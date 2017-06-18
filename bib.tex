@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,mathtools}
+\usepackage{float,tikz}
+\usepackage[shortlabels]{enumitem}
+\usepackage[nobreak=true]{mdframed}
+\usepackage[left=1.25in,right=0.75in,top=1.25in,bottom=2.0in]{geometry}
+
+\newcommand*{\Question}[1]{\section{#1}}
+\newenvironment{Parts}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand*{\Part}{\item}
+
+% start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
+\newcommand{\pdfinlimg}[5]{
+\makebox[#1cm][l]{\immediate\pdfliteral{
+  q
+  #3 0 0 #4 0 0 cm
+  #1 0 0 #2 0 0 cm
+  0.885 0 0 0.885 0 0 cm 
+  BI
+  /W #3
+  /H #4
+  /CS /RGB
+  /BPC 8
+  /F [ /AHx /Fl ]
+  ID
+  #5>
+  EI
+  Q
+}\vbox to #2cm{}}
+}
+% end pdfinlimg
+
+% name on bottom right
+\rfoot{\small Rustie Lin}
+
+% useful commands
+\newcommand*{\MC}[1]{\multicolumn{1}{c}{#1}}
+\newcommand*{\N}{\mathbb{N}}
+\newcommand*{\Z}{\mathbb{Z}}
+\newcommand*{\Q}{\mathbb{Q}}
+\newcommand*{\R}{\mathbb{R}}
+\newcommand*{\C}{\mathbb{C}}
+\newcommand*{\GF}{\text{GF}}
+\newcommand*{\E}{\textbf{E}}
+\newcommand*{\Var}[1]{\text{Var}(#1)}
+\newcommand*{\var}[1]{\text{var}(#1)}
+\newcommand*{\cov}[1]{\text{cov}(#1)}
+\newcommand*{\mc}[1]{\mathcal(#1)}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\pagestyle{fancy}
+\headheight=75pt
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+% header
+\renewcommand{\headrulewidth}{6pt}
+\chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+\lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+Introduction to Cryptocurrencies and Blockchain 
+\\ Rustie Lin}
+\rhead{\huge     \fontfamily{lmdh}\selectfont     Bibliography \hwnum}
+
+\lfoot{\small Introduction to Cryptocurrencies and Blockchain   \hwnum}
+\begin{document}
+    
+    % hacky workaround for no indents...?
+    \setlength{\parindent}{0pt}
+    %%%%%%%%%%%SECTION START BELOW%%%%%%%%%%%%%%%%%%%%%%
+    
+    \section*{References}
+    \begin{itemize}
+        \item http://www.coindesk.com/bitcoin-venture-capital/
+        \item https://letstalkpayments.com/high-profile-investments-bitcoin-2013/ 
+        \item http://www.coindesk.com/venture-capital-funding-bitcoin-startups-triples-2014/ 
+        \item http://www.coindesk.com/6-weird-wonderful-bitcoin-events-2014/ 
+        \item http://www.coindesk.com/7-biggest-crypto-scandals-2014/ 
+        \item http://www.coindesk.com/year-headlines-coindesks-top-news-stories-2014/ 
+        \item https://medium.com/@VitalikButerin/the-meaning-of-decentralization-a0c92b76a274 
+        \item http://www.coindesk.com/math-behind-bitcoin/
+        \item https://en.bitcoin.it/wiki/Proof\_of\_work
+        
+    \end{itemize}
+    
+\end{document}}

@@ -1,0 +1,124 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,mathtools}
+\usepackage{titleps}
+\usepackage[left=1.00in,right=1.00in,top=0.75in,bottom=1.50in]{geometry}
+
+% start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
+\newcommand{\pdfinlimg}[5]{
+\makebox[#1cm][l]{\immediate\pdfliteral{
+  q
+  #3 0 0 #4 0 0 cm
+  #1 0 0 #2 0 0 cm
+  0.885 0 0 0.885 0 0 cm 
+  BI
+  /W #3
+  /H #4
+  /CS /RGB
+  /BPC 8
+  /F [ /AHx /Fl ]
+  ID
+  #5>
+  EI
+  Q
+}\vbox to #2cm{}}
+}
+% end pdfinlimg
+
+% BEGIN PARAGRAPH STUFF
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+ 
+\setlength{\parindent}{4em}
+% \setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1}
+% END PARAGRAPH STUFF
+
+% useful commands
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newpagestyle{footers} {
+    \sethead{}{}{}
+    \setfoot{\small Intro to Crypto and Blockchain, Note \notenum}{\thepage}{\small Rustie Lin}
+    \footskip = 45pt
+}
+
+\fancypagestyle{firstpage} {
+    \vspace*{3\baselineskip}
+    \footskip = 0pt
+    \renewcommand{\headrulewidth}{6pt}
+    \chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+    \lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+    Introduction to Cryptocurrencies and Blockchain 
+    \\ Lin, Akhtar}
+    \rhead{\huge \fontfamily{lmdh}\selectfont    Note \notenum}
+    \lfoot{\small Intro to Crypto and Blockchain, Note \notenum}
+    \rfoot{\small Rustie Lin}
+}
+    
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+% for initial paragraph indent
+\usepackage{indentfirst}
+
+% UPDATE THIS FOR EVERY NEW NOTE
+\newcommand{\notenum}{1}
+
+\pagestyle{footers}
+
+\begin{document}
+    \thispagestyle{firstpage}
+    \vspace*{2\baselineskip}
+    \section*{Bitcoin History: From the Cypherpunk Movement to JPMorgan Chase}
+    Over the years, Bitcoin demonstrated its unique prowess as a currency, store of value, and more. As an open financial network based on public/private key encryption, Bitcoin allows for pseudonymous financial transactions. \textit{(Pseudonymous: While accounts are allegedly anonymous, experts can trace these random online accounts to real people with enough information, meaning that the accounts can be deanonymized with enough effort.)} Thanks to the Internet, Bitcoin is easily accessible and adoptable, allowing for censorship-resistant payments across borders.
+    
+    In the modern day, Bitcoin can be used to send money cheaply and efficiently across political and geographic borders. As a ``borderless" currency, Bitcoin enables users to send money that retains its value in every jurisdiction, and is thus useful in developing economies and as an overseas payment mechanism.  Bitcoin also finds major use in digital trading, machine to machine payments (especially in consideration of the Internet of Things), autonomous networks, micropayments, and as a general alternative store of value. In this note, we will explore the history of Bitcoin and the sequence of events that brought its existence. The goal is to provide insight into the backgrounds and motivations behind the people who lead the Blockchain industry today.
+    
+    \section*{Pre Bitcoin-2009: Libertarian Dreams and Ideals}
+    Rapid advancements in computing technology in the 1980s and '90s brought along debates of computing rights and privacy. Rooted in libertarianism and cryptography, a community who called themselves the ``Cypherpunks" began an anti-government movement to counter the potential of increased surveillance that came with new technologies. Eric Hughe's ``A Cypherpunk's Manifesto" states: ``Privacy is necessary for an open society and in the electronic age."
+    
+    Cypherpunks were especially interested in how technology would change the relationship between the individual and the state. They believed that individuals should be able to use these new tools and also be able to protect their personal information and maintain their privacy from the government.
+    
+    An early attempt to separate currency from the state, and create a cryptocurrency, was DigiCash. Seeing the existing financial system as one of the greatest threats to individual privacy, cryptographer David Chaum, who was associated with the invention of Blind Signature Technology, implemented DigiCash using the latest advancements in public and private key cryptography. Digicash was designed to ensure the complete privacy of users who conduct online transactions, and included a system or cryptographic protocols which made banks and governments unable to trace personal payments conducted online. However, there was a major flaw in DigiCash's design: it was controlled by a central organization. This meant that Chaum's company was required to confirm every digital signature in the system. Eventually, Chaum's company declared bankruptcy in 1998, and DigiCash went down with it. For the community, DigiCash represented an important learning opportunity. For a cryptocurrency to be stable, it must be decentralized.
+    
+    \section*{2009-2010: Early Development of Bitcoin}
+    
+    In October 2008, a paper titled \emph{Bitcoin: A Peer-to-Peer Electronic Cash System} was published by an unknown person or persons by the pseudonym Satoshi Nakamoto. His nine-page white paper seemed to combine all previous efforts to create a self-sustaining digital currency. Although some were disheartened by historical attempts (such as DigiCash) to implement a cryptocurrency, a few early pioneers quickly recognized Bitcoin's potential and began supporting the project.
+    
+    Within a year, the first Bitcoin implementation was created in 2009. The Genesis block was mined in January 3, 2009, and the coinbase of this block references a story in the Times of London newspaper involving the Chancellor bailing out banks. The first bitcoin transaction occurred on January 12, 2009. A year later on May 21, 2010, Bitcoin was first used to transact a tangible asset. Laszlo Hanyecz famously purchased \$25 worth of pizza for 10,000 BTC. Little did he know that 10,000 BTC would be worth ~\$20,169,600 (as of May 20, 2017).
+    \section*{2010-2012: Scandals, Hacks, Illegal Activity}
+    In the early stages of Bitcoin, there existed no exchange for trading bitcoin and regular currencies. In 2010, the creator of online service mtgox.com (\emph{\textbf{M}agic: \textbf{T}he \textbf{G}athering \textbf{O}nline} e\textbf{X}change), which allowed players of the \emph{Magic: The Gathering Online} to trade cards like stocks, decided to convert the domain into a bitcoin exchange website. Thus, Mt. Gox was established and consolidated itself as the biggest bitcoin exchange during the beginning stages of bitcoin. Since then, Mt. Gox has suffered various security breaches and thefts. On June 19, 2011, a significant breach in security resulted in fraudulent trading after a hacked allegedly used a Mt. Gox auditor's computer to illegal transfer a large number of bitcoins to himself. Mt. Gox was subsequently shut down for seven days to investigate the situation.
+    
+    Bitcoin was also involved in Silk Road, an illicit marketplace for drug deals. Called ``The eBay for drugs," Silk Road generated a significant number of transactions for Bitcoin, as most illegal merchants only accepted bitcoins. After launching in February 2011, Silk Road was shut down in October 2013 by the FBI. The FBI seized 3.6 milllion USD worth of bitcoin. Ross Ulbricht, the founder of Silk Road, was issued a life sentence without possibility of parole. The highly publicized story of Silk Road's take-down also changed the general sentiment towards Bitcoin.
+    
+    Within the media, association of Bitcoin with illegal online activity, scandals, and hacks swayed the public opinion against the cryptocurrency. Around this time, speculation also drove the price of bitcoin to over one thousand USD. For better or for worse, the flurry surrounding Bitcoin drew an unprecedented amount of attention.
+    \section*{2013-2014: Bitcoin Attracts Attention}
+    
+    Bitcoin's presence in the media continued to grow. Just four months after the FBI shut down Silk Road in October 2013, revealing to the public the illegal bitcoin marketplace, Mt. Gox declared for bankruptcy in February 2014. Mt. Gox reported losing 744,408 BTC in a theft that went unnoticed for years.
+    
+    In March of 2014, CoinDesk, a popular online Bitcoin news platform, published an article claiming that Bitcoin inventor Satoshi Nakamoto had been ``found" in California. The man in question denied his association with the name.
+    
+    Just as Bitcoin was entering the mainstream market, renowned venture capitalist by the name of Tim Draper revealed to the media that he purchased nearly 30,000 BTC. In an interview, Draper was optimistic that the price of bitcoin would rise to 10,000 USD; as he sees it, ``an entire economy is being rebuilt." In an interview, Draper described bitcoin as bullish in emerging markets, and encouraged investors to buy bitcoin.
+    
+    2014 also marked the year when major retailers and corporations began accepting bitcoin. In January, Overstock.com and Porn.com became the first companies to accept bitcoin. In April, it was announced that new marijuana vending machines in Colorado would accept bitcoin. In September, PayPal partners with Coinbase and Bitpay. In December, Microsoft also began accepting bitcoin payments.
+    \section*{2013-2014: Venture Funded Bitcoin Startups} 
+    
+    Hype for Bitcoin came analogous with a rise in venture funded Bitcoin startups. One of the most notable was Coinbase, a digital asset exchange company based in San Francisco. Coinbase served mainly as a centralized, hosted bitcoin wallet, and was also an important tool for investors to gauge the interest in Bitcoin as a whole. Founded in June 2012, Coinbase saw a drastic increase in funding following the Bitcoin hype. In May 2013, Coinbase received a 5 million USD Series A. December 2013, 25 million USD Series B. July 2015, 75 million USD Series C.
+    
+    Other early venture funded Bitcoin startups included BitFinex, 21 Inc, BitPay, and Blockstream. Around this time, Andreessen Horowitz (a16z) also got involved in the Bitcoin space. Andreessen Horowitz has been directly involved in the steady development of the Bitcoin industry, as they began investing in Bitcoin Core (the group that maintains the core Bitcoin software), sidechains, and various research firms in the space.
+    
+    Hype for Bitcoin seemed to die down in 2014, and the subsequent plummet in bitcoin price clearly indicated that Bitcoin was not in its best state. 
+    
+    \section*{2015-Present: Ethereum Blows Up, Bitcoin Bounces Back, ``Enterprise Blockchain"}
+    
+    There have been number of important developments in the last couple years up until the present (May 2017). Some may be left out.
+    
+    A whitepaper released in late 2013 by Russian programmer and cofounder of Bitcoin Magazine described the premise of a Turing-complete protocol running on a blockchain, the same technology behind Bitcoin. In July 2015, this idea came to fruition in form of the Ethereum blockchain, which serves as a platform for people to build and deploy decentralized applications. Applications on Ethereum require ``fuel" in the form of Ether tokens to run (more on this in a later note.) Less than a year later, Ether tokens were valued at a total of one billion USD. Ethereum represented a new future for decentralized technologies, and inspired such ideas as new governance models.
+    
+    Political events in 2016 and early 2017 also had a profound impact on the growing popularity of Bitcoin and blockchain technologies. Most notably, Brexit, India's war on cash, and the inauguration of President Donald Trump in the United States were political events that caused a number of individuals turn away from their governments, towards the decentralized and trustless alternative: bitcoin. Additionally, economic events in the media highlighting the circumvention of capital controls, as well as general instability in the market caused the price of bitcoin to increase dramatically.
+    
+    There has also a growing interest in blockchain technologies from banks. Whereas big banks had previously disregarded Bitcoin primarily due to a lack of understanding and also general resentment of lack of central control, several banks have shown interest in integrating blockchain technology into existing services. As chairman, president, and CEO of JPMorgan Chase Jamie Dimon stated in February 2016: ``The Blockchain is a technology, which we've been studying...and yes it's real. It could probably reduce the cost of real application in certain things...If it proves to be cheap and secure it will be adopted for a whole bunch of stuff.'' The separation of Bitcoin and blockchain in the discourse of even big banks reflects the importance of these technologies in recent past.
+    
+    From the underground Cypherpunk movement to one of the largest and most powerful centralized banking institutions in the United States, the influence of Bitcoin througout its history has risen to the mainstream. The culmination of the cutting edge in computer science and cryptography, and the passionate support by a dedicated community has elevated Bitcoin and blockchain technologies to a spotlight that is on its way to profoundly reinvent the future.
+\end{document}
