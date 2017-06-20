@@ -4,7 +4,7 @@
 \usepackage{titleps}
 \usepackage[left=1.00in,right=1.00in,top=0.75in,bottom=1.50in]{geometry}
 \usepackage{graphicx}
-\graphicspath{ {assets/img/} }
+\graphicspath{ {assets/note2/} }
 
 % start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
 \newcommand{\pdfinlimg}[5]{
@@ -74,13 +74,13 @@
     \vspace*{2\baselineskip}
     \section*{Bitcoin Protocol and Consensus: A High Level Overview}
     
-    Often, underlying the excitement around Bitcoin, cryptocurrencies, and blockchain is a confusion about what exactly Bitcoin is and how it works at its core. This note is dedicated to explaining how Bitcoin works at a high level. 
+    Often, underlying the excitement around Bitcoin, cryptocurrencies, and blockchain is a confusion about what exactly Bitcoin is and how it works at its core. This note is dedicated to explaining how Bitcoin works at a high level. First, we will build Bitcoin from the ground up, explaining each of the system's key features and why they are necessary for Bitcoin to be distributed, decentralized, and trustless. Then, we will move on to discuss finer details in Bitcoin's implementation, such as a brief overview of mining, and the anatomy of various key datastructures.
     
     \section*{Bitcoin from the Ground Up}
     
     To fully understand how Bitcoin works, we start by attempting to build Bitcoin from scratch. Each time a major flaw is detected, a new feature must be built in. By the end of this section, we will have built Bitcoin from the ground up. Keep in mind that our goal is to create a currency that requires no central entity. Let us start off by considering two users of this currency, Alice and Bob.
     
-    First step: establishing a system that allows users to write and sign messages describing transactions. Each transaction would be broadcast to the world (more specifically, every other user of the currency). If there exists no central third party to verify truths, then \underline{every other member of} \underline{the community becomes the third party}. For Alice to send Bob one bitcoin, she would announce to the world, ``I, Alice, am giving Bob one bitcoin," and the world would take note. A problem arises if Alice, intentionally or not, sends multiple identical messages to Bob. If she says five times in a row that she wants to give one bitcoin to Bob, did she accidentally repeat herself? Did she mean to send five bitcoins, or only one? The ability to send the same money multiple times would even give Alice the opportunity to spend more money than she has.
+    First step: establishing a system that allows users to write and sign messages describing transactions. Each transaction would be broadcast to the world (more specifically, every other user of the currency). Reasoning: If there exists no central third party to verify history, then \underline{every other member of the community} becomes the third party. For Alice to send Bob one bitcoin, she would announce to the world, ``I, Alice, am giving Bob one bitcoin," and the world would take note. A problem arises if Alice, intentionally or not, sends multiple identical messages to Bob. If she says five times in a row that she wants to give one bitcoin to Bob, did she accidentally repeat herself? Did she mean to send five bitcoins, or only one? The ability to send the same money multiple times would even give Alice the opportunity to spend more money than she has.
     
     To prevent ambiguity, we introduce uniquely identifiable serial numbers for each transaction conducted on the system. If Alice were to send one bitcoin to Bob now, she would announce ``I, Alice, am giving Bob one bitcoin with serial number \#\#\#\#." Modern banks use similar serial numbers to keep track of their transactions. If our version of Bitcoin were to implement serial numbers, it must need a centralized bank, a database or record to manage serial numbers, and thus transactions and balances. However, this defeats the purpose of a decentralized currency. 
     
@@ -88,7 +88,7 @@
     
     Simply tracking transaction times is not valid, since in the realm of dropped packets and unreliable connections, network speed varies too much. To address this problem we edit the transaction sequence as follows: Alice sends a transaction to Bob, who then announces the transaction to the world. Everyone then verifies the transaction. This increases the security of the system, but it is still possible for Alice to double spend on Bob and Charlie. If she fabricates many fake online identities, she can then verify her own transaction with her other identities. In general,the attack pattern of creating many fake identities to subvert a system is called a \textbf{Sybil attack}
     
-    To solve the Sybil attack issue of double spending, the system can implement a \textbf{proof-of-work} protocol to verify transactions. In a proof-of-work consensus system, when Alice wishes to make a transaction, she announces this to the entire network, as before. As others receive this message, they add to a \underline{list of pending transactions} that have yet to be verified. It should be noted that any user can maintain their own list of pending transactions, since they are not verified yet.
+    To solve the Sybil attack issue of double spending, the system can implement a \textbf{proof-of-work} protocol to verify transactions. In a proof-of-work consensus system, when Alice wishes to make a transaction, she announces this to the entire network, as before. As others receive this message, they add to a list of pending transactions that have yet to be verified. It should be noted that any user can maintain their own list of pending transactions, since they are not verified yet.
     
     To verify a list of pending transactions, an honest user --- call him David --- must do three things. First, he must check his version of the blockchain to ensure that the transactions in his list are valid (e.g. to check if the bitcoins involved have not been spent before.) Second, he must spend computation power to solve a difficult mathematical puzzle. Third, he must announce announce the list of transactions, now packaged into a new block, to the network. Other users in the system would then verify the transactions in the new block David has created, and append the new block onto the working blockchain.
     
@@ -113,8 +113,81 @@
     \section*{Introduction to Transactions}
     
     When a user spends bitcoin, they are spending from previous transactions. Transactions are mappings from inputs to outputs, where inputs and outputs both each contain an address and an amount. In a typical transaction, in order for Bob to spend 0.05 BTC at a coffee shop, Bob could create a transaction with one input and two outputs. If the transaction input was 1.00 BTC, then the outputs would be 0.05 BTC to the coffee shop, and 0.95 BTC back to Bob. The reason for two outputs is because as per the Bitcoin system specification, inputs can only be spent once. Thus creates the need for a change output (the 0.95 BTC) back to the sender. Users of Bitcoin can also impose transaction fees by constructing transactions in such a way as to make the input amount and output amount sum up to different values. In the previous example, if Bob sends 0.05 BTC to the coffee shop and only 0.94 BTC back to himself, then the Bitcoin system will calculate the difference in inputs and outputs (1.00 BTC - 0.05 BTC - 0.94 BTC = 0.01 BTC). This is what bitcoin miners collect as transaction fees. 
+    
+    \includegraphics[scale=0.9]{transactions}
 
-   \includegraphics[scale=0.9]{note2_transactions}
+    
+    \section*{Blocks and Blockchain}
+    
+    As alluded to earlier, a \textbf{block} is essentially an ordered bunch of transactions. Some other key characteristics of a block is that each of the transactions in a block is time-stamped, and also that any given block (with the exception of the genesis block) references a previous block. Changing a transaction, a transaction's time-stamp, or the block's reference invalidates a block. This property ensures that blocks are immutable. A \textbf{blockchain}, as the word implies, is a series of blocks that are "chained" together. Later parts of this note will discuss the specifics what actually composes a block.
+       
+   \section*{Basic Concepts -- UTXO Analogy}
+   
+    In Bitcoin, users do not have accounts from which they add or subtract value to determine the amout of bitcoin they own. Instead, users spend from unspent transaction outputs, or \textbf{UTXOs}. UTXOs can be thought of as the global set of unspent bitcoins. Instead of "spending A bitcoin," it is more useful to think of a user as "spending THIS bitcoin." Bitcoins are after all uniquely identified by their transaction outputs. 
+    
+    In this sense, bitcoin is analogous to the Rai Stones of the Yap Islands. Rai stones are large circular stone disks carved out of limestone, traditionally used by the Yapese, a Micronesian people. These rai stones were upwards of 3.6 meters long and 4 metric tons heavy, so locals never moved these rai stones when they conducted transactions and exchanged them for goods. Instead, the Yapese agreed on a system that revolved on trust and changing ownership of the rai stones. In a transaction, both parties would announce to the rest of the island that the transaction was taking place. This is how Bitcoin works, as ownership of specific bitcoin is transfered between users during transactions.
+    
+    \includegraphics[scale=0.7]{rai}
+
+    
+    \section*{Mining Sketch}
+    
+    Before exploring the concept of mining, first we need to understand some facts about proof-of-work. Proof-of-work solves the double spending problem in the case of Bitcoin. It is what is known as a \textbf{Byzantine consensus algorithm}, which is an algorithm that tolerates failuers which involve nodes actively attempting to subvert the system and preventing the system from coming to consensus. Proof-of-work is actually one of a multitude of different consensus algorithms (e.g. proof-of-stake, proof-of-activity, proof-of-burn). There exist private blockchains, which tend to use alternative consensus algorithms, but because they are private, there does not exist complete trustlessness in the system.
+    
+    In Bitcoin, \textbf{mining} serves various essential functions that uphold the entire Bitcion system. Firstly, it is essentially a \underline{minting mechanism} that ensures coins are distributed in a fair way, due to the properties of SHA-256 (though some could argue against this, considering the presence of mining pools. More on this in a later note.) Additionally, the prized block reward incentivizes miners to aid in the greater goal of securing the network. After all, it is with the participation of countless miners that maintains the health of the blockchain and ultimately the security and viability of Bitcoin by allowing for distributed consensus.
+    
+    \section*{Mining Sketch -- Finding Blocks}
+    
+    Once a miner find a proof-of-work, they validate (find) a block, and can add the block to the blockchain as immutable data. The miner who finds the block adds a special transaction called a \textbf{coinbase transaction}, which awards them with the mining reward, which is currentlly 12.5 BTC. The miner would then broadcast the block to the rest of the Bitcoin network. Other miners in the network would verify the block and then add it to their own copy of the blockchain. 
+    
+    On average, a block is found every 10 minutes by design. Because hash power and the ease of which miners can solve for the proof-of-work constantly varies, the difficulty of the problem which miners must solve is adjusted every 2 weeks to uphold the 10 minute solve time average. The block reward halves every 4 years, and at the time of writing, the last instance of the block reward halving was on July 9th, 2017. Halving the block reward implies that bitcoin is in limited supply and is thus deflationary in nature. By the year 2140, the maximum of 21 million bitcoins will be in circulation. There are approximately 15.2 million bitcoins in circulation today (6/19/17). 
+    
+    \section*{Mining Sketch -- Finding Blocks}
+    
+    Formally mining can be described as the hash of three components, the \textbf{merkle root}, a hash of a previous block, and a \textbf{nonce}. From a high level, a merkle root can be seen as a datastructure that preserves a summary of the transactions in a block using some useful cryptographic properties. The nonce is an arbitrary number that is used only once, and is essentially the piece of the math puzzle miners search for. A miner uses SHA-256 to hash together the merkle root, a nonce, and a hash of the previous block. 
+    $$Output = \text{SHA-256}\big(\textit{Merkle Root} + \text{SHA-256}(Previous Block) + Nonce\big)$$
+    
+    The solution (proof-of-work) that miners vie for is defined as an output that contains a requisite number of leading 0 bits. As discussed earlier, the difficulty of the puzzle is constantly adjusted (every two weeks, or every 2016 blocks), and it is the number of leading 0 bits that determines the difficulty of the puzzle. 
+    
+   \includegraphics[scale=0.65]{blockchain_diagram}
+   
+   \section*{Transaction Flow}
+   
+   To more clearly illustrate the process of making a transaction, consider the following example:
+   
+   Imagine Alice wants to send money to Bob. Alice would first sign a transaction and broadcast this to the network. Miners would then receive and verify the transaction against signature matches and whether or not Alice has sufficient funds. Also, often times miners will prioritize transactions based on the ratio of the transaction's fees to data size, ensuring maximum profit on their end. 
+   
+   When a miner finds the proof-of-work, thereby solving the block, they would then bbroadcast the block to the network. As the block propagates, other miners would verify the block themselves. At any given point in time, the longest blockchain is assumed to be the most valid, and since miners are constantly competiting for the block reward, they immediately start work on the next block's problem.
+   
+   \section*{51\% Attacks}
+   
+   A major assumption in Bitcoin is that no more than 51\% of the network is dishonest. An honest majority will always form the longest proof-of-work chain, because the majority of the network's hash power would be concentrated on creating honest blocks quicker than malicious entities can. Since miners have no incentive to work on a short, malicious chain that offers no valid block reward, miners will always work on the longest chain. Bitcoin can only function if the majority of its nodes are honest however. A \textbf{51\% attack} is an attempt to overwhelm the mining power of a network. While it is possible, amassing 51\% of the network's hash power is highly unlikely. 
+   
+   \section*{Forking and Consensus Updates}
+   
+   Whenever an update to the Bitcoin network needs to be made, new consensus rules may cause compatibility issues with that which are currently in effect. A \textbf{fork} is thus made, indicating a major change in the Bitcoin network. There are two types of forks, with potentially drastically different implications.
+   
+   A \textbf{hard fork} is a type of fork in which the new and old versions of the consensus protocols are incompatible with each other. A hard fork causes a permanent divergence in the blockchain. Nodes running an old version of the Bitcoin software would see the new transactions as invalid and thus hard forks are not backwards compatible. An issue can arise when upgraded nodes mine on the new forked blockchain, and non-upgraded nodes continue mining on the old chain. With enough community support, both chains could survive, and we can see this in Ethereum and Ethereum Classic. \\ \\
+   
+   \includegraphics[scale=0.9]{hard_fork} \\
+
+   
+   
+   A \textbf{soft fork} is a type of fork that creates a new chain that is still valid under old consensus rules. Changes brought about by soft forks are backwards compatible. However, although non-upgraded nodes will still be able to see new transactions as valid, they will not be able to mine, as upgraded nodes will reject their blocks. Therefore, the network ultimately upgrades to the newer consensus rules. \\ \\
+   
+  \includegraphics[scale=0.9]{soft_fork} \\
+  
+  
+  \section*{Merkle Trees}
+  
+   \textbf{Merkle trees} are the fundamental datastructures that grant the property of immutability to Bitcoin blocks in the blockchain. 
+   
+   \includegraphics[scale=0.6]{merkle} \\
+   
+   As seen in the diagram, a merkle tree is a binary tree in which every non-leaf node is laled with the hash of the labbels or values (in the case of leaves) of its child nodes. The rightmost child is labeled "Tx3", so it points to "Hash3." Hashing "Hash2" and "Hash3" together yields "Hash23," etc. When all transactions are hashed together, the resulting structure is the merkle root, which is then stored in the block. The rest of the merkle tree is then discarded to save space in the block.
+   
+   Blocks are immutable because if a malicious user were to tamper with the transactions in a block, the hash values in the merkle tree would change, and bubbling up to the merkle root, changes would be drastic, due to the properties of SHA-256 and the number of times hashing is required in the process of constructing a merkle tree. The tampered block would thus have a drastically different root hash than expected. The hash of the nonce, root hash, and hash of the previous block would then not have the requisite number of zeros, invalidating the block.
+   
     
     
     % BEGIN KEY TERMS
@@ -124,12 +197,10 @@
     \section*{Key Terms}
     \noindent A collection of terms mentioned in the note which may or may not have been described. Look to external sources for deeper understanding of any non-crypto/blockchain terms.
     \begin{enumerate}
-        \item \textbf{Sybil attack} --- A strategy by which a single entity generates additional identities, often a great many, in order to gain substantial undue influence in a peer-to-peer network. The rest of the network is not aware that all these identities belong to one person in a successful attack.
-        \item \textbf{Proof-of-work} --- A piece of data which is costly to produce but easy for others to verify and which satisfies certain requirements. 
         \item \textbf{ECDSA} --- Short for \underline{E}lliptic \underline{C}urve \underline{D}igital \underline{S}ignature \underline{A}lgorithm. In Bitcoin, ECDSA is used to generate public and private key pairs, which in turn allows users to sign transactions such that third parties can verify the authenticity of the signature while retaining exclusive ability to create the signature.
+        \item \textbf{Proof-of-work} --- A piece of data which is costly to produce but easy for others to verify and which satisfies certain requirements. 
         \item \textbf{SHA-256} --- A cryptographic hash function used in various parts of the Bitcoin network such as the proof-of-work challenge.
-        
-     
+        \item \textbf{Sybil attack} --- A strategy by which a single entity generates additional identities, often a great many, in order to gain substantial undue influence in a peer-to-peer network. The rest of the network is not aware that all these identities belong to one person in a successful attack.
     \end{enumerate}
     % END KEY TERMS
 \end{document}
