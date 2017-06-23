@@ -7,9 +7,9 @@ Note: This project is currently undergoing active development on ShareLatex. Upd
 ![for the love of blockchain](/assets/misc/everyone_blockchain.jpg)
 
 ## TODO
-⋅⋅* Note 2 revisions for proof-of-work spelling convention
-⋅⋅* Note 2 clarify soft and hard fork forwards and backwards compatibility
-⋅⋅* Note 2 finish up Key Terms
-⋅⋅* Note 2 maybe some images in Bitcoin from the Ground Up
-⋅⋅* Note 3 rough
-⋅⋅* Finish up Note 0 - 2 and compile PDF's to link here
+* Note 2 revisions for proof-of-work spelling convention
+* Note 2 clarify soft and hard fork forwards and backwards compatibility
+* Note 2 finish up Key Terms
+* Note 2 maybe some images in Bitcoin from the Ground Up
+* Note 3 rough
+* Finish up Note 0 - 2 and compile PDF's to link here
