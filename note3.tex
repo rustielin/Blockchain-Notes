@@ -4,9 +4,7 @@
 \usepackage{titleps}
 \usepackage[left=1.00in,right=1.00in,top=0.75in,bottom=1.50in]{geometry}
 \usepackage{graphicx}
-
-% change this line
-\graphicspath{ {assets/note___/} }
+\graphicspath{ {assets/note3/} }
 
 % start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
 \newcommand{\pdfinlimg}[5]{
@@ -67,17 +65,25 @@
 \usepackage{indentfirst}
 
 % UPDATE THIS FOR EVERY NEW NOTE
-\newcommand{\notenum}{NUMBER HERE}
+\newcommand{\notenum}{3}
 
 \pagestyle{footers}
 
 \begin{document}
     \thispagestyle{firstpage}
     \vspace*{2\baselineskip}
-    \section*{SECTION HEADER HERE}
-    text
+    \section*{Wallets and Cryptography}
     
-    new paragraph
+    For the average user, before conducting any serious transactions, often the first step is to download wallet software to help manage funds. This note is dedicated to explaining the various types of bitcoin wallets, as well as the underlying cryptography that keeps everyone safe.
+    
+    \section*{Bitcoin vs Gmail Address Creation}
+    
+    As a brief review of the public and private keys in Bitcoin, we can compare them with that of Gmail. When generating a public/private key pair to use in Bitcoin, the user first randomly generates a private key, which is then used to calculate a public key. The set of possible private keys is so large that it is cryptographically safe to just generate a key. In contrast, the average user registering for an email account with Gmail would choose an address (username) and a password. Username and password are independent of each other in this case, and are not generated from each other, as in Bitcoin. The user would then send a request to the web server hosting , and submit this request to a central registry or mail server to check if the address is available. The main difference in the generation of public and private keys in both examples is centralization. In Bitcoin, users trust the underlying security of cryptography and the negligible probability of colliding public keys. Meanwhile, users of Gmail trust Google to safely store their private information on their servers. 
+    
+    \section*{Base 58}
+    
+    Conventionallly 
+    
     
     % BEGIN KEY TERMS
     \newpage
