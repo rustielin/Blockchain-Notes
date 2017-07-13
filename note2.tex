@@ -168,7 +168,7 @@
    
    With time, Bitcoin's protocol and software must update to remain efficient and secure. However, nodes may choose to opt out of updating their protocol, causing a split known as a \textbf{fork}. There are two categories of forks, each with drastically different implications.
    
-   In a \textbf{hard fork}, the new version of the consensus protocols is incompatible with the previous because of loosened requirements upon blocks. In other words, hard forks are not forwards compatible. A hard fork causes a permanent divergence in the blockchain. Nodes running an old version of the Bitcoin software would see the new transactions as invalid and thus hard forks are not backwards compatible. An issue can arise when upgraded nodes mine on the new forked blockchain, and non-upgraded nodes continue mining on the old chain. With enough community support, both chains could survive, and we can see this in Ethereum and Ethereum Classic.
+   In a \textbf{hard fork}, the new version of the consensus protocols is incompatible with the previous because of loosened requirements upon blocks. In other words, hard forks are not forwards compatible. A hard fork potentially causes a permanent divergence in the blockchain. Nodes running an old version of the Bitcoin software would see the new transactions as invalid. An issue can arise when upgraded nodes mine on the new forked blockchain, and non-upgraded nodes continue mining on the old chain. With enough community support, both chains could survive, and we can see this in Ethereum and Ethereum Classic.
    
    \smallskip
    \includegraphics[scale=0.9]{hard_fork}
@@ -221,7 +221,7 @@
         \item \textbf{Nonce} --- An arbitrary value used to produce a valid block header. Nonces are tested in the ``mining" process, and a valid nonce is equivalent to the proof-of-work. It takes a massive amount of computing power to find a valid nonce.
         \item \textbf{Pseudonym} --- A false name. (In Bitcoin context, see: \textit{Address})
         \item \textbf{SHA-256} --- A cryptographic hash function used in various parts of the Bitcoin network such as the proof-of-work challenge.
-        \item \textbf{Soft fork} --- A fork in which the previous software is forwards compatible with the update. (Backwards compatibility is not guaranteed.)
+        \item \textbf{Soft fork} --- A fork in which the previous software is forwards compatible with the update, but not backwards compatible.
         \item \textbf{Sybil attack} --- A strategy by which a single entity generates additional identities, often a great many, in order to gain substantial undue influence in a peer-to-peer network. The rest of the network is not aware that all these identities belong to one person in a successful attack.
         \item \textbf{51\% attack} --- An attack in which an entity or group holds a majority of the mining power. With this majority, they can always produce the longest chain and outdo the rest of the network. Any transactions, valid or not, will be confirmed and stored in the longest chain, hence considered validated regardless.
     \end{enumerate}
