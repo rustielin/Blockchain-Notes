@@ -78,7 +78,112 @@
     
     \section*{Bitcoin Mechanics and Optimizations}
     
-    After spending time abstracting away certain Bitcoin features to high level concepts, it's time to take a deeper dive into how Bitcoin works on a technical level. In this note, we will cover topics such as more advanced Bitcoin mechanics, scripting, optimizations we can run on the network. Through these topics, we hope to exemplify how Bitcoin's design philosophy has been made as simple, robust, and conservative as possible.
+    After spending time abstracting away certain Bitcoin features to high level concepts, it's time to take a deeper dive into how Bitcoin works on a technical level. In this note, we will cover topics such as more advanced Bitcoin mechanics, scripting, optimizations we can run on the network. Through these topics, we hope to exemplify how Bitcoin's design philosophy has been made as simple, robust, and conservative as possible. We start with an in-depth look at double spending.
+    
+     \section*{Double Spend --- Example}
+ 
+     To gain further intuition on Bitcoin consensus, it is important to understand how double spending works. Previously we defined a double spend as a circumstance in which a party successfully spends the \underline{same} money more than once. For example, if Alice wants to purchase something from Bob for 1.00 BTC, she can double spend and send 1.00 BTC to Bob and also herself. Double spends are possible when a party gains more than 50\% of the network's hash power. Under the hood, there is a fairly involve process that results in the double spend.
+     
+     \section*{Double Spend --- Confirmations}
+     
+     Before going into the technical details of double spending, we will look at a more basic concept. A \textbf{confirmation} is the number of blocks created on top of the block a transaction is in. It is simply calculated by subtracting 1 from the block depth, since we want the most recent block to have 0 confirmations. 
+ 
+  \includegraphics[scale=0.5]{confirmations} \\
+  
+  Because of the difficulty of finding the proof-of-work for each block, confirmations are especially important because they roughly determine the security of transactions. In order to double spend a transaction, one must calculate the proof-of-work for each block until their fork of the blockchain is the longest. In the diagram above, one would have to calculate 3 different proofs-of-work starting with the block with 2 confirmations, to reach the same height as the most recent block. This is also assuming that the double spender has a significantly higher hash rate than that of the rest of the network, which is working on the original blockchain.
+  
+  What about transactions with no confirmations at all? Suppose Bob does not wait for \textit{any} confirmations on Alice's transaction. He simply checks that the transaction from Alice is valid, and \textit{immediately} sends Alice the product he is selling. Since there are no confirmations on Bob's transaction, Bob is vulnerable to a \textbf{race attack}. Alice can send a competing transaction to herself at the same time she sends Bob the legitimate transaction. Alice can then broadcast the transaction to the entire network. The false, conflicting transaction Alice sends is propagated much faster than the single transaction she sends to Bob, so there is a high likelihood that one of the Alice's conflicting transactions will be mined into a block and accepted by the network as genuine. Alice can also increase the block fee for the transaction to provide more incentive for miners to include the illegitimate transaction into their blocks. In this case, merchant Bob's waiting for 0 transactions makes him vulnerable to anyone that wants to steal goods. 
+  
+  On the other hand, in the case that Bob waits for more than 1 confirmation ($z$ confirmations), Alice can still double spend, but the process is more involved. Say Alice sends Bob a transaction, and Bob waits $z$ confirmations before he sends the goods to Alice. In order to double spend on Bob, Alice must mine on her own private chain, one that does not have the transaction that sent bitcoin from Alice to Bob; Alice can send the same transaction to herself instead. She builds up an illegitimate transaction history such that she sends money to herself rather than to Bob. After mining $z$ blocks, and making sure that her chain is longer than any other chain, Alice can broadcast her chain (preferably after she receives the goods from Bob). The network will adopt Alice's chain over the previous chain because it is longer in length. In fact, it is proven that if Alice has greater than 50\% of the total hash power, then she can always have a longer, illegitimate chain. \\ \\
+ 
+   \includegraphics[scale=0.3]{z_confirmation} \\
+   
+   \section*{Double Spend --- Security}
+   
+   Now we'll model our assertions regarding double spending and hash power using mathematics:
+   
+   Suppose Bob waits for $z$ confirmations before sending his goods over to Alice. Alice has $h_A$ hash power, and the honest network has $h_H$ hash power. The total network hash power is then $h_A + h_H$. 
+   
+   The probability, $p$, of the honest network finding the next block is simply the proportion of hash power the honest network controls:
+   
+   $$p = \frac{h_H}{h_A + h_H} $$
+   
+   The probability, $q$, of Alice finding the next block is the complement of $p$. We calculate it as follows:
+   
+   \begin{equation*}
+       \begin{split*}
+           q = 1-p &= 1 - \frac{h_H}{h_A + h_H} \\
+           &= \frac{h_A}{h_A + h_H}
+       \end{split*}
+   \end{equation*}
+   
+   Consider the scenario in which the honest network mines $z$ blocks on top of Alice's transaction to him. Bob sees that there are $z$ confirmations, and then he sends the goods over to Alice. In the meantime, Alice has been hard at work mining on her own chain ever since sending her transaction over, in hopes of double spending on Bob. The expected number of blocks Alice would have mined after the $z$ confirmations is equal to:
+   
+   $$\lambda = z(\frac{q}{p})$$
+   
+   If we model this as a Poisson distribution, because we have discrete events each corresponding to a probability, we can show that the probability that Alice generates $k$ blocks is:
+   
+   $$p_A(k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
+   
+   Now the question is: What is the probability Alice can mine enough blocks in secret to successfully broadcast her chain with the double spend? In other words, what is the probability that Alice can produce a longer chain than the honest network? 
+   
+   To solve this, first consider the related problem of Alice trying to catch up to a chain that is $j$ blocks ahead of Alice's own chain. The corresponding question is: What is the probability that Alice will ever catch up given an unlimited number of trials? It is also important to consider that the honest network is continuously mining their blocks on their chain, while Alice works maliciously on the side. This problem is actually an instance of the \textbf{Gambler's Ruin} problem, which in this case means that if Alice has more than 50\% hash power, she can always generate a longer chain, given an infinite timeline. The following is the probability of Alice catching up if she is $j$ blocks behind: 
+   
+   \[ p_c(j) = \begin{cases} 
+      1 & q \geq p \text{ OR } j < 0 \\
+      \big(\frac{q}{p}\big)^j & q < p
+   \end{cases}
+   \]
+   
+   Combining these two probabilities, we can compute the probability that Alice can catch up after $z$ blocks mined on the honest chain. Consider the case when Alice mines $k$ blocks. This means that the honest chain is $z-k$ blocks ahead of Alice. We sum over all possible values of $k$:
+   
+   \begin{equation*}
+       \begin{split}
+           &\Sigma_{k=0}^\infty p_A(k) \cdot p_C(z-k) \\
+           = &\Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot  \left\{
+    \begin{array}{ll}
+      1  & k > z \\ 
+      \big(\frac{q}{p}\big)^{z-k} & k \leq z \\
+    \end{array}
+  \right.
+       \end{split}
+   \end{equation*}
+   
+      \includegraphics[scale=1]{doublespend_plots} \\
+   
+    The above shows Alice's probability of catching up to the honest chain in arbitrary $x$ number of blocks. If Alice has 50\% hash power or more, then she can catch up with 100\% probability. Probability of catching up to the honest chain decreases as Alice's probability $q$ of getting the next block decreases.
+    
+    To avoid infinite tail, discrete summation, we can look at the inverse probability that Alice \textit{cannot} catch up to the chain that is $j$ blocks ahead:
+    
+    \begin{equation*}
+        \begin{split}
+           & 1 - \Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot  \left\{
+    \begin{array}{ll}
+      1  & k > z \\ 
+      \big(\frac{q}{p}\big)^{z-k} & k \leq z \\
+    \end{array}
+  \right. \\
+  &= 1 -\Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot \Bigg(1- \big(\frac{q}{p}\big)^{z-k}\Bigg)
+        \end{split}
+    \end{equation*}
+    
+    The number of confirmations Bob should wait before sending Alice the goods depends on how much hash power Bob assumes Alice to control. For the average user, it is recommended they wait around 6 or more confirmation until accepting a transaction. However, this is assuming any malicious party controls roughly 10\% or less of the network hash power. 
+    
+    \section*{Double Spend --- Bribing Miners}
+    
+    We have shown that if Alice controls more than 50\% of the total network hash power, she will always be able to double spend. Looking back at our calculations, whenever Alice is arbitrary $j$ blocks behind the honest network's chain, she will \textit{always} (in expectation) be able to catch up and out-produce the honest miners. Therefore, the probability that Alice can successfully double spend with greater than 50\% network hash power reaches 1.
+    
+    In reality, it is extremely costly, and approaching impossible, for Alice to own so much network hash power, especially given how vast the Bitcoin network is currently. Alice might not physically control the mining hardware necessary to perform a double spend, but she can definitely bribe other miners or even entire mining pools to mine on her chain. In the long run, it is guaranteed that Alice and her miners will profit, but the initial cost is extremely high.
+    
+    \section*{Double Spend --- "Gold Finger" Attack}
+    
+    There is actually a compelling reason as to why Alice would not want to double spend. If Alice does in fact succeed in a double spend, the rest of the network would be able to detect her double spend. Confidence in Bitcoin and the exchange rate would plummet as a result of the discovery of a security breach. Alice's bitcoin would then be worth a lot less, assuming Alice is staked in Bitcoin at the time. 
+    
+    If Alice is not staked in Bitcoin, she can short Bitcoin in order to profit after her double spend. Alice can short the exchange rate, and use that as collateral to buy, rent, or bribe miners, cashing out on the short.
+    
+    One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Gold Finger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
+    
+    (Note: The Gold Finger attack is named after the famous villain Auric Goldfinger in the third James Bond movie, who poisons the US gold supply in Ft. Knox in an effort to make the gold worth less, and to increase the value of his own gold holdings.)
     
     \section*{Account vs Transaction Based Ledgers}
     
@@ -196,119 +301,6 @@
  
  The current size of Bitcoin's blockchain is 122.7 gigabytes and growing. Miners, or ``full nodes'', are required to save the entire blockchain, but for the average user, such a requirement is not feasible if the aim is mass adoption. Enter \textbf{SPV (Simplified Payment Verification) nodes}, or ``thin'' clients. These nodes are designed to be lightweight, as their name implies. They only store the pieces of data needed to verify transactions that concern them, thus relieving the necessity to store the entire blockchain. Nearly all nodes in the Bitcoin network are SPV nodes because users are discouraged by the enormous download size. Those that do run full nodes exchange large amounts of storage and a high bandwidth for a shot at the block reward.
  
- \section*{Double Spend --- Example}
- 
- To gain further intuition on Bitcoin consensus, it is important to understand how double spending works. Previously we defined a double spend as a circumstance in which a party successfully spends the \underline{same} money more than once. For example, if Alice wants to purchase something from Bob for 1.00 BTC, she can double spend and send 1.00 BTC to Bob and also herself. Double spends are possible when a party gains more than 50\% of the network's hash power. Under the hood, there is a fairly involve process that results in the double spend.
- 
- \section*{Double Spend --- Confirmations}
- 
- Before going into the technical details of double spending, we will look at a more basic concept. A \textbf{confirmation} is the number of blocks created on top of the block a transaction is in. It is simply calculated by subtracting 1 from the block depth, since we want the most recent block to have 0 confirmations. 
- 
-  \includegraphics[scale=0.5]{confirmations} \\
-  
-  Because of the difficulty of finding the proof-of-work for each block, confirmations are especially important because they roughly determine the security of transactions. In order to double spend a transaction, one must calculate the proof-of-work for each block until their fork of the blockchain is the longest. In the diagram above, one would have to calculate 3 different proofs-of-work starting with the block with 2 confirmations, to reach the same height as the most recent block. This is also assuming that the double spender has a significantly higher hash rate than that of the rest of the network, which is working on the original blockchain.
-  
-  What about transactions with no confirmations at all? Suppose Bob does not wait for \textit{any} confirmations on Alice's transaction. He simply checks that the transaction from Alice is valid, and \textit{immediately} sends Alice the product he is selling. Since there are no confirmations on Bob's transaction, Bob is vulnerable to a \textbf{race attack}. Alice can send a competing transaction to herself at the same time she sends Bob the legitimate transaction. Alice can then broadcast the transaction to the entire network. The false, conflicting transaction Alice sends is propagated much faster than the single transaction she sends to Bob, so there is a high likelihood that one of the Alice's conflicting transactions will be mined into a block and accepted by the network as genuine. Alice can also increase the block fee for the transaction to provide more incentive for miners to include the illegitimate transaction into their blocks. In this case, merchant Bob's waiting for 0 transactions makes him vulnerable to anyone that wants to steal goods. 
-  
-  On the other hand, in the case that Bob waits for more than 1 confirmation ($z$ confirmations), Alice can still double spend, but the process is more involved. Say Alice sends Bob a transaction, and Bob waits $z$ confirmations before he sends the goods to Alice. In order to double spend on Bob, Alice must mine on her own private chain, one that does not have the transaction that sent bitcoin from Alice to Bob; Alice can send the same transaction to herself instead. She builds up an illegitimate transaction history such that she sends money to herself rather than to Bob. After mining $z$ blocks, and making sure that her chain is longer than any other chain, Alice can broadcast her chain (preferably after she receives the goods from Bob). The network will adopt Alice's chain over the previous chain because it is longer in length. In fact, it is proven that if Alice has greater than 50\% of the total hash power, then she can always have a longer, illegitimate chain. \\ \\
- 
-   \includegraphics[scale=0.3]{z_confirmation} \\
-   
-   \section*{Double Spend --- Security}
-   
-   Now we'll model our assertions regarding double spending and hash power using mathematics:
-   
-   Suppose Bob waits for $z$ confirmations before sending his goods over to Alice. Alice has $h_A$ hash power, and the honest network has $h_H$ hash power. The total network hash power is then $h_A + h_H$. 
-   
-   The probability, $p$, of the honest network finding the next block is simply the proportion of hash power the honest network controls:
-   
-   $$p = \frac{h_H}{h_A + h_H} $$
-   
-   The probability, $q$, of Alice finding the next block is the complement of $p$. We calculate it as follows:
-   
-   \begin{equation*}
-       \begin{split*}
-           q = 1-p &= 1 - \frac{h_H}{h_A + h_H} \\
-           &= \frac{h_A}{h_A + h_H}
-       \end{split*}
-   \end{equation*}
-   
-   Consider the scenario in which the honest network mines $z$ blocks on top of Alice's transaction to him. Bob sees that there are $z$ confirmations, and then he sends the goods over to Alice. In the meantime, Alice has been hard at work mining on her own chain ever since sending her transaction over, in hopes of double spending on Bob. The expected number of blocks Alice would have mined after the $z$ confirmations is equal to:
-   
-   $$\lambda = z(\frac{q}{p})$$
-   
-   If we model this as a Poisson distribution, because we have discrete events each corresponding to a probability, we can show that the probability that Alice generates $k$ blocks is:
-   
-   $$p_A(k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
-   
-   Now the question is: What is the probability Alice can mine enough blocks in secret to successfully broadcast her chain with the double spend? In other words, what is the probability that Alice can produce a longer chain than the honest network? 
-   
-   To solve this, first consider the related problem of Alice trying to catch up to a chain that is $j$ blocks ahead of Alice's own chain. The corresponding question is: What is the probability that Alice will ever catch up given an unlimited number of trials? It is also important to consider that the honest network is continuously mining their blocks on their chain, while Alice works maliciously on the side. This problem is actually an instance of the \textbf{Gambler's Ruin} problem, which in this case means that if Alice has more than 50\% hash power, she can always generate a longer chain, given an infinite timeline. The following is the probability of Alice catching up if she is $j$ blocks behind: 
-   
-   \[ p_c(j) = \begin{cases} 
-      1 & q \geq p \text{ OR } j < 0 \\
-      \big(\frac{q}{p}\big)^j & q < p
-   \end{cases}
-   \]
-   
-   Combining these two probabilities, we can compute the probability that Alice can catch up after $z$ blocks mined on the honest chain. Consider the case when Alice mines $k$ blocks. This means that the honest chain is $z-k$ blocks ahead of Alice. We sum over all possible values of $k$:
-   
-   \begin{equation*}
-       \begin{split}
-           &\Sigma_{k=0}^\infty p_A(k) \cdot p_C(z-k) \\
-           = &\Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot  \left\{
-    \begin{array}{ll}
-      1  & k > z \\ 
-      \big(\frac{q}{p}\big)^{z-k} & k \leq z \\
-    \end{array}
-  \right.
-       \end{split}
-   \end{equation*}
-   
-      \includegraphics[scale=1]{doublespend_plots} \\
-   
-    The above shows Alice's probability of catching up to the honest chain in arbitrary $x$ number of blocks. If Alice has 50\% hash power or more, then she can catch up with 100\% probability. Probability of catching up to the honest chain decreases as Alice's probability $q$ of getting the next block decreases.
-    
-    To avoid infinite tail, discrete summation, we can look at the inverse probability that Alice \textit{cannot} catch up to the chain that is $j$ blocks ahead:
-    
-    \begin{equation*}
-        \begin{split}
-           & 1 - \Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot  \left\{
-    \begin{array}{ll}
-      1  & k > z \\ 
-      \big(\frac{q}{p}\big)^{z-k} & k \leq z \\
-    \end{array}
-  \right. \\
-  &= 1 -\Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot \Bigg(1- \big(\frac{q}{p}\big)^{z-k}\Bigg)
-        \end{split}
-    \end{equation*}
-    
-    The number of confirmations Bob should wait before sending Alice the goods depends on how much hash power Bob assumes Alice to control. For the average user, it is recommended they wait around 6 or more confirmation until accepting a transaction. However, this is assuming any malicious party controls roughly 10\% or less of the network hash power. 
-    
-    \section*{Double Spend --- Bribing Miners}
-    
-    We have shown that if Alice controls more than 50\% of the total network hash power, she will always be able to double spend. Looking back at our calculations, whenever Alice is arbitrary $j$ blocks behind the honest network's chain, she will \textit{always} (in expectation) be able to catch up and out-produce the honest miners. Therefore, the probability that Alice can successfully double spend with greater than 50\% network hash power reaches 1.
-    
-    In reality, it is extremely costly, and approaching impossible, for Alice to own so much network hash power, especially given how vast the Bitcoin network is currently. Alice might not physically control the mining hardware necessary to perform a double spend, but she can definitely bribe other miners or even entire mining pools to mine on her chain. In the long run, it is guaranteed that Alice and her miners will profit, but the initial cost is extremely high.
-    
-    \section*{Double Spend --- "Gold Finger" Attack}
-    
-    There is actually a compelling reason as to why Alice would not want to double spend. If Alice does in fact succeed in a double spend, the rest of the network would be able to detect her double spend. Confidence in Bitcoin and the exchange rate would plummet as a result of the discovery of a security breach. Alice's bitcoin would then be worth a lot less, assuming Alice is staked in Bitcoin at the time. 
-    
-    If Alice is not staked in Bitcoin, she can short Bitcoin in order to profit after her double spend. Alice can short the exchange rate, and use that as collateral to buy, rent, or bribe miners, cashing out on the short.
-    
-    One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Gold Finger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
-    
-    (Note: The Gold Finger attack is named after the famous villain in the third James Bond 007 movie, who poisons the US gold supply to increase the value of his own assets.)
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
