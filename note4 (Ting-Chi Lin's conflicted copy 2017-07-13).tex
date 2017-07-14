@@ -243,7 +243,7 @@
    
    Now the question is: What is the probability Alice can mine enough blocks in secret to successfully broadcast her chain with the double spend? In other words, what is the probability that Alice can produce a longer chain than the honest network? 
    
-   To solve this, first consider the related problem of Alice trying to catch up to a chain that is $j$ blocks ahead of Alice's own chain. The corresponding question is: What is the probability that Alice will ever catch up given an unlimited number of trials? It is also important to consider that the honest network is continuously mining their blocks on their chain, while Alice works maliciously on the side. This problem is actually an instance of the \textbf{Gambler's Ruin} problem, which in this case means that if Alice has more than 50\% hash power, she can always generate a longer chain, given an infinite timeline. The following is the probability of Alice catching up if she is $j$ blocks behind: 
+   To solve this, first consider the related problem of Alice trying to catch up to a chain that is $j$ blocks ahead of Alice's own chain. The corresponding question is: What is the probability that Alice will ever catch up given an unlimited number of trials? It is also important to consider that the honest network is continuously mining their blocks on their chain, while Alice works maliciously on the side. This problem is actually an instance of the \textbf{Gambler's Ruin} problem, which has the following probability for Alice catching up if she is $j$ blocks behind: 
    
    \[ p_c(j) = \begin{cases} 
       1 & q \geq p \text{ OR } j < 0 \\
@@ -265,41 +265,8 @@
        \end{split}
    \end{equation*}
    
-      \includegraphics[scale=1]{doublespend_plots} \\
    
-    The above shows Alice's probability of catching up to the honest chain in arbitrary $x$ number of blocks. If Alice has 50\% hash power or more, then she can catch up with 100\% probability. Probability of catching up to the honest chain decreases as Alice's probability $q$ of getting the next block decreases.
     
-    To avoid infinite tail, discrete summation, we can look at the inverse probability that Alice \textit{cannot} catch up to the chain that is $j$ blocks ahead:
-    
-    \begin{equation*}
-        \begin{split}
-           & 1 - \Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot  \left\{
-    \begin{array}{ll}
-      1  & k > z \\ 
-      \big(\frac{q}{p}\big)^{z-k} & k \leq z \\
-    \end{array}
-  \right. \\
-  &= 1 -\Sigma_{k=0}^\infty \frac{\lambda^k e^{-\lambda}}{k!} \cdot \Bigg(1- \big(\frac{q}{p}\big)^{z-k}\Bigg)
-        \end{split}
-    \end{equation*}
-    
-    The number of confirmations Bob should wait before sending Alice the goods depends on how much hash power Bob assumes Alice to control. For the average user, it is recommended they wait around 6 or more confirmation until accepting a transaction. However, this is assuming any malicious party controls roughly 10\% or less of the network hash power. 
-    
-    \section*{Double Spend --- Bribing Miners}
-    
-    We have shown that if Alice controls more than 50\% of the total network hash power, she will always be able to double spend. Looking back at our calculations, whenever Alice is arbitrary $j$ blocks behind the honest network's chain, she will \textit{always} (in expectation) be able to catch up and out-produce the honest miners. Therefore, the probability that Alice can successfully double spend with greater than 50\% network hash power reaches 1.
-    
-    In reality, it is extremely costly, and approaching impossible, for Alice to own so much network hash power, especially given how vast the Bitcoin network is currently. Alice might not physically control the mining hardware necessary to perform a double spend, but she can definitely bribe other miners or even entire mining pools to mine on her chain. In the long run, it is guaranteed that Alice and her miners will profit, but the initial cost is extremely high.
-    
-    \section*{Double Spend --- "Gold Finger" Attack}
-    
-    There is actually a compelling reason as to why Alice would not want to double spend. If Alice does in fact succeed in a double spend, the rest of the network would be able to detect her double spend. Confidence in Bitcoin and the exchange rate would plummet as a result of the discovery of a security breach. Alice's bitcoin would then be worth a lot less, assuming Alice is staked in Bitcoin at the time. 
-    
-    If Alice is not staked in Bitcoin, she can short Bitcoin in order to profit after her double spend. Alice can short the exchange rate, and use that as collateral to buy, rent, or bribe miners, cashing out on the short.
-    
-    One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Gold Finger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
-    
-    (Note: The Gold Finger attack is named after the famous villain in the third James Bond 007 movie, who poisons the US gold supply to increase the value of his own assets.)
     
     
     
