@@ -301,6 +301,58 @@
  
  The current size of Bitcoin's blockchain is 122.7 gigabytes and growing. Miners, or ``full nodes'', are required to save the entire blockchain, but for the average user, such a requirement is not feasible if the aim is mass adoption. Enter \textbf{SPV (Simplified Payment Verification) nodes}, or ``thin'' clients. These nodes are designed to be lightweight, as their name implies. They only store the pieces of data needed to verify transactions that concern them, thus relieving the necessity to store the entire blockchain. Nearly all nodes in the Bitcoin network are SPV nodes because users are discouraged by the enormous download size. Those that do run full nodes exchange large amounts of storage and a high bandwidth for a shot at the block reward.
  
+ SPV nodes only keep the block headers of the blockchain. This is done by querying different full nodes until the SPV node has the longest chain. To validate an incoming transaction, an SPV node queries full nodes to get the Merkle branch for that transaction. Then, the node hashes the transaction together with intermediate hashes to obtain a Merkle root, which is cross checked with the Merkle root in the corresponding block header that the SPV node has locally. The only thing left to do after this point is to wait for the transaction to have enough confirmations (six) before delivering any goods.
+ 
+ \section*{SPV --- Security and Cost Analysis}
+ 
+ By definition, SPV nodes do not have a full transaction history, and do not know the UTXO set. Therefore, SPV nodes do not have the same level of security as full nodes. The reason is that SPV nodes cannot check if every transaction included in a block is actually valid.
+ 
+ One major assumption SPV nodes make in exchange for their light weight is that they assume incoming block headers are not a false chain. This is a fair assumption to make because block headers include the proof-of-work for each block, and it is very expensive for attackers to create blocks. Over the long term, as long as the majority of the network is honest, SPV nodes can safely assume that the longest chain is honest because malicious behavior is not sustainable. Another assumption is that there are other full nodes out in the network validating all transactions. It is often inefficient for big merchants to query remote full nodes to verify transactions. Instead, it makes sense to keep a full blockchain to run fast local checks. Lastly, SPV nodes also assume that miners ensure that the transactions they include in their bocks are valid. If a miner were to include an invalid transaction, after they find the proof-of-work for that block and propagate it, other full nodes would reject their block because of the invalid transaction. Thus, miners are well incentivized to make sure all transactions in their blocks are valid.
+ 
+ The storage tradeoff for running an SPV is huge. Bock headers are only around $\frac{1}{1000}$ the size of the full blockchain. This translates to ~123 MB vs. 123 GB. SPV nodes capitalize on obtaining data for verifying transactions lazily, relying on data from full nodes rather than keeping it locally. For most consumers and users of Bitcoin, SPV is a decent tradeoff.
+ 
+ % do more research on this
+ \section*{Flooding Algorithm}
+ 
+ We mentioned that SPV nodes query full nodes to get data on block headers. The mechanism through which an SPV node establishes connection to full nodes is worthy of analysis too, especially since we have been fairly hand-wavy when refering to the ``Bitcoin network.''
+ 
+ The Bitcoin network ensures that all nodes are equal; there exist no hierarchy of nodes or special nodes that have priority in any process: consensus, transactions, etc. The network is thus fully decentralized. The Bitcoin network is also defined by the property of random topology, meaning that each node in the network pairs with random nodes. Messages between nodes are generally taken as true, and the default behavior for nodes is to accept whichever message they hear about first, but this is not a strictly enforced rule in the network.
+ 
+ The process of joining the Bitcoin network is aided by the presence of hard-coded \textbf{seed nodes} in the Bitcoin software. The algorithm is as follows:
+ \begin{enumerate}
+     \item Pick a seed node and ask for its peers
+     \item Ask those peers for their peers, etc.
+     \item Eventually, you pick a random set of nodes to pair with. These nodes become your peers.
+ \end{enumerate}
+ 
+ In general, this type of message-sending schema is characterized by its pairwise connections, and is called a \textbf{flooding algorithm} or \textbf{gossip protocol}. The end goal is for the entire network to hear about a transaction. Consider a simple example with our favorite characters Alice and Bob:
+ 
+ \begin{enumerate}
+     \item Alice wants to pay Bob, so Alice first constructs a transaction and tells all of her peers
+     \item Her peers conduct checks on the transaction and if it passes, they relay the transaction to their peers
+     \item Each peer conducts checks such as the following: \begin{itemize}
+         \item Does the script for each previous output being redeemed return true?
+         \item Have all redeemed outputs not been spent?
+         \item Have I already seen this transaction? Do not relay it if so.
+         \item Only accept and relay ''standard scripts``: based off a small whitelist of scripts.
+     \end{itemize}
+     \item Eventually, the transaction makes it to Bob
+ \end{enumerate}
+ 
+ \section*{Bitcoin Relay Network}
+ 
+ One problem Bitcoin is currently facing is \textbf{mining pool centralization}. Miners are incentives to join large mining pools because smaller mining pools generally experience higher orphaning rates due to lesser hash power and network connectivity. Large pool on the other hand have lower block orphan rates becauses of the effects of \textbf{block propagation delays}.
+ 
+ One solution to this issue is the adoption of the \textbf{Bitcoin Relay Network}, also known as the Fast Relay Network. The idea is to serve a high speed ``railroad for block data.'' The design involves installing nodes in China/Asia, Europe, North America, etc., prioritizing first where the majority of miners are geographically located. Each of the nodes would have a fast internet connection, and would be able to relay data via compression and transmission via TCP to nearby miners. This would rapidly improve bock propagation speed, and thus reduce the number of orphaned blocks.
+ 
+ The problem with the Bitcoin Relay Network is that it relies on TCP as its connectivity protocol. TCP is susceptible to data loss. A sender might send $x$ number packets of data to a receiver, but not all $x$ may arrive. In the case where not all packets arrive, the receiver is notified, and can then ask to sender to resend the missing packets. This causes a round trip delay for the time-sensitive data.
+ 
+ \section*{FIBRE}
+ 
+ After realizing the problems with the Bitcoin Relay Network, developers conceptualized \textbf{FIBRE (Fast Internet Bitcoin Relay Engine)}. Problems with the Bitcoin Relay Network boiled down to its reliance on TCP, which only implements error correction at the IP leve. It uses ARQ (Automatically Repeat Request) to fix errors, which requires another round trip from receiver to sender, back to the receiver.
+
+ 
+ 
     
     
     
