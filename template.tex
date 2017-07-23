@@ -1,79 +1,12 @@
-\documentclass[11pt]{article}
+\documentclass[full.tex]{subfiles}
 
-\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,mathtools}
-\usepackage{titleps}
-\usepackage[left=1.00in,right=1.00in,top=0.75in,bottom=1.50in]{geometry}
-\usepackage{graphicx}
 
 % change this line
 \graphicspath{ {assets/note___/} }
 
-% start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
-\newcommand{\pdfinlimg}[5]{
-\makebox[#1cm][l]{\immediate\pdfliteral{
-  q
-  #3 0 0 #4 0 0 cm
-  #1 0 0 #2 0 0 cm
-  0.885 0 0 0.885 0 0 cm 
-  BI
-  /W #3
-  /H #4
-  /CS /RGB
-  /BPC 8
-  /F [ /AHx /Fl ]
-  ID
-  #5>
-  EI
-  Q
-}\vbox to #2cm{}}
-}
-% end pdfinlimg
-
-% BEGIN PARAGRAPH STUFF
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
- 
-\setlength{\parindent}{4em}
-% \setlength{\parskip}{1em}
-\renewcommand{\baselinestretch}{1}
-% END PARAGRAPH STUFF
-
-% useful commands
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-
-\newpagestyle{footers} {
-    \sethead{}{}{}
-    \setfoot{\small Intro to Crypto and Blockchain, Note \notenum}{\thepage}{\small Lin, Akhtar}
-    \footskip = 45pt
-}
-
-\fancypagestyle{firstpage} {
-    \vspace*{3\baselineskip}
-    \footskip = 0pt
-    \renewcommand{\headrulewidth}{6pt}
-    \chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
-    \lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
-    Introduction to Cryptocurrencies and Blockchain 
-    \\ Lin, Akhtar}
-    \rhead{\huge \fontfamily{lmdh}\selectfont    Note \notenum}
-    \lfoot{\small Intro to Crypto and Blockchain, Note \notenum}
-    \rfoot{\small Lin, Akhtar}
-}
-    
-\sectionfont{\Large\fontfamily{lmdh}\selectfont}
-
-% for initial paragraph indent
-\usepackage{indentfirst}
-
-% UPDATE THIS FOR EVERY NEW NOTE
-\newcommand{\notenum}{NUMBER HERE}
-
-\pagestyle{footers}
-
 \begin{document}
     \thispagestyle{firstpage}
-    \vspace*{2\baselineskip}
+    \vspace*{3\baselineskip}
     \section*{SECTION HEADER HERE}
     text
     

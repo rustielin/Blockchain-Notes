@@ -1,79 +1,13 @@
-\documentclass[11pt]{article}
+\documentclass[full.tex]{subfiles}
 
-\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,mathtools}
-\usepackage{titleps}
-\usepackage[left=1.00in,right=1.00in,top=0.75in,bottom=1.50in]{geometry}
-\usepackage{graphicx}
 
 % change this line
 \graphicspath{ {assets/note5/} }
 
-% start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
-\newcommand{\pdfinlimg}[5]{
-\makebox[#1cm][l]{\immediate\pdfliteral{
-  q
-  #3 0 0 #4 0 0 cm
-  #1 0 0 #2 0 0 cm
-  0.885 0 0 0.885 0 0 cm 
-  BI
-  /W #3
-  /H #4
-  /CS /RGB
-  /BPC 8
-  /F [ /AHx /Fl ]
-  ID
-  #5>
-  EI
-  Q
-}\vbox to #2cm{}}
-}
-% end pdfinlimg
-
-% BEGIN PARAGRAPH STUFF
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
- 
-\setlength{\parindent}{4em}
-% \setlength{\parskip}{1em}
-\renewcommand{\baselinestretch}{1}
-% END PARAGRAPH STUFF
-
-% useful commands
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
-
-\newpagestyle{footers} {
-    \sethead{}{}{}
-    \setfoot{\small Intro to Crypto and Blockchain, Note \notenum}{\thepage}{\small Lin, Akhtar}
-    \footskip = 45pt
-}
-
-\fancypagestyle{firstpage} {
-    \vspace*{3\baselineskip}
-    \footskip = 0pt
-    \renewcommand{\headrulewidth}{6pt}
-    \chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
-    \lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
-    Introduction to Cryptocurrencies and Blockchain 
-    \\ Lin, Akhtar}
-    \rhead{\huge \fontfamily{lmdh}\selectfont    Note \notenum}
-    \lfoot{\small Intro to Crypto and Blockchain, Note \notenum}
-    \rfoot{\small Lin, Akhtar}
-}
-    
-\sectionfont{\Large\fontfamily{lmdh}\selectfont}
-
-% for initial paragraph indent
-\usepackage{indentfirst}
-
-% UPDATE THIS FOR EVERY NEW NOTE
-\newcommand{\notenum}{5}
-
-\pagestyle{footers}
 
 \begin{document}
     \thispagestyle{firstpage}
-    \vspace*{2\baselineskip}
+    \vspace*{3\baselineskip}
     \section*{Cryptocurrency Mining: Proof-of-Work Consensus}
     
     Bitcoin mining is the process through which new bitcoins enter the network and is also what keeps the network healthy and resistant to malicious parties---an arms race that rewards those who invest the most into their hardware. But why do miners mine? What incentives do they have, and most importantly, is it profitable? In this section, we will explain in depth the design and mechanics behind Bitcoin mining, taking into account various mining incentives.
@@ -101,69 +35,74 @@
     
     \section*{Block Difficulty --- Puzzle Prerequisites}
     
-    Instead of blindly throwing darts at a dartboard, mining in Bitcoin involves solving a hash puzzle that results in a valid block. Miners race each other to find a nonce that makes the following inequality true:
-    $$H\big(nonce~||~H(previous~block~header)~||~merkle~root\big)~<~target$$
+    Instead of blindly throwing darts at a dartboard, mining in Bitcoin involves solving a \textbf{hash puzzle} that results in a valid block. Miners race each other to find a nonce that makes the following inequality true:
+    $$H\big(nonce~||~H(previous~block~header)~||~Merkle~root\big)~<~target$$
     
     Hash puzzles need to be computationally difficult. If finding the proof-of-work required little work, then reaching consensus would be difficult (See Note 4). This is why in the analogy, we blindfolded the dart-throwers. Hash puzzles also must have a variable cost, allowing for adjustments as the global hashrate increases. Finally, hash puzzles should be easily verifiable by all other nodes in the network. There should not be a need for a central authority to verify nonce validity. Every miner simply rehashes the nonce to verify validity. In the dart analogy, darts stick to the dartboard, so to verify, others simply have to take their blindfolds off to verify.
     
     \section*{Block Difficulty --- Adjustment}
     
-    \noindent The following is the equation to adjust the difficulty of the hash puzzle used in Bitcoin:
-    
+    \noindent The following is the equation to adjust the \textbf{difficulty} of the hash puzzle used in Bitcoin:
     $$\mathit{difficulty}~=~\mathit{difficulty~*~two\_weeks~/~time\_to\_mine\_prev\_2016\_blocks}$$
     
-    We use the ratio between two weeks and the time to mine 2016 blocks because the target block time is 10 minutes. 
-    
+    \noindent We use the ratio between two weeks and the time to mine 2016 blocks because the target block time is 10 minutes:
     $$\mathit{2016~blocks~*~10~\frac{min}{block}=20160~min=2~weeks}$$
     
     If the time to mine 2016 blocks is greater than two weeks, then the hash puzzle is too hard. The ratio is less than 1, so the difficulty scales down. If the time to mine 2016 blocks is less than two weeks, then the hash puzzle is too easy. The ratio is greater than 1, so the difficulty scales up. The block difficulty is always inversely proportional to the time required to mine the previous 2016 blocks.
     
     \section*{How to Profit From Mining}
     
-    For the Bitcoin miner, the following equations are true.
+    \noindent For the Bitcoin miner, the following equations are true.
     \begin{align*}
         \begin{split}
-            MINING\_REWARD~&=~BLOCK\_REWARD~+~TX\_FEES \\
-            MINING\_COST~&=~HARDWARE\_COST~+~OPERATING\_COSTS
+            \mathit{MINING\_REWARD}~&=~\mathit{BLOCK\_REWARD~+~TX\_FEES} \\
+            \mathit{MINING\_COST}~&=~\mathit{HARDWARE\_COST~+~OPERATING\_COSTS}
         \end{split}
     \end{align*}
     
-    If mining rewards exceed mining costs, then a Bitcoin miner will profit. In the next sections, we will analyze each of the components in the above equations.
+    \noindent If mining rewards exceed mining costs, then a Bitcoin miner will profit. In the next sections, we will analyze each of the components in the above equations.
     
     \section*{Block Reward}
     
-    A Bitcoin miner receives bitcoin for every confirmed block. Currently, the block reward is 12.5 BTC per block. The potential for profit (finding the proof-of-work first, broadcasting it, and getting it confirmed for block reward) provides incentive for honest behavior in the Bitcoin network. To receive the block reward, the miner must include a special transaction back to themselves, called the coinbase transaction. The block reward in the coinbase transaction is designed to half every 210,000 blocks. This is done to cap the total number of bitcoin that will ever be produced. There is a finite number of bitcoin, and by the year 2140, there will be 21,000,000 BTC (the supply cap.)
+    A Bitcoin miner receives bitcoins for producing valid blocks. As of July $23^{rd}$ 2017, the block reward is 12.5 BTC per block. Potential profit incentivizes honest behavior. The Bitcoin protocol requires finding the proof-of-work first, broadcasting the associated block, and awaiting confirmation to receive a \textbf{block reward}. In a block, the miner must include a special transaction to themselves, known as the \textbf{coinbase transaction}. The block reward halves every 210,000 blocks to cap the total number of bitcoins that will ever be produced. In other words, Bitcoin is a \textbf{deflationary} currency, topping off in 2140 at 21,000,000 BTC (the supply cap).
     
-    \includegraphics[scale=0.4]{supply_cap} \\
-    
+    \includegraphics[scale=0.33]{supply_cap}
     \section*{Transaction Fees}
     
-    The creator of a transaction sets the transaction fee. This is done voluntarily, but is practically necessary since it provides miners incentive to include the transaction above other transactions with high transaction fees. In practice, a higher transaction fee leads to a faster confirmation time. Transaction fees are a source of extra income for miners on top of the block reward, and are increasingly important as block reward diminishes over time. When block reward inevitably becomes 0, transaction fees will become the primary source of revenue for miners. To calculate transaction fee, simply subtract the output from the input amounts for the transaction. The difference implicitly becomes the transaction fee. 
+    The creator of a transaction sets the transaction fee, a voluntary but practically necessary incentivize miners into prioritizing your transaction. In practice, a higher transaction fee leads to a faster confirmation time. Transaction fees provide extra income to miners on top of the block reward, increasingly important as block rewards diminish. When the block reward becomes 0, transaction fees will become the sole source of revenue for miners. To calculate transaction fees, simply subtract the output from the input amounts for the transaction. The difference implicitly becomes the transaction fee. 
+    \begin{center}
+    \includegraphics[scale=0.22]{transaction_fee}
+    \end{center}
     
-    \includegraphics[scale=0.2]{transaction_fee} \\
-    
-    In the figure above, the input is 5 BTC and the output is 4.8 BTC. The creator of this bitcoin transaction has included an implicit transaction fee of 0.2 BTC that is to be collected by the miner who includes this transaction in the block that is confirmed by the rest of the network.
+    In the figure above, the input is 5.0 BTC and the output is 4.8 BTC. The creator of this bitcoin transaction has included an implicit transaction fee of 0.2 BTC that is to be collected by the miner who includes this transaction in the block that is confirmed by the rest of the network.
 
     \section*{Hardware Cost}
     
-    In the beginning, most Bitcoin mining was done on CPUs. As the block difficulty increased however, mining efforts have shifted quite dramatically first to GPUs, then to FPGAs, and finally ASICs. CPU mining was accessible to anyone who wanted to try out the Bitcoin core software. Keep in mind that hardware costs are fixed, unlike everything else we have mentioned. 
+    Bitcoin mining began on CPUs. As the block difficulty increased, mining efforts shifted dramatically: first to GPUs, then to FPGAs, and finally to ASICs. (Keep in mind that hardware costs are a one-time expense, unlike everything else we have mentioned.)
     
-    As commonly used CPUs began to get too slow for the block difficulty, GPU mining began to gain popularity. GPUs are an order of magnitude faster than CPUs in terms of hash power. However, this implies a larger consumption of energy and higher production of heat. GPU mining was most common around 5 years ago (2012), but as of now is not a viable solution for mining Bitcoin. (GPU mining is viable for Zcash on the other hand.) There were two main disadvantages to GPU mining:
+    As commonly used CPUs began to get too slow for the block difficulty, GPU mining began to gain popularity. GPUs are an order of magnitude more effective for hashing than CPUs. However, with more power comes more expense: a larger consumption of energy and higher production of heat. GPU mining was most common around 2012, but as of now is not viable for mining Bitcoin. (GPU mining is viable for Zcash, Ethereum, and some other cryptocurrencies on the other hand.) GPU mining brought two main disadvantages:
     
     \begin{enumerate}
-        \item GPUs have many components (like floating point units) that are not applicable to Bitcoin mining.
+        \item GPUs have many components (like floating point units) not applicable to Bitcoin mining.
         \item GPUs are not meant to be run in ``farms'' side by side.
     \end{enumerate}
     
-    The disadvantages of GPU mining made it clear that there needed to be a switch to mining specific hardware.
+    The disadvantages of GPU mining made clear the need to switch to mining specific hardware.
     
-    \textbf{FPGAs (Field Programmable Gate Arrays)} were the result of early efforts to develop Bitcoin-specific hardware without losing all hardware customizability. It was essentially a trade-off between dedicated, specialized hardware to run only SHA-256, and more general purpose hardware. The reason that FPGAs seemed like such a compromise in hardware composition is because of lingering mistrust in the Bitcoin software. If Bitcoin failed, SHA-256 specific hardware would be worthless, but general purpose hardware would still be useful. However, if Bitcoin thrives, specialized hardware for churning out SHA-256 calculations would generate higher profit than generalized hardware.
+    \textbf{FPGAs (Field Programmable Gate Arrays)} were the result of early efforts to develop Bitcoin-specific hardware without losing all hardware customizability, a trade-off between dedicated, specialized hardware and general purpose functionality. If Bitcoin failed, SHA-256 specific hardware would be worthless, but general purpose hardware would still be useful. However, if Bitcoin thrives, specialized hardware for churning out SHA-256 calculations would generate higher profit than generalized hardware. Hence, compromise.
     
-    As Bitcoin continued to gain popularity, general purpose hardware was dropped altogether to create the first \textbf{ASICs (Application-Specific Integrated Circuits)}. ASICs do nothing but SHA-256, but does it better than any other hardware in the market. There are a huge variety of ASICs currently in the market, each with various tradeoffs. One obvious tradeoff is between base cost and electricity usage; this depends on how often the ASIC is to be run. Another is device size and hashrate; larger devices take up more space and user more electricity, but have a higher overall hashrate. Also, manufacturing ASICs takes large upfront capital, which induces centralization --- a tradeoff with Bitcoin's core decentralized philosophy. Currently, the most effective ASIC is the Antminer 29, which can output 14 TH/s, for the steep price of 3000 USD.
+    As Bitcoin rose in popularity, general purpose hardware was dropped altogether by many to create the first \textbf{ASICs (Application-Specific Integrated Circuits)}. ASICs for Bitcoin do nothing but SHA-256, but they do it better than any other hardware. ASICs, a diverse breed, come with various tradeoffs,  one of which is between base cost and electricity usage, depending on how efficiently it uses energy. Another is device size and hashrate, as larger devices take up more space and use more electricity but have a higher overall hashrate. Also, manufacturing and purchasing ASICs takes large upfront capital, which induces centralization---a tradeoff with Bitcoin's core decentralized philosophy. Currently, the Antminer 29 holds the title of ``Most Powerful ASIC," maxing out at 14 TH/s, purchasable for the steep price of 3000 USD.
     
     \section*{Operating Costs}
     
-    When considering the cost to operate Bitcoin mining equipment, it is useful to categorize cost into three primary categories. \textbf{Embodied energy} is the energy used to produce mining hardware. \textbf{Electricity} is used to power the hardware, and energy for \textbf{cooling} is required to maintain hardware health. All energy is converted to heat, which generally dissipates in the air and is wasted. However, there are initiatives to recapture heat generated from operating mining hardware. The ``data furnace'' is an idea that involves using mining hardware as a heater. An average household could mine bitcoin during the winter, heating up their home with left over thermal energy from mining equipment, and earning a little profit on the side too. 
+     \noindent Bitcoin mining operating costs fall into into three primary categories:
+     \begin{itemize}
+        \item \textbf{Embodied energy:} to produce mining hardware. 
+        \item \textbf{Electricity:} to power the hardware. 
+        \item \textbf{Cooling:} to maintain hardware health. 
+    \end{itemize}
+    
+    All energy turns into heat, dissipating into the air without serving any further purpose. Over the years, initiatives arose to reuse heat generated by operating mining hardware. The ``data furnace'' idea involves using mining hardware as a heater. An average household could mine bitcoin during the winter, heating up their home with left over thermal energy from mining equipment, and earning a little profit on the side too. 
     
     \section*{ASIC-Resistance --- Pros and Cons}
     
@@ -220,7 +159,7 @@
     % BEGIN KEY TERMS
     \newpage
     \thispagestyle{firstpage}
-    \vspace*{2\baselineskip}
+    \vspace*{3\baselineskip}
     \section*{Key Terms}
     \noindent A collection of terms mentioned in the note which may or may not have been described. Look to external sources for deeper understanding of any non-crypto/blockchain terms.
     \begin{enumerate}
