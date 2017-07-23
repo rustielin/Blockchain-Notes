@@ -7,6 +7,5 @@ Note: This project is currently undergoing active development on ShareLatex. Upd
 ![for the love of blockchain](/assets/misc/everyone_blockchain.jpg)
 
 ## TODO
-* Note 3 revisions
-* Fill in missing key term definitions
-* Note 4 rough
+* Fill in missing key term definitions for Note 4 and 5
+* Note 6 rough

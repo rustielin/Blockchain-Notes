@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath,amssymb,amsthm,setspace,tabto,fancyhdr,sectsty,mathtools}
+\usepackage{titleps}
+\usepackage[left=1.00in,right=1.00in,top=0.75in,bottom=1.50in]{geometry}
+\usepackage{graphicx}
+
+% change this line
+\graphicspath{ {assets/note6/} }
+
+% start pdfinlimg (GPLv3, https://github.com/zerotoc/pdfinlimg/blob/master/pdfinlimg.sty)
+\newcommand{\pdfinlimg}[5]{
+\makebox[#1cm][l]{\immediate\pdfliteral{
+  q
+  #3 0 0 #4 0 0 cm
+  #1 0 0 #2 0 0 cm
+  0.885 0 0 0.885 0 0 cm 
+  BI
+  /W #3
+  /H #4
+  /CS /RGB
+  /BPC 8
+  /F [ /AHx /Fl ]
+  ID
+  #5>
+  EI
+  Q
+}\vbox to #2cm{}}
+}
+% end pdfinlimg
+
+% BEGIN PARAGRAPH STUFF
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+ 
+\setlength{\parindent}{4em}
+% \setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1}
+% END PARAGRAPH STUFF
+
+% useful commands
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newpagestyle{footers} {
+    \sethead{}{}{}
+    \setfoot{\small Intro to Crypto and Blockchain, Note \notenum}{\thepage}{\small Lin, Akhtar}
+    \footskip = 45pt
+}
+
+\fancypagestyle{firstpage} {
+    \vspace*{3\baselineskip}
+    \footskip = 0pt
+    \renewcommand{\headrulewidth}{6pt}
+    \chead{\rule{\textwidth}{6pt} \vspace{20pt}\\}
+    \lhead{\setstretch{1.05}\Large\fontfamily{lmdh}\selectfont
+    Introduction to Cryptocurrencies and Blockchain 
+    \\ Lin, Akhtar}
+    \rhead{\huge \fontfamily{lmdh}\selectfont    Note \notenum}
+    \lfoot{\small Intro to Crypto and Blockchain, Note \notenum}
+    \rfoot{\small Lin, Akhtar}
+}
+    
+\sectionfont{\Large\fontfamily{lmdh}\selectfont}
+
+% for initial paragraph indent
+\usepackage{indentfirst}
+
+% UPDATE THIS FOR EVERY NEW NOTE
+\newcommand{\notenum}{6}
+
+\pagestyle{footers}
+
+\begin{document}
+    \thispagestyle{firstpage}
+    \vspace*{2\baselineskip}
+    \section*{Game Theory \& Network Attacks: How to Destroy Bitcoin}
+    
+    As with any other distributed network, the Bitcoin network is subject to a variety of attacks. In this note, we will take a closer look at potential attacks that could be used to take down the Bitcoin network. As we will find, destroying Bitcoin is actually fairly simple.
+    
+    \section*{Mining Pools}
+    
+    Recall the concept of mining pools, which allow individual miners to combine or `pool,' their computational power together. Mining pools are run by \textbf{pool managers} or \textbf{pool operators}. The pool manager usually takes a cut of the ming rewards first, and the rest is distributed to other nodes in the pool, usually depending on the amount of hash power these nodes offer. As a result, a miner can achieve a relatively stable profit. If the mining pool is large enough, an individual miner in the pool can expect profit from the block reward regularly, in proportion to their own hash power. In contrast, mining alone implies a higher variance in mining rewards; you can expect to not win the block reward the majority of the time, but when you do win, the payout is huge. Mining pools also lower the barrier of entry for new miners, democratizing the mining scene. Instead of having to purchase an array of ASICs, individuals can opt to participate in a mining pool. Additionally, mining pools are easily upgraded, since only the pool manager has to upgrade on behalf of the pool. Everyone else can continue contributing hash power as before.
+    
+    Although the idea of mining pools might seem enticing for the average miner, mining pools are actually detrimental overall to the health of the Bitcoin network. Mining pools are centralized, around one pool manager, and bring with them the security flaws of centralized systems. For example, the pool manager must be trusted to distribute block reward in a fair manner. Especially as mining pools grow larger, and represent the majority of total hash power, the Bitcoin network may not be as safe as we like to think.
+    
+    \section*{Mining Pools --- Example}
+    
+    We will now compare estimated profit for a solo miner versus a miner in a mining pool. Suppose you want to start mining today. The best ASIC on the market, the Antminer S9, costs \$2400, and has an average hash rate of 14 TH/s. Today's (July 21, 2017) total network hashrate is 6,478,893 TH/s. Buying an Antminer S9 would get you $\frac{14~TH/s}{6,478,893~TH/s} = 0.000216086\%$ of the network hashrate. The total amount of mining reward awarded every year is $1~yr * \frac{12.5~BTC}{10~min} = 657,000~BTC/yr$. According to the percentage of network hashrate you own, you would expect to get an annual reward of: $0.000216086\% * 657,000~BTC/yr = 1.42 BTC/yr$. 
+    
+    However as a solo miner, you can't assume that you will win block reward consistently, with low variance. A more accurate calculation would be to consider the expected number of blocks you will mine, not block reward, proportionate to your hash power. Given the percentage of total hash power you own, you can expect to mine one block every 462,779 blocks. This translates to \textit{one block, 12.5 BTC, every 3214 days (8.8 years)}. This payout is way too infrequent.
+    
+    Now consider the case for mining pools. Assume the mining pool has 1/6th of the network hash rate. The pool would find every 6th block. We simply divide our expected annual reward, based on the proportion of hash power we own, with 8760 hours in a year to get the hourly rate. $1.42~BTC/yr~/~(8760~hr/yr) = 0.000162~BTC/hr$. 
+    
+    At today's exchange rate, 1 BTC = 2771.92 USD. Solo mining would yield $34,649~USD/8.8~yr$, whereas mining with a large mining pool (assuming the pool has 1/6 of the network hashrate) yields a much more frequent payout of $0.45~USD/hr$.
+    
+    % BEGIN KEY TERMS
+    \newpage
+    \thispagestyle{firstpage}
+    \vspace*{2\baselineskip}
+    \section*{Key Terms}
+    \noindent A collection of terms mentioned in the note which may or may not have been described. Look to external sources for deeper understanding of any non-crypto/blockchain terms.
+    \begin{enumerate}
+        % edit within here
+        \item \textbf{VOCAB WORD} --- Definition. % format
+    \end{enumerate}
+    % END KEY TERMS
+\end{document}
