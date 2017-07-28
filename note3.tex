@@ -2,6 +2,8 @@
 
 
 \graphicspath{ {assets/note3/} }
+\newcommand{\notenum}{3}
+
 
 \begin{document}
     \thispagestyle{firstpage}
@@ -136,10 +138,10 @@
         \item \textbf{Cryptographic hash function} --- See Note 1.
         \item \textbf{Hot wallets} --- Online wallets, typically holding frequently exchanged and traded bitcoins. 
         \item \textbf{Key stretching} --- Repeated hashing of a private key in the public key generation process, as opposed to only using the hash function once.
-        \item \textbf{Multisignature addresses} --- Addresses that 
-        \item \textbf{Preimage resistance} --- 
-        \item \textbf{Second preimage resistance} --- 
-        \item \textbf{Wallet} --- 
+        \item \textbf{Multisignature addresses} --- Addresses associated with multiple keys, as opposed to a single private key, allowing multiple users to share an account or to produce backups. Most multisignature addresses do not only require a fraction of keys to validate a transaction, often 2-of-3 wallets.
+        \item \textbf{Preimage resistance} --- A property of cryptographic hash functions. In layman's terms, it is excrutiatingly difficult to create an inverse hash function that turns outputs to inputs.
+        \item \textbf{Second preimage resistance} --- Another property of cryptographic hash functions. In layman's terms, it is excrutiatingly difficult to find two inputs to a hash function which produce the same output.
+        \item \textbf{Wallet} --- A piece of software which, at a minimum, stores one's private key. For user convenience, hot wallets also store information about past available UTXOs and protocols for creating transactionss.
     \end{enumerate}
     % END KEY TERMS
 \end{document}

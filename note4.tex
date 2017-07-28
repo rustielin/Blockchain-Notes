@@ -1,6 +1,7 @@
 \documentclass[full.tex]{subfiles}
 
 \graphicspath{ {assets/note4/} }
+\newcommand{\notenum}{4}
 
 
 \begin{document}
@@ -10,23 +11,23 @@
     
     \section*{Bitcoin Mechanics and Optimizations}
     
-    After abstracting away Bitcoin features to understand Bitcoin's fundamental principles and design, it's time to dive into how Bitcoin works on a technical level. In this note, we will cover topics such as advanced Bitcoin mechanics, scripting, and network optimizations techniques. Through these topics, we intend on demonstrating that Bitcoin's design philosophy is as simple, robust, and conservative as possible.
+    After abstracting away Bitcoin features to focus on fundamental principles and design, it's time to dive into how Bitcoin works on a technical level. In this note, we will cover topics such as advanced Bitcoin mechanics, scripting, and network optimizations techniques. Through these topics, we intend on demonstrating that Bitcoin's design philosophy is as simple, robust, and conservative as possible.
     
      \section*{Double Spend --- Example}
  
-     To gain further intuition on Bitcoin consensus, it is important to understand how double spending works. Previously, we defined a ``double spend" as a circumstance in which a party successfully spends the same funds more than once. In real life, it's as if you used a single dollar bill in two separate purchases. Physically, it's impossible to double spend, but the virtual world creates issues. For example, if Alice wants to purchase something from Bob for 1.00 BTC, she can double spend by creating two transactions: send 1.00 BTC to Bob in one transaction, and 1.00 BTC to herself in another. The double spend is successful if the transaction to herself is the one accepted by the network, which will allow her to keep the money and fool Bob. Double spends are possible when a party gains more than 50\% of the network's hash power. Under the hood, there is a fairly involved process that results in the double spend.
+     To gain further intuition on Bitcoin consensus, let's understand once more the problem it solves: double spending. Previously, we defined a ``double spend" as a circumstance in which a party successfully spends the same funds more than once. In real life, it's as if you used a single dollar bill in two separate purchases. Physically, it's impossible to double spend, but the virtual world creates issues. For example, if Alice wants to purchase something from Bob for 1.00 BTC, she can double spend by creating two transactions: send 1.00 BTC to Bob in one transaction, and 1.00 BTC to herself in another. The double spend is successful if the transaction to herself is the one accepted by the network, which will allow her to keep the money and fool Bob. Double spends are possible when a party gains more than 50\% of the network's hash power. Under the hood, there is a fairly involved process that results in the double spend.
      
      \section*{Double Spend --- Confirmations}
      
-     A transaction's \textbf{confirmations} are defined as the blocks built off of the block containing the transaction. All transactions in the block at the tip of the blockchain have 0 confirmations, as there are no newer blocks yet. A transaction's confirmation quantity will be one less than the block depth: the most recent block is at depth 1 and has 0 confirmations, and every next block will increase both the depth and confirmations by one.
+     A transaction's \textbf{confirmations} are defined as the blocks built off of the block containing the transaction. All transactions in the block at the tip of the blockchain have 0 confirmations, as there are no newer blocks. A transaction's confirmations will be one less than the block depth: the most recent block is at depth 1 and has 0 confirmations, and every next block will increase both the depth and confirmations by one.
  
   \includegraphics[scale=0.5]{confirmations}
   
-  Because of the difficulty of finding the proof-of-work for each block, confirmations roughly determine the security of transactions. In order to double spend a transaction, one must calculate the proof-of-work for each block until their fork of the blockchain is the longest. In the diagram above, one would have to calculate 3 different proofs-of-work starting with the block with 2 confirmations, to reach the same height as the most recent block. This is also assuming that the double spender has a significantly higher hash rate than that of the rest of the network, which is working on the original blockchain.
+  Because of the difficulty of finding the proof-of-work for each block, confirmations represent the security and acceptance of transactions. In order to double spend a transaction, one must calculate the proof-of-work for each block until their fork of the blockchain is the longest. In the diagram above, one would have to calculate 3 different proofs-of-work starting with the block with 2 confirmations, to reach the same height as the most recent block. This is also assuming that the double spender has a significantly higher hash rate than that of the rest of the network, which is working on the original blockchain.
   
   What about transactions with no confirmations at all? Suppose Bob does not wait for \textit{any} confirmations on Alice's transaction. He simply checks that the transaction from Alice is valid, and \textit{immediately} sends Alice the product he is selling. Since there are no confirmations on Bob's transaction, Bob is vulnerable to a \textbf{race attack}. Alice can send a competing transaction to herself at the same time she sends Bob the legitimate transaction. Alice can then broadcast the transaction to the entire network. The false, conflicting transaction Alice sends is propagated much faster than the single transaction she sends to Bob, so there is a high likelihood that one of the Alice's conflicting transactions will be mined into a block and accepted by the network as genuine. Alice can also increase the block fee for the transaction to provide more incentive for miners to include the illegitimate transaction into their blocks. In this case, merchant Bob's waiting for 0 transactions makes him vulnerable to anyone that wants to steal goods. 
   
-  On the other hand, in the case that Bob waits for more than 1 confirmation ($z$ confirmations), Alice can still double spend, but the process is more involved. Say Alice sends Bob a transaction, and Bob waits $z$ confirmations before he sends the goods to Alice. In order to double spend on Bob, Alice must mine on her own private chain, one that does not have the transaction that sent bitcoin from Alice to Bob; Alice can send the same transaction to herself instead. She builds up an illegitimate transaction history such that she sends money to herself rather than to Bob. After mining $z$ blocks, and making sure that her chain is longer than any other chain, Alice can broadcast her chain (preferably after she receives the goods from Bob). The network will adopt Alice's chain over the previous chain because it is longer in length. In fact, it is proven that if Alice has greater than 50\% of the total hash power, then she can always have a longer, illegitimate chain. \\ \\
+  On the other hand, in the case that Bob waits for more than 1 confirmation ($z$ confirmations), Alice can still double spend, but the process is more involved. Say Alice sends Bob a transaction, and Bob waits $z$ confirmations before he sends the goods to Alice. In order to double spend on Bob, Alice must mine on her own private chain, one that does not have the transaction that sent bitcoin from Alice to Bob; Alice can send the same transaction to herself instead. She builds up an illegitimate transaction history such that she sends money to herself rather than to Bob. After mining $z$ blocks, and making sure that her chain is longer than any other chain, Alice can broadcast her chain (preferably after she receives the goods from Bob). The network will adopt Alice's chain over the previous chain because it is longer in length. In fact, it is proven that if Alice has greater than 50\% of the total hash power, then she can always generate a longer, illegitimate chain. \\ \\
  
    \includegraphics[scale=0.3]{z_confirmation} \\
    
@@ -43,10 +44,10 @@
    The probability, $q$, of Alice finding the next block is the complement of $p$. We calculate it as follows:
    
    \begin{equation*}
-       \begin{split*}
+       \begin{split}
            q = 1-p &= 1 - \frac{h_H}{h_A + h_H} \\
            &= \frac{h_A}{h_A + h_H}
-       \end{split*}
+       \end{split}
    \end{equation*}
    
    Consider the scenario in which the honest network mines $z$ blocks on top of Alice's transaction to him. Bob sees that there are $z$ confirmations, and then he sends the goods over to Alice. In the meantime, Alice has been hard at work mining on her own chain ever since sending her transaction over, in hopes of double spending on Bob. The expected number of blocks Alice would have mined after the $z$ confirmations is equal to:
@@ -107,19 +108,19 @@
     
     In reality, it is extremely costly, and approaching impossible, for Alice to own so much network hash power, especially given how vast the Bitcoin network is currently. Alice might not physically control the mining hardware necessary to perform a double spend, but she can definitely bribe other miners or even entire mining pools to mine on her chain. In the long run, it is guaranteed that Alice and her miners will profit, but the initial cost is extremely high.
     
-    \section*{Double Spend --- "Gold Finger" Attack}
+    \section*{Double Spend --- ``Gold Finger" Attack}
     
     There is actually a compelling reason as to why Alice would not want to double spend. If Alice does in fact succeed in a double spend, the rest of the network would be able to detect her double spend. Confidence in Bitcoin and the exchange rate would plummet as a result of the discovery of a security breach. Alice's bitcoin would then be worth a lot less, assuming Alice is staked in Bitcoin at the time. 
     
     If Alice is not staked in Bitcoin, she can short Bitcoin in order to profit after her double spend. Alice can short the exchange rate, and use that as collateral to buy, rent, or bribe miners, cashing out on the short.
     
-    One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Gold Finger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
+    One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Goldfinger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
     
     (Note: The Gold Finger attack is named after the famous villain Auric Goldfinger in the third James Bond movie, who poisons the US gold supply in Ft. Knox in an effort to make the gold worth less, and to increase the value of his own gold holdings.)
     
     \section*{Account vs Transaction Based Ledgers}
     
-    Consider the notion of \textbf{account based ledgers}. There are certain cryptocurrencies such as Ethereum which maintain account based ledgers. Each address in Ethereum has an account, and for a user to check how many tokens they have, they simply add the inputs and subtract the outputs. The downside to this method is that the system must track every single transaction that has ever affected that one account. Scaling this to many thousands of users, this method could be a performance issue. One way to fix this huge amount of data is to 'prune' away old transaction history so that the user does not have to deal with old transaction data. This method has proven to be error-prone however, due to the additional block maintenance that is required. 
+    Consider the notion of \textbf{account-based ledgers}. There are certain cryptocurrencies such as Ethereum which maintain account based ledgers. Each address in Ethereum has an account, and for a user to check how many tokens they have, they simply add the inputs and subtract the outputs. The downside to this method is that the system must track every single transaction that has ever affected that one account. Scaling this to many thousands of users, this method could be a performance issue. One way to fix this huge amount of data is to 'prune' away old transaction history so that the user does not have to deal with old transaction data. This method has proven to be error-prone however, due to the additional block maintenance that is required. 
     
     On the contrary, Bitcoin is a \textbf{transaction-based ledger} (known as triple-entry accounting.) Users are always spending from previous outputs. As we mentioned in Note 2, UTXOs (unspent transaction outputs) can only be spent once, so Bitcoin has change addresses. By restricting UTXO usage and introducing the concept of change addresses, Bitcoin has a very efficient verification system. To determine how many tokens a user has, simply total the amounts associated with their recent UTXOs. The state of the Bitcoin network is only dependent on the most recent history. Bitcoin also supports joint payments, so that a transaction can have multiple inputs -- for example if Alice and Bob both want to pitch in to spend a total of 1.00 BTC. In practice, this feature is rarely used but is supported nonetheless.
     
@@ -297,6 +298,7 @@
     \noindent A collection of terms mentioned in the note which may or may not have been described. Look to external sources for deeper understanding of any non-crypto/blockchain terms.
     \begin{enumerate}
         % edit within here
+        % confirmations, race attack, Gambler's Ruin, Goldfinger Attack, account-based ledger, transaction-based ledger, scriptSigs, scriptPubKeys, Script, proof-of-burn, P2PKH, P2SH, SPV, seed nodes, flooding algorithm, gossip protocol, mining pool centralization, block propagation delays, Bitcoin Relay Network, FIBRE
         \item \textbf{VOCAB WORD} --- Definition. % format
     \end{enumerate}
     % END KEY TERMS
