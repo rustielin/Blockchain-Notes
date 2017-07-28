@@ -9,3 +9,4 @@ Note: This project is currently undergoing active development on ShareLatex. Upd
 ## TODO
 * Fill in missing key term definitions for Note 4 and 5
 * Note 6 rough
+* Note 5 merge mining is **not accurate**
