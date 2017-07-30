@@ -108,7 +108,7 @@
     
     In reality, it is extremely costly, and approaching impossible, for Alice to own so much network hash power, especially given how vast the Bitcoin network is currently. Alice might not physically control the mining hardware necessary to perform a double spend, but she can definitely bribe other miners or even entire mining pools to mine on her chain. In the long run, it is guaranteed that Alice and her miners will profit, but the initial cost is extremely high.
     
-    \section*{Double Spend --- ``Gold Finger" Attack}
+    \section*{Double Spend --- ``Goldfinger" Attack}
     
     There is actually a compelling reason as to why Alice would not want to double spend. If Alice does in fact succeed in a double spend, the rest of the network would be able to detect her double spend. Confidence in Bitcoin and the exchange rate would plummet as a result of the discovery of a security breach. Alice's bitcoin would then be worth a lot less, assuming Alice is staked in Bitcoin at the time. 
     
@@ -116,7 +116,7 @@
     
     One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Goldfinger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
     
-    (Note: The Gold Finger attack is named after the famous villain Auric Goldfinger in the third James Bond movie, who poisons the US gold supply in Ft. Knox in an effort to make the gold worth less, and to increase the value of his own gold holdings.)
+    (Note: The Goldfinger attack is named after the famous villain Auric Goldfinger in the third James Bond movie, who poisons the US gold supply in Ft. Knox in an effort to make the gold worth less, and to increase the value of his own gold holdings.)
     
     \section*{Account vs Transaction Based Ledgers}
     
@@ -174,34 +174,34 @@
      \item plus a $<$sig$>$ from the owner of that $<$pubKey$>$, which will make the output script evaluate to true."
  \end{enumerate}
  
- \section*{Proof of Burn}
+ \section*{Proof-of-Burn}
  
  One application of Bitcoin scripting is to implement something known as a \textbf{proof-of-burn}, which allows a user to prove the existence of some data in exchange for destroying bitcoin. There exists an instruction named OP\_RETURN that throws an error when reached, stopping code execution. By placing this instruction anywhere in an output script before the script returns either true or false, we can effectively make it so that no one can redeem that output. We have \textit{burned} that coin. Anything that exists after the OP\_RETURN will never be executed, but this allows us to prove its existence cryptographically.
  
  \includegraphics[scale=1]{burn_script} \\
  
- As seen in the sample script above, as long as we're willing to burn coin, we can prove the existence of anything at a particular point in time. This would be a word you coined, a hash of a document, music, your creative works, etc. If Alice stores a hash of a word she coined in the blockchain via proof-of-burn, she could then show everyone that "Alice coined word asdf at time 12345." Any data stored in this way in the blockchain is valid because blocks are timestamped. This is especially true when considering that the blockchain is provably immutable with honest actors. There have also been instances of burning bitcoin to bootstrap the value of other cryptocurrencies. To bootstrap an imaginary SuperAwesomeCoin, Super Awesome Bob could require users to burn bitcoin in order to get superAwesomeCoin. 
+ As seen in the sample script above, as long as we're willing to burn coin, we can prove the existence of anything at a particular point in time. This would be a word you coined, a hash of a document, music, your creative works, etc. If Alice stores a hash of a word she coined in the blockchain via proof-of-burn, she could then show everyone that ``Alice coined word asdf at time 12345." Any data stored in this way in the blockchain is valid because blocks are timestamped. This is especially true when considering that the blockchain is provably immutable with honest actors. There have also been instances of burning bitcoin to bootstrap the value of other cryptocurrencies. To bootstrap an imaginary SuperAwesomeCoin, Super Awesome Bob could require users to burn bitcoin in order to get superAwesomeCoin. 
  
  \section*{Pay-to-PubKey-Hash vs Pay-to-Script-Hash}
  
- The previous example of requiring a public key and a signature in order to spend from a transaction output script is a use case of \textbf{P2PKH (pay-to-pubkey-hash)}, in which the vendor says "send your coins to the hash of this public key." This scheme represents the simplest and by far the most common case of transaction.
+ The previous example of requiring a public key and a signature in order to spend from a transaction output script is a use case of \textbf{P2PKH (pay-to-pubkey-hash)}, in which the vendor says ``send your coins to the hash of this public key." This scheme represents the simplest and by far the most common case of transaction.
  
  However, for more complicated scripts, such as those which require multiple signature verification, P2PKH no longer works. For instance, if a merchant wants Alice to send coin payment to an output that allows the merchant to spend using multiple signatures, how would Alice know how to specify such a complicated script?
  
  The solution is to use a \textbf{pay-to-script-hash (P2SH)}. To clarify, consider following general cases:
  
  \begin{itemize}
-     \item P2PKH: ``Send your coins to the hash of this \underline{public key}''
-     \item P2SH: ``Send your coins to the hash of this \underline{script}. To redeem those coins, you must reveal the script that has the given hash and provide \underline{data} that will make the script evaluate to true.''
+     \item P2PKH: ``Send your coins to the hash of this \underline{public key}."
+     \item P2SH: ``Send your coins to the hash of this \underline{script}. To redeem those coins, you must reveal the script that has the given hash and provide \underline{data} that will make the script evaluate to true."
  \end{itemize}
  
  One of the most important improvements to the Bitcoin protocol since its inception, P2SH offloads the burden of complicated script writing to recipients of a transaction. When a merchant wants to receive payments from a customer, they do not want to burden the customer with writing a complicated script that could potentially differ between merchants. Instead, the merchant alone is responsible for writing a correct and secure script for the transaction. Likewise, the optimal customer experience is one in which the customer does not have to care about what the script actually is. They should not have to know anything about the company stores funds; customers should just have to create a transaction, pay, and leave.
  
  \section*{Merkle Trees}
  
- Let's take a deeper dive into the specifics of merkle trees, which we briefly touched upon in note 2. As review, merkle trees are inary trees of hash pointers. Blobs of transaction data are hashed together, then their hashes are hashed together, until one element remains --- the merkle root. (Note: Merkle trees are always full. If there are gaps, duplicate the last transaction to fill in the gaps.)
+ Let's take a deeper dive into the specifics of Merkle trees, which we briefly touched upon in note 2. As review, merkle trees are inary trees of hash pointers. Blobs of transaction data are hashed together, then their hashes are hashed together, until one element remains---the Merkle root. (Note: Merkle trees are always full. If there are gaps, duplicate the last transaction to fill in the gaps.)
  
- Because outputs of cryptographic hash functions are unique, by \underline{second preimage resistance}, merkle trees are very efficient. Just from analyzing the merkle root, it is possible to prove that the merkle tree, a large string of data, contains a certain substring. To prove inclusion of data in the merkle tree, one must provide root data and intermediate hashes. Then, once hashing everything together in order, one would compare the final hash to the merkle root. To take this proof, one would need to find hash preimages that hash to valueus in the merkle tree. As discussed earlier, second preimage resistance makes faking proofs in merkle trees extremely difficult and practically impossible.
+ Because outputs of cryptographic hash functions are unique, by \underline{second preimage resistance}, Merkle trees are very efficient. Just from analyzing the Merkle root, it is possible to prove that the merkle tree, a large string of data, contains a certain substring. To prove inclusion of data in the merkle tree, one must provide root data and intermediate hashes. Then, once hashing everything together in order, one would compare the final hash to the merkle root. To take this proof, one would need to find hash preimages that hash to valueus in the merkle tree. As discussed earlier, second preimage resistance makes faking proofs in merkle trees extremely difficult and practically impossible.
 
  \includegraphics[scale=0.4]{merkle_proof} \\
  
@@ -298,8 +298,26 @@
     \noindent A collection of terms mentioned in the note which may or may not have been described. Look to external sources for deeper understanding of any non-crypto/blockchain terms.
     \begin{enumerate}
         % edit within here
-        % confirmations, race attack, Gambler's Ruin, Goldfinger Attack, account-based ledger, transaction-based ledger, scriptSigs, scriptPubKeys, Script, proof-of-burn, P2PKH, P2SH, SPV, seed nodes, flooding algorithm, gossip protocol, mining pool centralization, block propagation delays, Bitcoin Relay Network, FIBRE
-        \item \textbf{VOCAB WORD} --- Definition. % format
+        \item \textbf{Account-based ledger} --- Definition.
+        \item \textbf{Bitcoin Relay Network} --- Definition.
+        \item \textbf{Block propagation delays} --- Definition.
+        \item \textbf{Confirmations} --- Definition.
+        \item \textbf{Fast Internet Bitcoin Relay Engine (FIBRE)} --- Definition.
+        \item \textbf{Flooding algorithm} --- Definition.
+        \item \textbf{Gambler's Ruin} --- Definition.
+        \item \textbf{Goldfinger attack} --- Definition.
+        \item \textbf{Gossip protocol} --- Definition.
+        \item \textbf{Mining pool centralization} --- Definition.
+        \item \textbf{Pay to Public Key Hash (P2PKH)} --- Definition.
+        \item \textbf{Pay to Public Script (P2PS)} --- Definition.
+        \item \textbf{Proof-of-burn} --- Definition.
+        \item \textbf{Race attack} --- Definition.
+        \item \textbf{Seed node} --- Definition.
+        \item \textbf{Simplified Payment Verification (SPV)} --- Definition.
+        \item \textbf{Script} --- Definition.
+        \item \textbf{ScriptPubKeys} --- Definition.
+        \item \textbf{ScriptSigs} --- Definition.
+        \item \textbf{Transaction-based ledger} --- Definition.
     \end{enumerate}
     % END KEY TERMS
 \end{document}
