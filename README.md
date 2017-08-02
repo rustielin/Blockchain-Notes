@@ -8,6 +8,5 @@ Note: This project is currently undergoing active development on ShareLatex. Upd
 
 ## TODO
 * Fill in missing key term definitions for Note 4 and 5
-* Note 6 rough
-* Note 5: review info on merge mining
-* Update the preview PDF in archive
+* Note 6 revisions
+* Note 7 rough
