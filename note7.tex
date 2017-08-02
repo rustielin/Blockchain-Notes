@@ -1,0 +1,46 @@
+\documentclass[full.tex]{subfiles}
+
+
+% change this line
+\graphicspath{ {assets/note7/} }
+
+\begin{document}
+    \thispagestyle{firstpage}
+    \vspace*{2\baselineskip}
+    \section*{Ethereum and Smart Contracts: Enabling a Decentralized Future}
+    
+    In this note, we will go in depth into what Ethereum is, some technical details on its architecture, how the network and blockchain works, and how the EVM executes Ethereum smart contacts. We will then explore some use cases for Ethereum and see how the technology applies in the real world.
+    
+    Looking at articles on Ethereum as well as Ethereum's own website landing page, we often come across a plethora of ``buzzwords'' primarily used in publicity campaigns. Decentralized apps, smart contracts, DAOs, Bitcoin 2.0, etc. are all confusing buzzwords used to hype up Ethereum. Our first task will be to demystify Ethereum and to analyze how it works at a high level.
+    
+    \section*{What is Ethereum?}
+    
+    Looking at it from a very high level, \textbf{Ethereum} is a \textit{decentralized} platform designed to run smart contracts. Ethereum is decentralized in the same way Bitcoin is decentralized: there is no single point of control or failure, and the network is essentially censorship resistant since the resources required to do so would be immense. Additionally, Ethereum is an \textbf{account-based blockchain}, which differs from Bitcoin's UTXO model. It is also useful to think of Ethereum as a \textbf{distributed state machine} in which blocks of transactions are equivalent to state transition functions, which contain information on how to transition between blocks/states.
+    
+    Ethereum has a native asset called \textbf{ether}, which represents the basis of value in the Ethereum ecosystem. It is used to align the incentives of the various different types of nodes in the system: miners, full nodes, etc. Miners are rewarded in Ether for helping to secure the system once they find the proof-of-work and propagate the first valid block. 
+    
+    \section*{Ethereum vs. Bitcoin}
+    
+    Since we already know quite a lot about how Bitcoin works from previous notes, it is useful to draw comparisons between Bitcoin and Ethereum. Ethereum markets itself primarily as a smart contract platform. It is complex and feature-rich (we'll discuss this in later sections) and most importantly, features a Turing complete scripting language. Bitcoin on the other hand is a decentralized asset system primarily used to trade value between users, It is simple and robust. This extends even to its underlying scripting language (Script, or often times just the Bitcoin Scripting Language), which is simple and stack-based, and not at all Turing complete. Why having a Turing complete scripting language is important is because it allows Ethereum developers to define arbitrary computations and programs, all which run on the blockchain. What is important to note is that both Bitcoin and Ethereum have both decentralized assets and scripting languages. They are just designed differently to serve differnt use cases.
+    
+    The existence of ether is not actually a primary goal of Ethereum. It is used to align incentive within the network. From a game theroretical standpoint, it is important for users to have more incentive to act honestly than to cheat the system. In this way, because the ceators of Ethereum wanted miners to help secure the network via a Proof-of-Work consensus algorithm, they needed to incentivize miners with a block reward of ether. Ether is primarily traded between smart contracts. Another distinguishing factor between Ethereum and Bitcoin is that Ethereum plans to swap out its Proof-of-Work model for an alternative consensus algorithm called Proof-of-Stake, which rewards users for owning a particular percentage/stake of the entire network's capital. We'll go over alternative consensus protocols in a later note.
+    
+    In terms of implementation details, Ethereum has a target block creation time of about 12 seconds, compared with Bitcoin's 10 minute block creation time. For its version of the Proof-of-Work protocol, it uses Ethash over SHA-256 for its primary cryptographic hash function. Ethash is currently ASIC resistant, but whether or not it stays so in the future is up to debbate. At the time of writing (July 31, 2017), 1 ETH $\rightarrow$ 200 USD, while 1 BTC $\rightarrow$ 2847 USD.
+    
+    
+    \section*{}
+    
+    
+    
+    % BEGIN KEY TERMS
+    \newpage
+    \thispagestyle{firstpage}
+    \vspace*{2\baselineskip}
+    \section*{Key Terms}
+    \noindent A collection of terms mentioned in the note which may or may not have been described. Look to external sources for deeper understanding of any non-crypto/blockchain terms.
+    \begin{enumerate}
+        % edit within here
+        \item \textbf{VOCAB WORD} --- Definition. % format
+    \end{enumerate}
+    % END KEY TERMS
+\end{document}
