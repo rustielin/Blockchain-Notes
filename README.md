@@ -10,3 +10,4 @@ Note: This project is currently undergoing active development on ShareLatex. Upd
 * Fill in missing key term definitions for Note 4 and 5
 * Note 6 revisions
 * Note 7 rough
+* Fix footer position on "firstpage" fancypagestyles
