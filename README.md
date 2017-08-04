@@ -8,6 +8,7 @@ Note: This project is currently undergoing active development on ShareLatex. Upd
 
 ## TODO
 * Fill in missing key term definitions for Note 4 and 5
+* Revise Note 4's "Double Spend -- Confirmations"
 * Note 6 revisions
 * Note 7 rough
 * Fix footer position on "firstpage" fancypagestyles
