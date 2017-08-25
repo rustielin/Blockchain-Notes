@@ -1,7 +1,9 @@
 \documentclass[full.tex]{subfiles}
 
 \graphicspath{ {assets/note4/} }
-\newcommand{\notenum}{4}
+
+
+\providecommand{\notenum}{4}
 
 
 \begin{document}
@@ -23,50 +25,53 @@
  
   \includegraphics[scale=0.5]{confirmations}
   
-  Because of the difficulty of finding the proof-of-work for each block, confirmations represent security in acceptance. In order to double spend, one must procure two transactions:  the proof-of-work for each block until their fork of the blockchain is the longest. In the diagram above, one would have to calculate 3 different proofs-of-work starting with the block with 2 confirmations, to reach the same height as the most recent block. This is also assuming that the double spender has a significantly higher hash rate than that of the rest of the network, which is working on the original blockchain.
+%   Because of the difficulty of finding the proof-of-work for each block, confirmations represent security in acceptance. Most businesses await 6 confirmations before considering a transaction finalized. In order to double spend with this confirmation system, one must procure two transactions using the same source of funds, conventionally 1) to the targeted individual and 2) to themselves. Let's call these $TX_A$ and $TX_{A'}$ respectively. The attacker wants the other party to see $TX_A$ but wants $TX_{A'}$ to be the one included in the longest chain, tricking the other party into believing that they will receive funds. The attacker must propagate $TX_A$ to the network, assuming it will inevitably be included in a block, and locally generate the dubious $TX_{A'}$. The attacker will not send this second transaction to the network's \textbf{mempool} as it's being used by the attacker alone and would cause confusion should it enter the network and conflict with $TX_A$. They will include this second transaction in their own block which will be used to make a fork of the blockchain. From there, the attacker must find the proof-of-work for each block until their fork of the blockchain is the longest. In the diagram above, an attacker would have to find 3 different valid blocks and fork from this entire chain to reach the same height as the most recent block and invalidate the block holding $TX_A$. This assumes has a significantly higher hash rate than that of the rest of the network, which is working on the original chain. (There are tricks to conduct such an attack without a majority of the hash rate which will be introduced in the ``Game Theory" lecture and note.)
   
-  What about transactions with no confirmations at all? Suppose Bob does not wait for \textit{any} confirmations on Alice's transaction. He simply checks that the transaction from Alice is valid, and \textit{immediately} sends Alice the product he is selling. Since there are no confirmations on Bob's transaction, Bob is vulnerable to a \textbf{race attack}. Alice can send a competing transaction to herself at the same time she sends Bob the legitimate transaction. Alice can then broadcast the transaction to the entire network. The false, conflicting transaction Alice sends is propagated much faster than the single transaction she sends to Bob, so there is a high likelihood that one of the Alice's conflicting transactions will be mined into a block and accepted by the network as genuine. Alice can also increase the block fee for the transaction to provide more incentive for miners to include the illegitimate transaction into their blocks. In this case, merchant Bob's waiting for 0 transactions makes him vulnerable to anyone that wants to steal goods. 
+  Why do confirmations matter? Suppose Bob does not wait for any confirmations on Alice's transaction. He checks that the transaction from Alice is valid and \textit{immediately} sends Alice the product he is selling, such as if Alice were buying coffee at a cafe where waiting up to an hour for confirmations would inconvenience everyone involved. Since there are no confirmations on Bob's transaction, Bob is vulnerable to a \textbf{race attack}. Alice can send a competing transaction to herself at the same time she sends Bob the legitimate transaction, as previously mentioned. Alice can then broadcast the transaction to the entire network. The false, conflicting transaction Alice sends is propagated much faster than the single transaction she sends to Bob, so there is a high likelihood that one of the Alice's conflicting transactions will be mined into a block and accepted by the network as genuine. Alice can also increase the block fee for the transaction to provide more incentive for miners to include the illegitimate transaction into their blocks. In this case, merchant Bob's waiting for 0 transactions makes him vulnerable to anyone that wants to steal goods. 
   
-  On the other hand, in the case that Bob waits for more than 1 confirmation ($z$ confirmations), Alice can still double spend, but the process is more involved. Say Alice sends Bob a transaction, and Bob waits $z$ confirmations before he sends the goods to Alice. In order to double spend on Bob, Alice must mine on her own private chain, one that does not have the transaction that sent bitcoin from Alice to Bob; Alice can send the same transaction to herself instead. She builds up an illegitimate transaction history such that she sends money to herself rather than to Bob. After mining $z$ blocks, and making sure that her chain is longer than any other chain, Alice can broadcast her chain (preferably after she receives the goods from Bob). The network will adopt Alice's chain over the previous chain because it is longer in length. In fact, it is proven that if Alice has greater than 50\% of the total hash power, then she can always generate a longer, illegitimate chain. \\ \\
+  On the other hand, in the case that Bob waits for more than 1 confirmation ($z$ confirmations), Alice must go through a much more involved process to double spend. Say Alice sends Bob a transaction, and Bob waits $z$ confirmations before he sends the goods to Alice. In order to double spend on Bob, Alice must mine on her own private chain, one that does not have the transaction that sent bitcoin from Alice to Bob; Alice can send the same transaction to herself instead. She builds up an illegitimate transaction history such that she sends money to herself rather than to Bob. After mining $z$ blocks, and making sure that her chain is longer than any other chain, Alice can broadcast her chain (preferably after she receives the goods from Bob). The network will adopt Alice's chain over the previous chain because it is longer in length. In fact, it is proven that if Alice has greater than 50\% of the total hash power, then she can always generate a longer, illegitimate chain.
+  \medskip
  
-   \includegraphics[scale=0.3]{z_confirmation} \\
+   \includegraphics[scale=0.3]{z_confirmation}
+   \smallskip
    
    \section*{Double Spend --- Security}
    
-   Now we'll model our assertions regarding double spending and hash power using mathematics:
+   \noindent Let's model our assertions about double spending and hash power with mathematics:
    
-   Suppose Bob waits for $z$ confirmations before sending his goods over to Alice. Alice has $h_A$ hash power, and the honest network has $h_H$ hash power. The total network hash power is then $h_A + h_H$. 
-   
-   The probability, $p$, of the honest network finding the next block is simply the proportion of hash power the honest network controls:
-   
+   Suppose Bob waits for $z$ confirmations before sending his goods over to Alice. Alice has $h_A$ hash power, and the honest network has $h_H$ hash power. The total network hash power is then $h_A + h_H$. The probability, $p$, of the honest network finding the next block is simply the proportion of hash power the honest network controls:
    $$p = \frac{h_H}{h_A + h_H} $$
    
-   The probability, $q$, of Alice finding the next block is the complement of $p$. We calculate it as follows:
-   
+   \noindent The probability, $q$, of Alice finding the next block is the complement of $p$. We calculate it as follows:
    \begin{equation*}
        \begin{split}
-           q = 1-p &= 1 - \frac{h_H}{h_A + h_H} \\
+           q &= 1-p \\
+           &= 1 - \frac{h_H}{h_A + h_H} \\
            &= \frac{h_A}{h_A + h_H}
        \end{split}
    \end{equation*}
    
-   Consider the scenario in which the honest network mines $z$ blocks on top of Alice's transaction to him. Bob sees that there are $z$ confirmations, and then he sends the goods over to Alice. In the meantime, Alice has been hard at work mining on her own chain ever since sending her transaction over, in hopes of double spending on Bob. The expected number of blocks Alice would have mined after the $z$ confirmations is equal to:
+   Consider the scenario in which the honest network mines $z$ blocks on top of Alice's transaction to him. Bob sees that there are $z$ confirmations, and then he sends the goods over to Alice. In the meantime, Alice has been hard at work mining on her own chain ever since sending her transaction over, in hopes of double spending on Bob. If $\lambda$ equals the expected number of blocks mined by Alice in the time that $z$ blocks are mined by the honest network, then we see that $\lambda$ depends on the ratio of the mining power of each entity (Alice vs the honest network):
    
    $$\lambda = z(\frac{q}{p})$$
    
-   If we model this as a Poisson distribution, because we have discrete events each corresponding to a probability, we can show that the probability that Alice generates $k$ blocks is:
+   (\underline{Sanity check}: if $p = q = 0.5$, then $\lambda = z$, meaning that we expect Alice to mine mine the exact same number of blocks as the honest network. This makes sense, that two entities with equal power would produce an equal number of valid blocks.)
+   
+   If we model this as a \textbf{Poisson distribution}, because we have discrete events each corresponding to a probability, we can show that the probability that Alice generates $k$ blocks is:
    
    $$p_A(k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
    
    Now the question is: What is the probability Alice can mine enough blocks in secret to successfully broadcast her chain with the double spend? In other words, what is the probability that Alice can produce a longer chain than the honest network? 
    
-   To solve this, first consider the related problem of Alice trying to catch up to a chain that is $j$ blocks ahead of Alice's own chain. The corresponding question is: What is the probability that Alice will ever catch up given an unlimited number of trials? It is also important to consider that the honest network is continuously mining their blocks on their chain, while Alice works maliciously on the side. This problem is actually an instance of the \textbf{Gambler's Ruin} problem, which in this case means that if Alice has more than 50\% hash power, she can always generate a longer chain, given an infinite timeline. The following is the probability of Alice catching up if she is $j$ blocks behind: 
+   To solve this, first consider the related problem of Alice trying to catch up to a chain that is $j$ blocks ahead of Alice's own chain. The corresponding question is: What is the probability that Alice will ever catch up given an unlimited number of trials? It is also important to consider that the honest network is continuously mining their blocks on their chain, while Alice works maliciously on the side. This problem is actually an instance of the \textbf{Gambler's Ruin} problem, which in this case means that if Alice has more than 50\% hash power, she can always generate a longer chain, given infinite time. The following is the probability of Alice catching up if she is $j$ blocks behind: 
    
    \[ p_c(j) = \begin{cases} 
       1 & q \geq p \text{ OR } j < 0 \\
       \big(\frac{q}{p}\big)^j & q < p
    \end{cases}
    \]
+   
+   In other words, Alice can succeed in eventually producing a longer chain if she either has at least as much hash power than the rest of the network or if she is already ahead of the rest of the network. On the other hand, if she has less hash power than the rest of the network, she may still be able to catch up based on the ratio of her own hash power fraction to the rest of the network. The more blocks she is behind, the smaller her chance of producing the longest chain and ``winning."
    
    Combining these two probabilities, we can compute the probability that Alice can catch up after $z$ blocks mined on the honest chain. Consider the case when Alice mines $k$ blocks. This means that the honest chain is $z-k$ blocks ahead of Alice. We sum over all possible values of $k$:
    
@@ -82,11 +87,12 @@
        \end{split}
    \end{equation*}
    
-      \includegraphics[scale=1]{doublespend_plots} \\
+      \includegraphics[scale=1]{doublespend_plots}
+      \medskip
    
     The above shows Alice's probability of catching up to the honest chain in arbitrary $x$ number of blocks. If Alice has 50\% hash power or more, then she can catch up with 100\% probability. Probability of catching up to the honest chain decreases as Alice's probability $q$ of getting the next block decreases.
     
-    To avoid infinite tail, discrete summation, we can look at the inverse probability that Alice \textit{cannot} catch up to the chain that is $j$ blocks ahead:
+    To avoid \textbf{infinite tail discrete summation}, we can look at the inverse probability that Alice \textit{cannot} catch up to the chain that is $j$ blocks ahead:
     
     \begin{equation*}
         \begin{split}
@@ -100,45 +106,47 @@
         \end{split}
     \end{equation*}
     
-    The number of confirmations Bob should wait before sending Alice the goods depends on how much hash power Bob assumes Alice to control. For the average user, it is recommended they wait around 6 or more confirmation until accepting a transaction. However, this is assuming any malicious party controls roughly 10\% or less of the network hash power. 
+    The number of confirmations Bob should wait before sending Alice the goods depends on how much hash power Bob assumes Alice to control. After 6 confirmations, the likelihood of a double spend attack drops to zero assuming any malicious party controls 10\% or less of the network hash power. 
     
     \section*{Double Spend --- Bribing Miners}
     
-    We have shown that if Alice controls more than 50\% of the total network hash power, she will always be able to double spend. Looking back at our calculations, whenever Alice is arbitrary $j$ blocks behind the honest network's chain, she will \textit{always} (in expectation) be able to catch up and out-produce the honest miners. Therefore, the probability that Alice can successfully double spend with greater than 50\% network hash power reaches 1.
+    We have shown that if Alice controls more than 50\% of the total network hash power, she will always be able to double spend. Looking back at our calculations, whenever Alice is some $j$ blocks behind the honest network's chain, she will \textit{always} (in expectation) be able to catch up and out-produce the honest miners. Hence, the probability that Alice can successfully double spend with greater than 50\% network hash power is 1.
     
-    In reality, it is extremely costly, and approaching impossible, for Alice to own so much network hash power, especially given how vast the Bitcoin network is currently. Alice might not physically control the mining hardware necessary to perform a double spend, but she can definitely bribe other miners or even entire mining pools to mine on her chain. In the long run, it is guaranteed that Alice and her miners will profit, but the initial cost is extremely high.
+    In reality, it is extremely costly and implausible for Alice to own so much network hash power, especially given the Bitcoin network's current vastness. While Alice might not physically control mining hardware for a double spend attack, she can bribe other willing miners or even entire mining pools to mine on her chain. In the long run, Alice and her miners will profit after managing to overcome the extremely high initial cost.
     
     \section*{Double Spend --- ``Goldfinger" Attack}
     
-    There is actually a compelling reason as to why Alice would not want to double spend. If Alice does in fact succeed in a double spend, the rest of the network would be able to detect her double spend. Confidence in Bitcoin and the exchange rate would plummet as a result of the discovery of a security breach. Alice's bitcoin would then be worth a lot less, assuming Alice is staked in Bitcoin at the time. 
+    \textbf{``Your scientists were so preoccupied with whether or not they could, they didn’t stop to think if they should." --- Ian Malcolm, \textit{Jurassic Park}}
     
-    If Alice is not staked in Bitcoin, she can short Bitcoin in order to profit after her double spend. Alice can short the exchange rate, and use that as collateral to buy, rent, or bribe miners, cashing out on the short.
+    Is double spending a good idea, even with the proper resources? If Alice does in fact succeed, confidence in Bitcoin's value would plummet after the rest of the network detects the security breach. Alice's bitcoins would also tank in value, assuming Alice is staked in Bitcoin when she performs the attack. 
     
-    One slightly terrifying outcome of this analysis is when we consider the possibility of Alice being a hostile government, adversarial altcoin, or large financial institution, with a large amount of capital available. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Goldfinger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
+    However, if Alice wants to use this price drop to her own advantage, she can instead \textbf{short} Bitcoin in order to profit after her double spend. Alice can short the exchange rate and use that as collateral to buy, rent, or bribe miners, cashing out on the short.
     
-    (Note: The Goldfinger attack is named after the famous villain Auric Goldfinger in the third James Bond movie, who poisons the US gold supply in Ft. Knox in an effort to make the gold worth less, and to increase the value of his own gold holdings.)
+    Consider Alice as a hostile government, adversarial altcoin, or large financial institution with a large amount of \textbf{capital}. Alice would then be able to acquire enough mining equipment or bribe enough miners or pools to achieve greater than 50\% hash power. Alice can then perform a so-called \textbf{Goldfinger attack}, with the objective of destroying the target cryptocurrency with a double spend or spamming the network with empty blocks.
+    
+    (Note: The Goldfinger attack references the famous villain Auric Goldfinger from the third James Bond movie, who poisons the US gold supply in Ft. Knox to reduce the value of that US gold and to increase the value of his own gold holdings.)
     
     \section*{Account vs Transaction Based Ledgers}
     
-    Consider the notion of \textbf{account-based ledgers}. There are certain cryptocurrencies such as Ethereum which maintain account based ledgers. Each address in Ethereum has an account, and for a user to check how many tokens they have, they simply add the inputs and subtract the outputs. The downside to this method is that the system must track every single transaction that has ever affected that one account. Scaling this to many thousands of users, this method could be a performance issue. One way to fix this huge amount of data is to 'prune' away old transaction history so that the user does not have to deal with old transaction data. This method has proven to be error-prone however, due to the additional block maintenance that is required. 
+    Consider the notion of \textbf{account-based ledgers}. Cryptocurrencies such as Ethereum maintain account-based ledgers. Each address in Ethereum represents an account, and for a user to check how many tokens they have, they simply add the inputs and subtract the outputs. The downside to this method is that the system must track every single transaction that has ever affected that one account, a potential peformance issue when scaling to thousands of users. A possible fix? `Pruning' away old transaction history so that the user does not have to deal with old transaction data. (Currently error-prone due to additional required block maintenance.)
     
-    On the contrary, Bitcoin is a \textbf{transaction-based ledger} (known as triple-entry accounting.) Users are always spending from previous outputs. As we mentioned in Note 2, UTXOs (unspent transaction outputs) can only be spent once, so Bitcoin has change addresses. By restricting UTXO usage and introducing the concept of change addresses, Bitcoin has a very efficient verification system. To determine how many tokens a user has, simply total the amounts associated with their recent UTXOs. The state of the Bitcoin network is only dependent on the most recent history. Bitcoin also supports joint payments, so that a transaction can have multiple inputs -- for example if Alice and Bob both want to pitch in to spend a total of 1.00 BTC. In practice, this feature is rarely used but is supported nonetheless.
+    Bitcoin is a \textbf{transaction-based ledger} (also known as triple-entry accounting). Users are always spending from previous outputs. As we mentioned in Note 2, UTXOs (unspent transaction outputs) can only be spent once. When someone wants to spend a portion of a UTXO, they send part to the receiving party and the remaining to a ``change address" controlled by themselves, for later use. Restricting UTXO usage and introducing the concept of change addresses produces an efficient verification system: to determine how many tokens a user has, sum their valid unspent UTXOs. Bitcoin also supports joint payments, so that a transaction can have multiple inputs -- for example if Alice and Bob both want to pitch in to spend a total of 1.00 BTC. In practice, this feature is rarely used but is supported nonetheless.
     
     \section*{Contents of a Transaction}
     
-    The contents of an actual transaction in Bitcoin can be split into three sections: the metadata, inputs, and outputs. 
+    The contents of a Bitcoin transaction fall into three categories: metadata, inputs, and outputs.
     
    \includegraphics[scale=0.3]{transaction_contents}
    
-   As seen above, a transaction folllows JSON structure. Metadata contains information such as the hash of the current transaction (often times referred to as the transaction ID), the version number (currently 1), the number of inputs and outputs, lock time, and data size.
+   As seen above, a transaction follows \textbf{JSON} structure. Metadata contains information such as the hash of the current transaction (aka the transaction ID), the \textbf{version number} (currently 1), the number of inputs and outputs, \textbf{lock time}, and \textbf{data size}.
    
-   Inputs to the transaction include a hash of a previous unspent transaction, and an index specifying the output of the previous transaction from which the user is spending. Transaction outputs are ordered, so an index is required to identify specific outputs in a transaction. Inputs also need a signature as a cryptographic proof of ownership. 
+   Inputs to the transaction include a hash of a previous unspent transaction and an index, which specify the output of the previous transaction from which the user is spending. Transaction outputs are ordered, so an index is required to identify specific outputs in a transaction. Inputs also need a cryptographic signature as a proof of ownership. 
    
-   The outputs of a transaction include an output amount in BTC as well as an output script. The output script is what enables the parties associated with the transaction to claim their bitcoin later on, using a system called the Pay-to-PubkeyHash, which we will discuss later.
+   The outputs of a transaction include an output amount in BTC as well as an \textbf{output script}. The output script is what enables the parties associated with the transaction to claim their bitcoins later on, using a system called the Pay-to-PubkeyHash, which we will discuss later. Shallowly, the script says, ``Whoever owns the private key to this public key can redeem these bitcoins."
    
    \section*{Bitcoin Scripting}
    
-   Previously we may have made the abstraction that transactions map input addresses to output addresses. In practice, these "addresses" we have been referring to are really scripts. By defining inputs and outputs through scripting, we can allow for the future extensibility of Bitcoin because scripting is such a low level feature that could potentially support many other future operations if needed. Recall that a signature proves the ownership of a public key, and that the Bitcoin address is a hash of the public key.
+   Previously we stated that transactions map input addresses to output addresses. In practice, these ``addresses" are scripts. By defining inputs and outputs through scripting, we can allow for the future extensibility of Bitcoin because scripting is such a low level feature that could potentially support many other future operations if needed. Recall that a signature proves the ownership of a public key, and that the Bitcoin address is a hash of the public key.
    
    $$Hash(PubKey)~==~Address~==~"PubKeyHash"$$
    
@@ -150,7 +158,7 @@
    
    However, by the cryptographic property of preimage resistance, we know that we cannot find a public key given an address. What the transaction should really be saying is:
    
-   "This amount can be redeemed by the \underline{public key} that hashes to address X, plus a \underlline{signature} from the owner of that public key."
+   ``This amount can be redeemed by the \underline{public key} that hashes to address X, plus a \underline{signature} from the owner of that public key.''
    
    Only the owner of the public key would be able to produce the valid signature necessary to redeem the bitcoin from the output script.
    
@@ -201,9 +209,11 @@
  
  Let's take a deeper dive into the specifics of Merkle trees, which we briefly touched upon in note 2. As review, merkle trees are inary trees of hash pointers. Blobs of transaction data are hashed together, then their hashes are hashed together, until one element remains---the Merkle root. (Note: Merkle trees are always full. If there are gaps, duplicate the last transaction to fill in the gaps.)
  
- Because outputs of cryptographic hash functions are unique, by \underline{second preimage resistance}, Merkle trees are very efficient. Just from analyzing the Merkle root, it is possible to prove that the merkle tree, a large string of data, contains a certain substring. To prove inclusion of data in the merkle tree, one must provide root data and intermediate hashes. Then, once hashing everything together in order, one would compare the final hash to the merkle root. To take this proof, one would need to find hash preimages that hash to valueus in the merkle tree. As discussed earlier, second preimage resistance makes faking proofs in merkle trees extremely difficult and practically impossible.
-
- \includegraphics[scale=0.4]{merkle_proof} \\
+ Outputs of cryptographic hash functions are unique by \underline{second preimage resistance}, making Merkle trees efficient. The Merkle root serves as a summary of the Merkle tree and as a mechanism to maintain history of included information. To prove inclusion of data, one must provide root data and intermediate hashes. After hashing everything together in order, one compares the final hash to the merkle root. To fake this proof, one would need to find hash preimages that hash to values in the merkle tree. As discussed earlier, second preimage resistance makes faking proofs in merkle trees extremely difficult and practically impossible.
+ \begin{center}
+ \includegraphics[scale=0.4]{merkle_proof}
+ \end{center}
+ \medskip
  
  The figure above illustrates how one might prove the inclusion of a substring $data$, the circled leaf node. Provided the circled $data$, the proof proceeds as follows.
  

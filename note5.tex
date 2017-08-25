@@ -3,7 +3,11 @@
 
 % change this line
 \graphicspath{ {assets/note5/} }
-\newcommand{\notenum}{5}
+
+
+\providecommand{\notenum}{5}
+
+
 
 
 \begin{document}
@@ -36,7 +40,7 @@
     
     \section*{Block Difficulty --- Puzzle Prerequisites}
     
-    Instead of blindly throwing darts at a dartboard, mining in Bitcoin involves solving a \textbf{hash puzzle} that results in a valid block. Miners race each other to find a nonce that makes the following inequality true:
+Instead of blindly throwing darts at a dartboard, mining in Bitcoin involves solving a \textbf{hash puzzle} that results in a valid block. Miners race each other to find a nonce that makes the following inequality true:
     $$H\big(nonce~||~H(previous~block~header)~||~Merkle~root\big)~<~target$$
     
     \noindent Hash puzzles must meet a few significant requirements:
@@ -54,7 +58,7 @@
     \noindent We use the ratio between two weeks and the time to mine 2016 blocks because the target block time is 10 minutes:
     $$\mathit{2016~blocks~*~10~\frac{min}{block}=20160~min=2~weeks}$$
     
-    If the time to mine 2016 blocks is greater than two weeks, then the hash puzzle is too hard. The ratio is less than 1, so the difficulty scales down. If the time to mine 2016 blocks is less than two weeks, then the hash puzzle is too easy. The ratio is greater than 1, so the difficulty scales up. The block difficulty is always inversely proportional to the time required to mine the previous 2016 blocks.
+    If the time to mine 2016 blocks is greater than two weeks, then the hash puzzle is too hard (ratio less than 1), so the difficulty scales down. If the time to mine 2016 blocks is less than two weeks, then the hash puzzle is too easy (ratio greater than one), so the difficulty scales up. The block difficulty is inversely proportional to the time required to mine the previous 2016 blocks.
     
     \section*{How to Profit From Mining}
     
@@ -87,17 +91,16 @@
     Bitcoin mining began on CPUs. As the block difficulty increased, mining efforts shifted dramatically: first to GPUs, then to FPGAs, and finally to ASICs. (Keep in mind that hardware costs are a one-time expense, unlike everything else we have mentioned.)
     
     As commonly used CPUs began to get too slow for the block difficulty, GPU mining began to gain popularity. GPUs are an order of magnitude more effective for hashing than CPUs. However, with more power comes more expense: a larger consumption of energy and higher production of heat. GPU mining was most common around 2012, but as of now is not viable for mining Bitcoin. (GPU mining is viable for Zcash, Ethereum, and some other cryptocurrencies on the other hand.) GPU mining brought two main disadvantages:
-    
     \begin{enumerate}
         \item GPUs have many components (like floating point units) not applicable to Bitcoin mining.
         \item GPUs are not meant to be run in ``farms'' side by side.
     \end{enumerate}
     
-    The disadvantages of GPU mining made clear the need to switch to mining specific hardware.
+    \noindent The disadvantages of GPU mining made clear the need to switch to mining specific hardware.
     
     \textbf{FPGAs (Field Programmable Gate Arrays)} were the result of early efforts to develop Bitcoin-specific hardware without losing all hardware customizability, a trade-off between dedicated, specialized hardware and general purpose functionality. If Bitcoin failed, SHA-256 specific hardware would be worthless, but general purpose hardware would still be useful. However, if Bitcoin thrives, specialized hardware for churning out SHA-256 calculations would generate higher profit than generalized hardware. Hence, compromise.
     
-    As Bitcoin rose in popularity, general purpose hardware was dropped altogether by many to create the first \textbf{ASICs (Application-Specific Integrated Circuits)}. ASICs for Bitcoin do nothing but SHA-256, but they do it better than any other hardware. ASICs, a diverse breed, come with various tradeoffs,  one of which is between base cost and electricity usage, depending on how efficiently it uses energy. Another is device size and hashrate, as larger devices take up more space and use more electricity but have a higher overall hashrate. Also, manufacturing and purchasing ASICs takes large upfront capital, which induces centralization---a tradeoff with Bitcoin's core decentralized philosophy. Currently, the Antminer 29 holds the title of ``Most Powerful ASIC," maxing out at 14 TH/s, purchasable for the steep price of 3000 USD.
+    As Bitcoin rose in popularity, general purpose hardware was dropped altogether by many to create the first \textbf{ASICs (Application-Specific Integrated Circuits)}. ASICs for Bitcoin do nothing but SHA-256, but they do it better than any other hardware. ASICs, a diverse breed, come with various tradeoffs,  one of which is between base cost and electricity usage, depending on how efficiently it uses energy. Another is device size and hashrate, as larger devices take up more space and use more electricity but have a higher overall hashrate. Also, manufacturing and purchasing ASICs takes large upfront capital, which induces centralization---a tradeoff with Bitcoin's core decentralized philosophy. Currently, the Antminer 29 holds the title of ``Most Powerful ASIC," maxing out at 14 TH/s, for sale at the steep price of 3000 USD.
     
     \section*{Operating Costs}
     
@@ -118,7 +121,7 @@
     
     \section*{ASIC-Resistance --- Memory-Hard Puzzle}
     
-    Movements to make Bitcoin ASIC-resistant stirred consideration of            \textbf{memory-hard puzzles}, requiring large amounts of memory rather than computational power to solve. In other words, these puzzles are \textbf{memory-bound}, meaning that memory bottlenecks computation time. Memory-hard puzzles would viably deter ASICs and effectively make Bitcoin ASIC-resistant. ASICs are optimized to perform a specific algorithm while regular CPUs are not, and since optimization of this algorithm (in our case, a hash function) is not the limiting agent, ASICs would not give some miners more power if memory is the limiting agent, not computational optimization. Memory performance increases more slowly than computational power. The cost of solving a puzzle also decreases more slowly, all valid considerations in the ASIC-resistance debate among Bitcoin users.
+    Movements to make Bitcoin ASIC-resistant stirred consideration of \textbf{memory-hard puzzles}, requiring large amounts of memory rather than computational power to solve. In other words, these puzzles are \textbf{memory-bound}, meaning that memory bottlenecks computation time. Memory-hard puzzles would viably deter ASICs and effectively make Bitcoin ASIC-resistant. ASICs are optimized to perform a specific algorithm while regular CPUs are not, and since optimization of this algorithm (in our case, a hash function) is not the limiting agent, ASICs would not give some miners more power if memory is the limiting agent, not computational optimization. Memory performance increases more slowly than computational power. The cost of solving a puzzle also decreases more slowly, all valid considerations in the ASIC-resistance debate among Bitcoin users.
     
     \section*{Scrypt}
     

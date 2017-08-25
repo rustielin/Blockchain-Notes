@@ -3,7 +3,9 @@
 
 % change this line
 \graphicspath{ {assets/note6/} }
-\newcommand{\notenum}{6}
+
+
+\providecommand{\notenum}{6}
 
 
 
@@ -16,9 +18,13 @@
     
     \section*{Mining Pools}
     
-    Recall the concept of mining pools, which allow individual miners to combine or `pool,' their computational power together. Mining pools are run by \textbf{pool managers} or \textbf{pool operators}. The pool manager usually takes a cut of the ming rewards first, and the rest is distributed to other nodes in the pool, usually depending on the amount of hash power these nodes offer. As a result, a miner can achieve a relatively stable profit. If the mining pool is large enough, an individual miner in the pool can expect profit from the block reward regularly, in proportion to their own hash power. In contrast, mining alone implies a higher variance in mining rewards; you can expect to not win the block reward the majority of the time, but when you do win, the payout is huge. Mining pools also lower the barrier of entry for new miners, democratizing the mining scene. Instead of having to purchase an array of ASICs, individuals can opt to participate in a mining pool. Additionally, mining pools are easily upgraded, since only the pool manager has to upgrade on behalf of the pool. Everyone else can continue contributing hash power as before.
+    Recall the concept of mining pools, which allow individual miners to combine, or `pool,' their computational power. Mining pools are run by \textbf{pool managers} or \textbf{pool operators}. The pool manager conventionally takes a cut of mining rewards first, and the rest is distributed to miners, depending on offered hash power. Thus, instead of mining until finding a single block and profiting immensely, a miner can achieve a relatively stable profit by submitting \textbf{shares} to the pool. 
     
-    Although the idea of mining pools might seem enticing for the average miner, mining pools are actually detrimental overall to the health of the Bitcoin network. Mining pools are centralized, around one pool manager, and bring with them the security flaws of centralized systems. For example, the pool manager must be trusted to distribute block reward in a fair manner. Especially as mining pools grow larger, and represent the majority of total hash power, the Bitcoin network may not be as safe as we like to think.
+    In a large mining pool, an individual miner expects consistent profit in proportion to their own hash power, akin to a 100\% commission-based salary. In contrast, mining alone implies a higher variance in mining rewards: you expect not to win the block reward the majority of the time, but celebrate the huge payout when you do. 
+    
+    Mining pools lower the barrier of entry for new miners, democratizing the mining scene. Instead of having to purchase an array of ASICs, individuals can opt to participate in a mining pool. Additionally, mining pools are easily upgraded during times of protocol change, since only the pool manager has to upgrade on behalf of the pool instead of each participating node needing to upgrade. Everyone else continues contributing hash power as before.
+    
+    Mining pools, although enticing to the average miner, detriment Bitcoin's network health. Mining pools are examples of centralization, around one pool manager, and bring with them the security flaws of centralized systems. For example, the pool manager must be trusted to distribute block reward in a fair manner. Especially as mining pools grow larger, and represent the majority of total hash power, the Bitcoin network may not be as safe as we like to think.
     
     \section*{Mining Pools --- Example}
     
