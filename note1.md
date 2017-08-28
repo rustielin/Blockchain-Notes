@@ -1,4 +1,4 @@
-Bitcoin History: From the Cypherpunk Movement to JPMorgan Chase {#bitcoin-history-from-the-cypherpunk-movement-to-jpmorgan-chase .unnumbered}
+Bitcoin History: From the Cypherpunk Movement to JPMorgan Chase 
 ===============================================================
 
 Over the years, Bitcoin demonstrated its unique prowess as a currency,
@@ -21,7 +21,7 @@ brought its existence. The goal is to provide insight into the
 backgrounds and motivations behind the present-day leaders of the
 Blockchain industry.
 
-Pre Bitcoin-2009: Libertarian Dreams and Ideals {#pre-bitcoin-2009-libertarian-dreams-and-ideals .unnumbered}
+Pre Bitcoin-2009: Libertarian Dreams and Ideals 
 ===============================================
 
 Rapid advancements in computing technology in the 1980s and ’90s brought
@@ -53,7 +53,7 @@ bankruptcy in 1998. For the community, DigiCash represented not so much
 a failure as an important learning opportunity. *Moral of the story: For
 a cryptocurrency to be stable, it must be .*
 
-2009-2010: Early Development of Bitcoin {#early-development-of-bitcoin .unnumbered}
+2009-2010: Early Development of Bitcoin 
 =======================================
 
 In October 2008, a **whitepaper** titled *Bitcoin: A Peer-to-Peer
@@ -74,7 +74,7 @@ Laszlo Hanyecz purchased \$25 worth of pizza for 10,000 BTC. Little did
 he know that 10,000 BTC would be worth about \$20,169,600 (as of May 20,
 2017).
 
-2010-2012: Scandals, Hacks, Illegal Activity {#scandals-hacks-illegal-activity .unnumbered}
+2010-2012: Scandals, Hacks, Illegal Activity 
 ============================================
 
 In the early stages of Bitcoin, there existed no exchange for trading
@@ -107,7 +107,7 @@ price of one bitcoin to over one thousand USD. For better or for worse,
 the flurry surrounding Bitcoin drew an unprecedented amount of
 attention.
 
-2013-2014: Bitcoin Attracts Attention {#bitcoin-attracts-attention .unnumbered}
+2013-2014: Bitcoin Attracts Attention 
 =====================================
 
 Just four months after the FBI revealed and shut down revealing the
@@ -134,7 +134,7 @@ machines in Colorado intended on accepting bitcoin. In September, PayPal
 partnered with Coinbase and Bitpay, two large exchanges. In December,
 Microsoft also began accepting bitcoin payments.
 
-2013-2014: Venture Funded Bitcoin Startups {#venture-funded-bitcoin-startups .unnumbered}
+2013-2014: Venture Funded Bitcoin Startups 
 ==========================================
 
 Hype for Bitcoin fueled a rise in venture funded Bitcoin startups. One
@@ -156,7 +156,7 @@ software), sidechains, and various research firms in the space.
 Hype for Bitcoin seemed to die down in 2014, demonstrated by a plummet
 in bitcoin price. Clearly, Bitcoin was not in its best state.
 
-2015-Present: Ethereum Blows Up, Bitcoin Bounces Back, “Enterprise Blockchain" {#present-ethereum-blows-up-bitcoin-bounces-back-enterprise-blockchain .unnumbered}
+2015-Present: Ethereum Blows Up, Bitcoin Bounces Back, “Enterprise Blockchain" 
 ==============================================================================
 
 Between 2015 and the present (May 2017), a great number of initiatives
@@ -206,7 +206,7 @@ science, cryptography, and the passionate support by a dedicated
 community has elevated Bitcoin and blockchain technologies to a
 spotlight that is on its way to profoundly reinvent the future.
 
-Key Terms {#key-terms .unnumbered}
+Key Terms 
 =========
 
 A collection of terms mentioned in the note which may or may not have

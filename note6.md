@@ -1,4 +1,4 @@
-Game Theory & Network Attacks: How to Destroy Bitcoin {#game-theory-network-attacks-how-to-destroy-bitcoin .unnumbered}
+Game Theory & Network Attacks: How to Destroy Bitcoin 
 =====================================================
 
 As with any other distributed network, the Bitcoin network is subject to
@@ -6,7 +6,7 @@ a variety of attacks. In this note, we will take a closer look at
 potential attacks that could be used to take down the Bitcoin network.
 As we will find, destroying Bitcoin is actually fairly simple.
 
-Mining Pools {#mining-pools .unnumbered}
+Mining Pools 
 ============
 
 Recall the concept of mining pools, which allow individual miners to
@@ -39,7 +39,7 @@ distribute block reward in a fair manner. Especially as mining pools
 grow larger, and represent the majority of total hash power, the Bitcoin
 network may not be as safe as we like to think.
 
-Mining Pools — Example {#mining-pools-example .unnumbered}
+Mining Pools — Example 
 ======================
 
 We will now compare estimated profit for a solo miner versus a miner in
@@ -78,7 +78,7 @@ the more we need mining pools, whose dangerous centralization
 dangerously contrasts with Bitcoin’s underlying concepts of
 decentralization.
 
-Mining Pools — Hash Rate Distribution {#mining-pools-hash-rate-distribution .unnumbered}
+Mining Pools — Hash Rate Distribution 
 =====================================
 
 ![image](hash_rate_distribution)
@@ -100,7 +100,7 @@ from, and whether they are associated with mining pools. By extension,
 this raises the concern that the actual concentration of control over
 mining hardware is *unknown*.
 
-Mining Pools — Shares {#mining-pools-shares .unnumbered}
+Mining Pools — Shares 
 =====================
 
 For mining pools to distribute the block reward, they must keep track of
@@ -120,7 +120,7 @@ The coinbase transaction goes to the pool operator, who redistributes
 the profit to the pool. In this way, a miner cannot just submit shares
 in a pool and keep the reward of the valid block for themselves.
 
-Mining Pools — Basic Reward Schemes {#mining-pools-basic-reward-schemes .unnumbered}
+Mining Pools — Basic Reward Schemes 
 ===================================
 
 There are two basic reward schemes that mining pools employ to reward
@@ -148,7 +148,7 @@ reward is found. In this way, individual miners are incentivized to
 submit valid blocks, solving the fundamental problem of the
 pay-per-share reward scheme.
 
-Pool Hopping {#pool-hopping .unnumbered}
+Pool Hopping 
 ============
 
 Because miners seek profit, the existence of multiple mining pool reward
@@ -185,7 +185,7 @@ Designing a mining pool reward scheme with aligned incentives , for
 miners and the pool, that is not vulnerable to pool hopping remains an
 open problem.
 
-Pool Wars {#pool-wars .unnumbered}
+Pool Wars 
 =========
 
 Let’s create a theoretical scenario to simplify some of the calculations
@@ -210,7 +210,7 @@ other pool would be $\frac{1}{71} * 0.7 = 0.0098~BTC$. Therefore, we can
 conclude that since 0.0098 BTC &gt; 0.0069 BTC, it is more profitable to
 cannibalize pools than to mine honestly.
 
-Selfish Mining (Block-Withholding) {#selfish-mining-block-withholding .unnumbered}
+Selfish Mining (Block-Withholding) 
 ==================================
 
 Instead of withholding a block from a mining pool, what happens when we
@@ -243,7 +243,7 @@ large mining pool (or several) banded together in hopes of increasing
 their own profits, they could potentially deploy the strategy of selfish
 mining and profit every time.
 
-Blacklisting via Punitive Forking {#blacklisting-via-punitive-forking .unnumbered}
+Blacklisting via Punitive Forking 
 =================================
 
 Say you are a government that has jurisdiction over many mining pools,
@@ -291,7 +291,7 @@ you can make a fork in the blockchain, and since you have majority hash
 rate, everyone else would have no choice but to join your chain, else
 waste their computing power on a chain that will never win.
 
-Blacklisting via Feather Forking {#blacklisting-via-feather-forking .unnumbered}
+Blacklisting via Feather Forking 
 ================================
 
 One weakness of punitive forking is that it only works if you have a
@@ -330,7 +330,7 @@ Yikes.
 
 ![image](blacklist_feather)
 
-Network Attacks — Timejacking {#network-attacks-timejacking .unnumbered}
+Network Attacks — Timejacking 
 =============================
 
 Whereas blacklising and malicious mining pool schemes only affect mining
@@ -378,7 +378,7 @@ confirmations worth of time, to mine on her double spend chain — plenty
 of time for Bob to get tricked and accidentally send goods over in
 exchange for Alice’s fake money.
 
-DoS Attack — Malicious Miners {#dos-attack-malicious-miners .unnumbered}
+DoS Attack — Malicious Miners 
 =============================
 
 It turns out that malicious miners can also use timejacking to take down
@@ -391,7 +391,7 @@ profit. Taking this one step further, miners with access to a
 distributed Botnet have a competitive advantage over other normal
 miners.
 
-Transaction Malleability {#transaction-malleability .unnumbered}
+Transaction Malleability 
 ========================
 
 A consequence of using the cryptographic signature schemes that it does,
@@ -432,7 +432,7 @@ of transaction malleability. It stores transaction signatures in a
 separate merkle tree. We will discuss more about SegWit in the
 scalability note.
 
-Conclusion {#conclusion .unnumbered}
+Conclusion 
 ==========
 
 In this section, we will make some broad generalizations about the
@@ -477,7 +477,7 @@ of acquiring the 51% hash rate in the first place. Game theory says that
 get 51% of the network hash rate is actually profitable, so what is
 stopping anyone from doing this?
 
-Generalization of Vulnerabilities {#generalization-of-vulnerabilities .unnumbered}
+Generalization of Vulnerabilities 
 =================================
 
 Currently, there are a lot of orphaned blocks due to pool wars and other
@@ -511,7 +511,7 @@ incentivized by profit, so the question is not whether or not this sort
 of attack has happened before, but: how many of these secret attacks are
 going on today?
 
-Post-Block Reward Bitcoin {#post-block-reward-bitcoin .unnumbered}
+Post-Block Reward Bitcoin 
 =========================
 
 As a recap, the Bitcoin block reward halves every 4 years, and by the
@@ -543,7 +543,7 @@ transactions to their blocks to earn more of the transaction fees. To
 achieve this, changes to the Bitcoin protocol, such as adoption of the
 Lightning Network, to boost transaction velocity must be made.
 
-Key Terms {#key-terms .unnumbered}
+Key Terms 
 =========
 
 A collection of terms mentioned in the note which may or may not have

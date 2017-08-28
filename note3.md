@@ -1,4 +1,4 @@
-Wallets and Cryptography {#wallets-and-cryptography .unnumbered}
+Wallets and Cryptography 
 ========================
 
 The average Bitcoin user often first downloads a **wallet** to manage
@@ -7,7 +7,7 @@ convenience, wallet software holds Bitcoin or any other cryptocurrency
 for users, depending on the wallet. This note is dedicated to various
 uses of Bitcoin wallets and how wallet cryptography keeps everyone safe.
 
-Bitcoin vs Gmail Address Creation {#bitcoin-vs-gmail-address-creation .unnumbered}
+Bitcoin vs Gmail Address Creation 
 =================================
 
 To review public and private keys in Bitcoin, let’s compare them with
@@ -27,7 +27,7 @@ probability of colliding public keys. Meanwhile, Gmail users trust
 Google with private information and regulation of public email
 addresses.
 
-Base 58 {#base-58 .unnumbered}
+Base 58 
 =======
 
 Bitcoin adopts the **base 58** convention to improve the readability of
@@ -41,7 +41,7 @@ similar characters do not fool wallet software, a few points of human
 failure remain, enough to warrant the use of base 58, such as reading
 and writing or typing out one’s public key for any manual task.
 
-Bitcoin Wallets {#bitcoin-wallets .unnumbered}
+Bitcoin Wallets 
 ===============
 
 A Bitcoin wallet’s fundamental use: storing a user’s private key. While
@@ -77,7 +77,7 @@ transaction back to the PC to broadcast to the network. Finally, brain
 wallets rely on the user memorizing their own private key, typically by
 memorizing a series of unrelated words which hash to the private key.
 
-Key Stretching {#key-stretching .unnumbered}
+Key Stretching 
 ==============
 
 Regarding the aforementioned brain wallets, consider the human mind’s
@@ -96,7 +96,7 @@ malicious user must guess both a sequence of English words and how many
 times Alice’s key was stretched. A small cost for a huge gain in
 security.
 
-Choosing a Wallet – Multisignature Addresses {#choosing-a-wallet-multisignature-addresses .unnumbered}
+Choosing a Wallet – Multisignature Addresses 
 ============================================
 
 Consider a wallet owned by a company. Should one person hold the
@@ -111,7 +111,7 @@ In the image above, two of three keys of the shared wallet are necessary
 in order to sign a transaction. The Bitcoin network validates the
 transaction by checking the signature produced by the two user keys.
 
-Choosing a Wallet – Generating New Keys {#choosing-a-wallet-generating-new-keys .unnumbered}
+Choosing a Wallet – Generating New Keys 
 =======================================
 
 Users commonly generate new keys for every transaction to maintain
@@ -123,7 +123,7 @@ generation and storage of different keys by combining funds from
 different keys so that the user can see exactly how much bitcoin they
 have while enjoying reinforced security as a perk.
 
-Choosing a Wallet – Wallet Backups {#choosing-a-wallet-wallet-backups .unnumbered}
+Choosing a Wallet – Wallet Backups 
 ==================================
 
 Wallet backups protect against loss, as hardware failures potentially
@@ -154,7 +154,7 @@ wallets/accounts to every department of the organization, which then
 distributes wallets to each employee, for a manageable hierarchical
 structure.
 
-Choosing a Wallet – Control & Responsibility {#choosing-a-wallet-control-responsibility .unnumbered}
+Choosing a Wallet – Control & Responsibility 
 ============================================
 
 We previously mentioned that Coinbase store private keys in the cloud,
@@ -181,7 +181,7 @@ case of a lost device (i.e. a lost signature), a user can call Case and
 the separate backup company to get the remaining two signatures and
 retrieve their funds.
 
-Cryptographic Hash Functions {#cryptographic-hash-functions .unnumbered}
+Cryptographic Hash Functions 
 ============================
 
 A **cryptographic hash function**, as discussed in the previous note,
@@ -228,7 +228,7 @@ Suppose we have two messages $x_1$ and $x_2$;
 2.  finding *any* $x_1,~x_2$ such that $H(x_1)=H(x_2)$ is
     computationally difficult.
 
-Use of Cryptographic Hash Functions {#use-of-cryptographic-hash-functions .unnumbered}
+Use of Cryptographic Hash Functions 
 ===================================
 
 In the context of Bitcoin, we have seen cryptographic hash functions
@@ -241,7 +241,7 @@ authentication codes (HMACs), password verification, commitment schemes,
 pseudo-random number generators (PRNGs), and as the groundwork for
 cryptographic protocols.
 
-Simple Hash Commitment Scheme {#simple-hash-commitment-scheme .unnumbered}
+Simple Hash Commitment Scheme 
 =============================
 
 Consider a scenario in which Alice and Bob each bet \$100 on a coin
@@ -298,7 +298,7 @@ Alice wins the bet if she can pick $R'$ such that $C'= H(!B||R') = C$.
 However, if our hash function $H$ is , this scenario is deterred as
 well.
 
-Key Terms {#key-terms .unnumbered}
+Key Terms 
 =========
 
 A collection of terms mentioned in the note which may or may not have

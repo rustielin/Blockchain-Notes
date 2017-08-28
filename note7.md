@@ -1,4 +1,4 @@
-Ethereum and Smart Contracts: Enabling a Decentralized Future {#ethereum-and-smart-contracts-enabling-a-decentralized-future .unnumbered}
+Ethereum and Smart Contracts: Enabling a Decentralized Future 
 =============================================================
 
 In this note, we will go in depth into what Ethereum is, some technical
@@ -19,7 +19,7 @@ decentralized apps on Ethereum are shaking up markets everywhere.
 *Note: Unless otherwise specified, use of the word “blockchain” or
 “network” refers to the Ethereum blockchain or the Ethereum network.*
 
-What is Ethereum? {#what-is-ethereum .unnumbered}
+What is Ethereum? 
 =================
 
 Looking at it from a very high level, **Ethereum** is a *decentralized*
@@ -40,7 +40,7 @@ nodes, etc. Miners are rewarded in Ether for helping to secure the
 system once they find the proof-of-work and propagate the first valid
 block.
 
-Ethereum vs. Bitcoin {#ethereum-vs.-bitcoin .unnumbered}
+Ethereum vs. Bitcoin 
 ====================
 
 Since we already know quite a lot about how Bitcoin works from previous
@@ -80,7 +80,7 @@ is currently ASIC resistant, but whether or not it stays so in the
 future is up to debbate. At the time of writing (July 31, 2017), 1 ETH
 $\rightarrow$ 200 USD, while 1 BTC $\rightarrow$ 2847 USD.
 
-Accounts vs. UTXOs {#accounts-vs.-utxos .unnumbered}
+Accounts vs. UTXOs 
 ==================
 
 Recall that a Bitcoin user’s available balance is the sum of the unspent
@@ -97,7 +97,7 @@ The distinction between UTXO and account based models might be subtle
 for the common user, but it significantly affects the way developers
 write smart contracts.
 
-Ethereum Account Types {#ethereum-account-types .unnumbered}
+Ethereum Account Types 
 ======================
 
 There are two types of accounts in Ethereum. Both are fundamentally
@@ -116,7 +116,7 @@ externally owned accounts. Contracts have persistent storage for their
 contract code, as their code, referred to as smart contracts, live and
 execute distributedly on the blockchain.
 
-All Accounts == Network State {#all-accounts-network-state .unnumbered}
+All Accounts == Network State 
 =============================
 
 In Bitcoin, the state of the network at any point in time is defined by
@@ -133,7 +133,7 @@ blocks. Accounts interact with the network, other accounts, other
 contracts, and contract state through the transactions that are
 contained within each block.
 
-Accounts Rationale {#accounts-rationale .unnumbered}
+Accounts Rationale 
 ==================
 
 One of the reasons Ethereum chose to use the account model rather than
@@ -145,7 +145,7 @@ easier to make a program that transfers value between accounts with a
 balance, rather than having to constantly update a UTXO set to compute a
 user’s available balance.
 
-Smart Contracts {#smart-contracts .unnumbered}
+Smart Contracts 
 ===============
 
 Ethereum is smart contract platform, but what exactly is a smart
@@ -168,7 +168,7 @@ does. Smart contracts on Ethereum run in the context of the global state
 of the network, established by blocks, and everyone on the Ethereum
 network agrees on what these smart contracts do.
 
-What is a Smart Contract? {#what-is-a-smart-contract .unnumbered}
+What is a Smart Contract? 
 =========================
 
 In Ethereum, smart contracts are executed by the network itself. Every
@@ -214,7 +214,7 @@ think multisig wallets and board members coming to consensus. While we
 identified only four general purposes, there are many contracts in the
 Ethereum network that are a combination of the four classes mentioned.
 
-Minimum Viable Token {#minimum-viable-token .unnumbered}
+Minimum Viable Token 
 ====================
 
 Next, let’s look at a basic sketch of a smart contract that defines the
@@ -242,7 +242,7 @@ currency that can be traded between any Ethereum users. Because the
 network is decentralized and distributed, the currency is secure, and
 thus immune to censorship or other attacks by governments.
 
-Ethereum Virtual Machine {#ethereum-virtual-machine .unnumbered}
+Ethereum Virtual Machine 
 ========================
 
 Contract code on Ethereum is run on the **EVM (Ethereum Virtual
@@ -271,7 +271,7 @@ storage, and however much gas remains from the execution.
 
 ![image](evm_transition)
 
-EVM Design Goals {#evm-design-goals .unnumbered}
+EVM Design Goals 
 ================
 
 Some of the funamental design goals of the EVM are simplicity, space
@@ -292,7 +292,7 @@ there is no way to overflow the EVM and take over a node, for example.
 Gas cost makes the EVM realistically non-exploitable. We’ll talk about
 how this happens in the next section.
 
-EVM Gas and Fees {#evm-gas-and-fees .unnumbered}
+EVM Gas and Fees 
 ================
 
 One immediate concern with the design of Ethereum smart contracts is
@@ -333,7 +333,7 @@ in Bitcoin would have to use a lot of capital to get enough hardware to
 subvert the network, attackers in Ethereum must obtain enough Ether to
 use as gas to fuel their infinite loop denial of service attack.
 
-Ethereum Conclusions {#ethereum-conclusions .unnumbered}
+Ethereum Conclusions 
 ====================
 
 One important idea to grasp about Ethereum is that it is not designed to
@@ -348,7 +348,7 @@ across nodes, computation is expensive. The cost associated with
 executing a contract creates an incentive not to use the Ethereum
 blockchain for computation that can be done off chain.
 
-Smart Assets {#smart-assets .unnumbered}
+Smart Assets 
 ============
 
 Now we’ll dive into some of the use cases of smart contracts in
@@ -361,7 +361,7 @@ PhilipToken, and also in the Ethereum whitepaper:
 
 ![image](smart_assets)
 
-Public Registry/Pubic Database {#public-registrypubic-database .unnumbered}
+Public Registry/Pubic Database 
 ==============================
 
 Smart assets contain a database to keep track of how much token each
@@ -376,7 +376,7 @@ as shown in the Ethereum whitepaper:
 
 ![image](public_registry)
 
-Crowdfunding and Incentivization {#crowdfunding-and-incentivization .unnumbered}
+Crowdfunding and Incentivization 
 ================================
 
 Another use case for Ethereum is for crowdfunding. “Ether-on-a-stick” is
@@ -396,7 +396,7 @@ dominant assurant contract and solves the free rider problem.
 *(Note: “Ether-on-a-Stick” was a hackathon project of Blockchain at
 Berkeley members Max and Philip)*
 
-Smart Energy Grids {#smart-energy-grids .unnumbered}
+Smart Energy Grids 
 ==================
 
 Imagine that a neighborhood has a smart energy grid. There might be some
@@ -431,7 +431,7 @@ fall back onto the blockchain when coordination cannot be found via a
 central entity or government. What was originally a social problem can
 now be solved technologically with the Ethereum blockchain.
 
-Decentralized Prediction Markets {#decentralized-prediction-markets .unnumbered}
+Decentralized Prediction Markets 
 ================================
 
 The idea of decentralized prediction markets draws on the wisdom of
@@ -530,7 +530,7 @@ that decentralized prediction markets are censorship-resistant, because
 of properties of the Ethereum’s distributed network, and also allow for
 automatic, trustless payments through the smart contract code.
 
-Decentralized IOT {#decentralized-iot .unnumbered}
+Decentralized IOT 
 =================
 
 Ethereum’s support for general smart contracts lends itself nicely to
@@ -558,7 +558,7 @@ especially because of its emphasis on resilience and dependability. Data
 for the bindings is duplicated across on all connected sensor units,
 increasing data redundancy, which entails increased durability.
 
-After Hours Trading {#after-hours-trading .unnumbered}
+After Hours Trading 
 ===================
 
 24 hour stock trading would be convenient, and given that our world is
@@ -594,7 +594,7 @@ followed. Anti money laundering is enforced when traders redeem their
 tokens. All trading history is transparently logged on the blockchain,
 so malicious traders can be caught with evidence.
 
-Decentralized Autonomous Organizations {#decentralized-autonomous-organizations .unnumbered}
+Decentralized Autonomous Organizations 
 ======================================
 
 The last Ethereum use-case we are going to cover is something called a
@@ -627,7 +627,7 @@ currency, making the entire system centralized. Dash refuses this
 temptation in an attempt to make a more pure decentralized,
 privacy-centric cryptocurrency solution.
 
-Limitations on Blockchain Tech {#limitations-on-blockchain-tech .unnumbered}
+Limitations on Blockchain Tech 
 ==============================
 
 One of the main limitations of blockchain technology is that there is
@@ -676,7 +676,7 @@ on the blockchain after encryption would be incredibly difficult, as the
 only solution as of now would be to use **homomorphic encryption**, but
 such technology is still being designed.
 
-Essential Properties of Killer Blockchain Apps {#essential-properties-of-killer-blockchain-apps .unnumbered}
+Essential Properties of Killer Blockchain Apps 
 ==============================================
 
 With so many use cases of Ethereum and blockchain technology, it is
@@ -747,7 +747,7 @@ blockchains can also create new governance models. Although this is a
 relatively new field, examples in decentralized autonomous organizations
 (DAOs) have proven that this is effective, at least on-chain.
 
-Conclusion {#conclusion .unnumbered}
+Conclusion 
 ==========
 
 Contrast all the perks of blockchain technology with the perks of having
@@ -780,7 +780,7 @@ important to consider the properties that make distributed solutions so
 great in the first place. Blockchains are great, but not applicable to
 everything at their current state.
 
-Key Terms {#key-terms .unnumbered}
+Key Terms 
 =========
 
 A collection of terms mentioned in the note which may or may not have

@@ -210,7 +210,7 @@ confirmed—if ever! (You will soon see that “the network" is an
 abstraction referring to miners, which we will talk about later in this
 note.)
 
-![image](assets/note2/transactions.png)
+![image](transactions)
 
 Blocks and Blockchain 
 =====================
@@ -249,7 +249,7 @@ specific bitcoins are transferred between users during transactions.
 (There is a slight difference because bitcoins can be divided and
 renamed, but the concept remains true.)
 
-![image](assets/note2/rai.jpg)
+![image](rai)
 
 Mining Sketch 
 =============
@@ -343,7 +343,7 @@ that generates a valid block header. The difficulty of the puzzle is
 constantly adjusted every 2016 blocks (every two weeks at 10
 minutes/block).
 
-![image](assets/note2/blockchain_diagram.jpg)
+![image](blockchain_diagram)
 
 Transaction Flow 
 ================
@@ -398,7 +398,7 @@ the new forked blockchain, and non-upgraded nodes continue mining on the
 old chain. With enough community support, both chains could survive, and
 we can see this in Ethereum and Ethereum Classic.
 
-![image](assets/note2/hard_fork.png)
+![image](hard_fork)
 
 A **soft fork** tightens the protocol, meaning that old nodes will
 always accept blocks from new nodes, and the new chain remains valid
@@ -410,12 +410,12 @@ able to mine, as upgraded nodes will reject their blocks. If a majority
 of the network adopts the new protocol of the soft fork, the network
 ultimately upgrades to the newer consensus rules.
 
-![image](assets/note2/soft_fork.png)
+![image](soft_fork)
 
 Merkle Trees 
 ============
 
-![image](assets/note2/merkle.png)
+![image](merkle)
 
 As seen in the diagram, a **Merkle tree** is a fundamental data
 structure, “gluing" transactions together and immensely facilitating

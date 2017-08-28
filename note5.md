@@ -1,4 +1,4 @@
-Cryptocurrency Mining: Proof-of-Work Consensus {#cryptocurrency-mining-proof-of-work-consensus .unnumbered}
+Cryptocurrency Mining: Proof-of-Work Consensus 
 ==============================================
 
 Bitcoin mining is the process through which new bitcoins enter the
@@ -9,7 +9,7 @@ have, and most importantly, is it profitable? In this section, we will
 explain in depth the design and mechanics behind Bitcoin mining, taking
 into account various mining incentives.
 
-Recap: What a Miner Does {#recap-what-a-miner-does .unnumbered}
+Recap: What a Miner Does 
 ========================
 
 In a nutshell, a Bitcoin miner accomplishes the following six tasks:
@@ -36,7 +36,7 @@ They ensure that (hopefully) only valid blocks make their way into the
 blockchain, receiving a bitcoin reward in exchange (also functioning as
 a mechanism through which new coin created in the Bitcoin network).
 
-Block Difficulty — Analogy {#block-difficulty-analogy .unnumbered}
+Block Difficulty — Analogy 
 ==========================
 
 Imagine a game in which you are blindfolded, throwing darts randomly at
@@ -56,7 +56,7 @@ distributed within a given period of time, $d$ changes depending on the
 average time taken to hit the target. This way, if people get better at
 throwing darts, then $d$ gets smaller, and vice versa.
 
-Block Difficulty — Puzzle Prerequisites {#block-difficulty-puzzle-prerequisites .unnumbered}
+Block Difficulty — Puzzle Prerequisites 
 =======================================
 
 Instead of blindly throwing darts at a dartboard, mining in Bitcoin
@@ -82,7 +82,7 @@ Hash puzzles must meet a few significant requirements:
     analogy, darts stick to the dartboard, so to verify, others simply
     have to take their blindfolds off to verify.
 
-Block Difficulty — Adjustment {#block-difficulty-adjustment .unnumbered}
+Block Difficulty — Adjustment 
 =============================
 
 The following is the equation to adjust the **difficulty** of the hash
@@ -100,7 +100,7 @@ puzzle is too easy (ratio greater than one), so the difficulty scales
 up. The block difficulty is inversely proportional to the time required
 to mine the previous 2016 blocks.
 
-How to Profit From Mining {#how-to-profit-from-mining .unnumbered}
+How to Profit From Mining 
 =========================
 
 For the Bitcoin miner, the following equations are true.
@@ -115,7 +115,7 @@ If mining rewards exceed mining costs, then a Bitcoin miner will profit.
 In the next sections, we will analyze each of the components in the
 above equations.
 
-Block Reward {#block-reward .unnumbered}
+Block Reward 
 ============
 
 A Bitcoin miner receives bitcoins for producing valid blocks. As of July
@@ -131,7 +131,7 @@ Bitcoin is a **deflationary** currency, topping off in 2140 at
 
 ![image](supply_cap)
 
-Transaction Fees {#transaction-fees .unnumbered}
+Transaction Fees 
 ================
 
 The creator of a transaction sets the transaction fee, a voluntary but
@@ -151,7 +151,7 @@ creator of this bitcoin transaction has included an implicit transaction
 fee of 0.2 BTC that is to be collected by the miner who includes this
 transaction in the block that is confirmed by the rest of the network.
 
-Hardware Cost {#hardware-cost .unnumbered}
+Hardware Cost 
 =============
 
 Bitcoin mining began on CPUs. As the block difficulty increased, mining
@@ -198,7 +198,7 @@ induces centralization—a tradeoff with Bitcoin’s core decentralized
 philosophy. Currently, the Antminer 29 holds the title of “Most Powerful
 ASIC," maxing out at 14 TH/s, for sale at the steep price of 3000 USD.
 
-Operating Costs {#operating-costs .unnumbered}
+Operating Costs 
 ===============
 
 Bitcoin mining operating costs fall into into three primary categories:
@@ -216,7 +216,7 @@ using mining hardware as a heater. An average household could mine
 bitcoins during the winter to heat up their home while making money on
 the side.
 
-ASIC-Resistance — Pros and Cons {#asic-resistance-pros-and-cons .unnumbered}
+ASIC-Resistance — Pros and Cons 
 ===============================
 
 Calls for **ASIC-resistance** developed based on arguments that mining
@@ -237,7 +237,7 @@ into expensive ASIC hardware becomes worthless without a puzzle to
 solve, discouraging attacks on the Bitcoin network. By that rationale,
 ASICs promote network security.
 
-ASIC-Resistance — Memory-Hard Puzzle {#asic-resistance-memory-hard-puzzle .unnumbered}
+ASIC-Resistance — Memory-Hard Puzzle 
 ====================================
 
 Movements to make Bitcoin ASIC-resistant stirred consideration of
@@ -254,7 +254,7 @@ slowly than computational power. The cost of solving a puzzle also
 decreases more slowly, all valid considerations in the ASIC-resistance
 debate among Bitcoin users.
 
-Scrypt {#scrypt .unnumbered}
+Scrypt 
 ======
 
 **Scrypt** (pronounced “ess crypt” and lowercase by default) is an
@@ -277,7 +277,7 @@ puzzle requirements. In addition, against scrypt’s entire meaning for
 existing as a cryptocurrency hash puzzle, scrypt ASICs have been
 developed, killing the ASIC-resistance claim.
 
-ASIC-Resistance — Other Approaches {#asic-resistance-other-approaches .unnumbered}
+ASIC-Resistance — Other Approaches 
 ==================================
 
 Memory-hard algorithms such as scrypt do not provide real-world
@@ -295,7 +295,7 @@ been implemented. In short, ASIC-resistance seems like an impossible
 goal. As Mike Hearn, Bitcoin Core developer, famously stated: “There’s
 really no such thing as an ASIC-resistant algorithm."
 
-Proof-of-Useful-Work {#proof-of-useful-work .unnumbered}
+Proof-of-Useful-Work 
 ====================
 
 Instead of having the world’s most powerful network of assigned
@@ -339,7 +339,7 @@ to delegate tasks, otherwise we fail to reach the requirement of
 decentralized and algorithmically generated problems. Thus,
 Proof-of-useful-work is unviable.
 
-Proof-of-Storage — Permacoin {#proof-of-storage-permacoin .unnumbered}
+Proof-of-Storage — Permacoin 
 ============================
 
 Instead of distributing work across a network, one idea involves
@@ -359,7 +359,7 @@ Proof-of-storage is that it is hard to find a large enough file to
 subsection to the network’s nodes. If such a file is found, it would be
 difficult to change the block difficulty or to modify the file.
 
-Merge Mining {#merge-mining .unnumbered}
+Merge Mining 
 ============
 
 Consider the potential vulnerabilities of a new altcoin in the current
@@ -418,7 +418,7 @@ meet the altcoin’s difficulty target, but not Bitcoin’s difficulty
 target. These contain information on both Bitcion and altcoin
 blockchains, but are only accepted on the altcoin blockchain.
 
-Bonus: SHA-256 {#bonus-sha-256 .unnumbered}
+Bonus: SHA-256 
 ==============
 
 SHA-256 is Bitcion’s most fundamental cryptographic hash function, and
@@ -445,7 +445,7 @@ the hash function the properties of first and second preimage
 resistance. SHA-256 performs these operations a total of 64 times in
 order to produce the final hash.
 
-Key Terms {#key-terms .unnumbered}
+Key Terms 
 =========
 
 A collection of terms mentioned in the note which may or may not have

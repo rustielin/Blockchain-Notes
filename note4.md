@@ -1,4 +1,4 @@
-Bitcoin Mechanics and Optimizations {#bitcoin-mechanics-and-optimizations .unnumbered}
+Bitcoin Mechanics and Optimizations 
 ===================================
 
 After abstracting away Bitcoin features to focus on fundamental
@@ -8,7 +8,7 @@ Bitcoin mechanics, scripting, and network optimizations techniques.
 Through these topics, we intend on demonstrating that Bitcoin’s design
 philosophy is as simple, robust, and conservative as possible.
 
-Double Spend — Example {#double-spend-example .unnumbered}
+Double Spend — Example 
 ======================
 
 To gain further intuition on Bitcoin consensus, let’s understand once
@@ -26,7 +26,7 @@ spends are possible when a party gains more than 50% of the network’s
 hash power. Under the hood, there is a fairly involved process that
 results in the double spend.
 
-Double Spend — Confirmations {#double-spend-confirmations .unnumbered}
+Double Spend — Confirmations 
 ============================
 
 A transaction’s **confirmations** are defined as the blocks built off of
@@ -74,7 +74,7 @@ chain.
 
 ![image](z_confirmation)
 
-Double Spend — Security {#double-spend-security .unnumbered}
+Double Spend — Security 
 =======================
 
 Let’s model our assertions about double spending and hash power with
@@ -189,7 +189,7 @@ goods depends on how much hash power Bob assumes Alice to control. After
 assuming any malicious party controls 10% or less of the network hash
 power.
 
-Double Spend — Bribing Miners {#double-spend-bribing-miners .unnumbered}
+Double Spend — Bribing Miners 
 =============================
 
 We have shown that if Alice controls more than 50% of the total network
@@ -206,7 +206,7 @@ double spend attack, she can bribe other willing miners or even entire
 mining pools to mine on her chain. In the long run, Alice and her miners
 will profit after managing to overcome the extremely high initial cost.
 
-Double Spend — “Goldfinger" Attack {#double-spend-goldfinger-attack .unnumbered}
+Double Spend — “Goldfinger" Attack 
 ==================================
 
 **“Your scientists were so preoccupied with whether or not they could,
@@ -237,7 +237,7 @@ Goldfinger from the third James Bond movie, who poisons the US gold
 supply in Ft. Knox to reduce the value of that US gold and to increase
 the value of his own gold holdings.)
 
-Account vs Transaction Based Ledgers {#account-vs-transaction-based-ledgers .unnumbered}
+Account vs Transaction Based Ledgers 
 ====================================
 
 Consider the notion of **account-based ledgers**. Cryptocurrencies such
@@ -264,7 +264,7 @@ transaction can have multiple inputs – for example if Alice and Bob both
 want to pitch in to spend a total of 1.00 BTC. In practice, this feature
 is rarely used but is supported nonetheless.
 
-Contents of a Transaction {#contents-of-a-transaction .unnumbered}
+Contents of a Transaction 
 =========================
 
 The contents of a Bitcoin transaction fall into three categories:
@@ -291,7 +291,7 @@ a system called the Pay-to-PubkeyHash, which we will discuss later.
 Shallowly, the script says, “Whoever owns the private key to this public
 key can redeem these bitcoins."
 
-Bitcoin Scripting {#bitcoin-scripting .unnumbered}
+Bitcoin Scripting 
 =================
 
 Previously we stated that transactions map input addresses to output
@@ -367,7 +367,7 @@ The output is saying: "This amount can be redeemed by
 2.  plus a $<$sig$>$ from the owner of that $<$pubKey$>$, which will
     make the output script evaluate to true."
 
-Proof-of-Burn {#proof-of-burn .unnumbered}
+Proof-of-Burn 
 =============
 
 One application of Bitcoin scripting is to implement something known as
@@ -394,7 +394,7 @@ bootstrap the value of other cryptocurrencies. To bootstrap an imaginary
 SuperAwesomeCoin, Super Awesome Bob could require users to burn bitcoin
 in order to get superAwesomeCoin.
 
-Pay-to-PubKey-Hash vs Pay-to-Script-Hash {#pay-to-pubkey-hash-vs-pay-to-script-hash .unnumbered}
+Pay-to-PubKey-Hash vs Pay-to-Script-Hash 
 ========================================
 
 The previous example of requiring a public key and a signature in order
@@ -430,7 +430,7 @@ the script actually is. They should not have to know anything about the
 company stores funds; customers should just have to create a
 transaction, pay, and leave.
 
-Merkle Trees {#merkle-trees .unnumbered}
+Merkle Trees 
 ============
 
 Let’s take a deeper dive into the specifics of Merkle trees, which we
@@ -470,7 +470,7 @@ the proof proceeds as follows.
     2.  Else, the proof failed and the merkle tree does not contain
         $data$
 
-Merkle Trees — Bitcoin Construction {#merkle-trees-bitcoin-construction .unnumbered}
+Merkle Trees — Bitcoin Construction 
 ===================================
 
 There are two main hash structures in Bitcoin. The blockchain is a hash
@@ -483,7 +483,7 @@ bubbling up and changing the merkle root. Changing the merkle root in
 turn changes the hash of the block it’s contained in, invalidating the
 block.
 
-Merkle Trees — Mining, In More Detail {#merkle-trees-mining-in-more-detail .unnumbered}
+Merkle Trees — Mining, In More Detail 
 =====================================
 
 Previously, we explained for simplicity that for every block, miners
@@ -516,7 +516,7 @@ $\theta(1)$ time.) We want to minimize the time spent calculating new
 merkle tree hashes, so change the coinbase transaction as little times
 as possible.
 
-SPV — Simplified Payment Verification {#spv-simplified-payment-verification .unnumbered}
+SPV — Simplified Payment Verification 
 =====================================
 
 The current size of Bitcoin’s blockchain is 122.7 gigabytes and growing.
@@ -541,7 +541,7 @@ header that the SPV node has locally. The only thing left to do after
 this point is to wait for the transaction to have enough confirmations
 (six) before delivering any goods.
 
-SPV — Security and Cost Analysis {#spv-security-and-cost-analysis .unnumbered}
+SPV — Security and Cost Analysis 
 ================================
 
 By definition, SPV nodes do not have a full transaction history, and do
@@ -574,7 +574,7 @@ verifying transactions lazily, relying on data from full nodes rather
 than keeping it locally. For most consumers and users of Bitcoin, SPV is
 a decent tradeoff.
 
-Flooding Algorithm {#flooding-algorithm .unnumbered}
+Flooding Algorithm 
 ==================
 
 We mentioned that SPV nodes query full nodes to get data on block
@@ -628,7 +628,7 @@ Alice and Bob:
 
 4.  Eventually, the transaction makes it to Bob
 
-Bitcoin Relay Network {#bitcoin-relay-network .unnumbered}
+Bitcoin Relay Network 
 =====================
 
 One problem Bitcoin is currently facing is **mining pool
@@ -655,7 +655,7 @@ arrive. In the case where not all packets arrive, the receiver is
 notified, and can then ask to sender to resend the missing packets. This
 causes a round trip delay for the time-sensitive data.
 
-FIBRE {#fibre .unnumbered}
+FIBRE 
 =====
 
 After realizing the problems with the Bitcoin Relay Network, developers
@@ -671,7 +671,7 @@ having to contact the sender to send it again. The sender simply
 includes extra packets to account for potential packet loss or
 corruption.
 
-Key Terms {#key-terms .unnumbered}
+Key Terms 
 =========
 
 A collection of terms mentioned in the note which may or may not have
