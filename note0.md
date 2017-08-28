@@ -1,7 +1,7 @@
-Introduction {#introduction .unnumbered}
+Introduction 
 ============
 
-![image](bab)
+![image](assets/note0/bab.png)
 
 After taking Blockchain at Berkeley’s Spring 2017 Introduction to
 Cryptocurrencies DeCal, I decided to make a set of notes to reinforce my
@@ -61,7 +61,7 @@ structure, are not necessarily be reflected within these notes.
     they’re mostly paraphrased or even made from scratch based on
     personal knowledge.)
 
-Key Terms {#key-terms .unnumbered}
+Key Terms
 =========
 
 Below is a working list of commonly used terms and their definitions in
