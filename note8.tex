@@ -17,23 +17,37 @@
     
     \section*{Properties of a Distributed System}
     
-    Recall that a state is a condition at a specific period of time. Think the state of your bank account, and the balance included in it. Think the state of the Ethereum network, and the balances of all the accounts in Ethereum. In order to ensure correctness of state, distributed systems must have two essential properties.
+    Of course, in order to define some essential properties of distributed systems -- of which Bitcoin is an example -- we need to first define what a distributed system is. While the definition of a \textbf{distributed system} might vary from person to person, depending on their field of study, we are primarily interested in categorizing distributed systems as a network of independent nodes (computers), communicating via messages, and all working concurrently to reach a common goal. It is difficult to track time precisely in a distributed system, as every node could have its own slightly-off internal clock, so there is no global clock. Indeed, it would be impractical for every node in a network to share the same synchronized clock, and such a system may not be considered distributed at all. Instead, time is relative to a previous state of the distributed system (e.g. in blockchain systems, referring to a block number.) Components within a distributed system also have the potential to fail. 
     
-    The first essential property is \textbf{liveness}, which says that the current state of a system satisfies liveness if there is some path from the current state to some future state where the liveness property also holds true. In simpler terms, the liveness property guarantees that a network will always make progress, and that something good will happen eventually. In the context of consensus algorithms, liveness guarantees that all nodes will eventually decide on a value, whih ultimately defines a state. (Note the use of the word \textit{decide} and \textit{agree}, because a node may have to conform to what is agreed upon by the rest of the network.)
+    % Recall that a state is a condition at a specific period of time. Think the state of your bank account, and the balance included in it. Think the state of the Ethereum network, and the balances of all the accounts in Ethereum. In order to ensure correctness of state, distributed systems must maintain two classes of essential properties.
     
-    The second essential property is \textbf{safety}, which says that the current state guarantees the safety property if \textit{all} the future states that can be reached from the current state also satisfies the safety property. In simpler terms, the safety property guarantees that something bad will never happen. In regards to consensus algorithms, safety guarantees that no two nodes will decide on different values.
+    \textbf{Liveness} properties guarantee that a system must continue to make progress no matter the current state. In other words, they guarantee that a distributed system will always return a value and never reach a stuck state that cannot progress. In the context of consensus algorithms, liveness guarantees that all nodes will eventually decide on a value, and reach a new state. (Note the use of the word \textit{decide} and \textit{agree}, because a node may have to conform to what is agreed upon by the rest of the network.)
+    
+    \textbf{Safety} properties guarantee that the network will always return a correct value. In other words, safety properties guarantee that something bad will never happen to a system. In regards to consensus algorithms, safety guarantees that no two nodes will decide on different values. 
+    
+
+    \section*{FLP Impossibility Theorem}
     
     In the \textbf{Fischer Lynch Paterson (FLP) Impossibility Theorem}, there are a total of three fundamental properties of distributed systems. We introduced liveness and safety already. The third property is fault tolerance, which guarantees that if one node in a system fails, the entire node will not fail. FLP Impossibility states that in any consensus system, only two of the three properties can be satisfied at once. Although fault tolerance is important, we will focus mainly on how to ensure safety and liveness in this note.
     
     \section*{Distributed Properties in Consensus}
     
-    In an asynchronous distributed system, we cannot guarantee decisions (safety) and correct decisions (safety) at the same time. You can only guarantee eventual liveness or eventual consistency. This means that if no new updates are made to a data item, eventually all access to that item will return the last updated value. Everyone sees the same thing. In terms of consensus on a blockchain, eventual consistency means that all nodes in a network will eventually share a common view of the state of the blockchain. Keep in mind that blockchains are immutable --- blocks can only be appended to the end of a blockchain, and that it is difficult to alter the middle of a blockchain. 
+    % In an asynchronous distributed system, we cannot guarantee decisions (liveness) and correct decisions (safety) at the same time. You can only guarantee eventual liveness or eventual consistency. This means that if no new updates are made to a data item, eventually all access to that item will return the last updated value. Everyone sees the same thing. In terms of consensus on a blockchain, eventual consistency means that all nodes in a network will eventually share a common view of the state of the blockchain. Keep in mind that blockchains are immutable --- blocks can only be appended to the end of a blockchain, and that it is difficult to alter the middle of a blockchain. 
+    
+    To ensure the proper execution of a distributed system, we must also define \textbf{correctness} as the property that ensures that a distributed system will achieve its intended goal. Correctness can be expressed using our previously defined liveness and safety properties. \textbf{Consensus algorithms} are used to achieve three properties of correct distributed systems. \textbf{Validity} states that any value decided upon by the network must have been proposed by one of the processes or nodes. \textbf{Agreement}, a safety property, states that all non-faulty nodes must agree on the same value and will never decide on different values. \textbf{Termination}, a liveness property, states that all non-faulty nodes eventually decide on some value and will never be stuck.
+    
+    
+    \section*{CAP Theorem}
     
     \section*{Key Consensus Protocol Problems}
     
     Two key problems that consensus protocols must tackle are Sybil attacks and the Byzantine Generals Problem. Recall that Sybil attacks involve flooding a network with false identities and transferring malicious information to other nodes. Bitcoin makes Sybil attacks difficult because of its underlying Proof-of-Work algorithm and also some design considerations, including restrictions on connecting with geographically close IP addresses.
     
-    The Byzantine Generals Problem is a classic agreement problem that involves a group of Byzantine generals surrounding a city, each in a different location. 
+    The \textbf{Byzantine Generals Problem} is a classic agreement problem that revolves around the concept of communication over an unreliable medium. Imagine a group of Byzantine generals surrounding a city, each in a different location. They must all commonly agree on a plan of action -- either to attack or retreat. To communicate with one another, they must send messengers. The catch is that there may or may not be traitors among the generals, and also among the messengers. The question is: how do we ensure that all generals agree on the same plan of action? The positioning of the generals represents a distributed network. The possibility of there being traitor generals represents the possibility of faulty/malicious nodes, and the possibility of traitor messengers represents the unreliable network. The Bitcoin's Proof-of-Work algorithm is one possible solution to the Byzantine Generals Problem.
+    
+    Bitcoin solves the Byzantine Generals Problem by assuming that the longest chain is always ``correct'' and that the majority of the network is not malicious. By this assumption, 
+    
+    
     
     
     

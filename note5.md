@@ -429,10 +429,7 @@ NSA, SHA-256 has been the subject of a number of conspiracy theories
 which claim the existence of back doors that would potentially allow the
 NSA to break Bitcoin at will. There has been no proof thus far. Another
 concern with SHA-256 is Bitcoin’s reliance and association with the
-cryptographic hash function. In the era of quantum computing, SHA-256
-may no longer provide the security needed to uphold the security of the
-Bitcoin network. Die-hard Bitcoin developers would then have to explore
-alternatives.
+cryptographic hash function. In the future if SHA-256 no longer provides the necessary security to uphold the Bitcoin network, die-hard Bitcoin developers would then have to explore alternatives.
 
 SHA-256 works by maintaining 256 bits of state. These 256 bits of state
 are divided into 8 words of 32-bit state. Because the input for SHA-256

@@ -52,7 +52,7 @@
     
     Wallet backups protect against loss, as hardware failures potentially lead to losing one's entire supply of bitcoin. However, generating new keys for every transaction poses a problem: if a user generates a new address with each transaction, then the safest backup scheme requires a new backup for every new address. This backup scheme describes \textbf{JBOK (Just a Bunch of Keys) wallets}.
     
-    In \textbf{BIP (Bitcoin Improvement Proposal)} 32, the Bitcoin protocol accepted \textbf{HD (hierarchical deterministic) wallets}, where hierarchal refers to various ``ancestries" and deterministic refers to an unchanging hierarchy system, characterized by a process whereby a `child' private key comes from a `parent' private key via secure mathematical relationships, removing the burden of backing up new keys upon every transaction as with JBOK wallets. Instead, one saevs a set of parent keys and later calculates child keys as needed. Each parent private key can have multiple child private keys, and each child private key can in turn be a parent private key and have children as well, defining the hierarchical property of HD wallets.  
+    In \textbf{BIP (Bitcoin Improvement Proposal)} 32, the Bitcoin protocol accepted \textbf{HD (hierarchical deterministic) wallets}, where hierarchal refers to various ``ancestries" and deterministic refers to an unchanging hierarchy system, characterized by a process whereby a `child' private key comes from a `parent' private key via secure mathematical relationships, removing the burden of backing up new keys upon every transaction as with JBOK wallets. Instead, one saves a set of parent keys and later calculates child keys as needed. Each parent private key can have multiple child private keys, and each child private key can in turn be a parent private key and have children as well, defining the hierarchical property of HD wallets.  
 
    \includegraphics[scale=3.5]{bip32}
    
@@ -133,7 +133,7 @@
         % edit within here
         \item \textbf{Avalance effect} --- In the context of hash functions: small changes to the input result in large changes to the output.
         \item \textbf{Base 58} --- Base 62 (all lowercase and uppercase letters, along with all ten digits) minus 4 particular characters to prevent mixups between similar characters.
-        \item \textbf{BIP (Bitcoin Improvement Proposal)} --- Used to signal approval for a change in protocol. To gauge how much of the network supports a particular Bitcoin initiative, miners can store a piece of code in the coinbase transaction as a signal to tell the rest of the world their opinion. If a particular BIP is signaled 
+        \item \textbf{BIP (Bitcoin Improvement Proposal)} --- Used to signal approval for a change in protocol. To gauge how much of the network supports a particular Bitcoin initiative, miners can store a piece of code in the coinbase transaction as a signal to tell the rest of the world their opinion. 
         \item \textbf{Cold wallets} --- Offline wallets, typically used for storing bitcoins long-term. By never putting the private key online, the likelihood of one's bitcoins being taken from this wallet decrease substantially.
         \item \textbf{Collision resistance} --- In the context of hash functions: the prevention of two inputs generating the same output.
         \item \textbf{Commitment} --- A hash that represents the selection of some decision while obfuscating the decision. Hashing a selection with a random number produces the commitment. With both preimage and second preimage resistance, one can commit to a particular submission or claim without revealing the claim.
@@ -141,9 +141,9 @@
         \item \textbf{Hot wallets} --- Online wallets, typically holding frequently exchanged and traded bitcoins. 
         \item \textbf{Key stretching} --- Repeated hashing of a private key in the public key generation process, as opposed to only using the hash function once.
         \item \textbf{Multisignature addresses} --- Addresses associated with multiple keys, as opposed to a single private key, allowing multiple users to share an account or to produce backups. Most multisignature addresses do not only require a fraction of keys to validate a transaction, often 2-of-3 wallets.
-        \item \textbf{Preimage resistance} --- A property of cryptographic hash functions. In layman's terms, it is excrutiatingly difficult to create an inverse hash function that turns outputs to inputs.
-        \item \textbf{Second preimage resistance} --- Another property of cryptographic hash functions. In layman's terms, it is excrutiatingly difficult to find two inputs to a hash function which produce the same output.
-        \item \textbf{Wallet} --- A piece of software which, at a minimum, stores one's private key. For user convenience, hot wallets also store information about past available UTXOs and protocols for creating transactionss.
+        \item \textbf{Preimage resistance} --- A property of cryptographic hash functions. In layman's terms, it is excruciatingly difficult to create an inverse hash function that turns outputs to inputs.
+        \item \textbf{Second preimage resistance} --- Another property of cryptographic hash functions. In layman's terms, it is excruciatingly difficult to find two inputs to a hash function which produce the same output.
+        \item \textbf{Wallet} --- A piece of software which, at a minimum, stores one's private key. For user convenience, hot wallets also store information about past available UTXOs and protocols for creating transactions.
     \end{enumerate}
     % END KEY TERMS
 \end{document}
