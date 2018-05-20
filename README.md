@@ -1,4 +1,8 @@
 # Blockchain-Notes
+
+Update: Writing halting for a while as we prepare to redesign the course and launch it as a MOOC.
+
+
 ## Introduction
 Meticulous notes on various topics in cryptography, cryptocurrencies, and blockchain based on Blockchain at Berkeley's Spring 2017 "Introduction to Cryptocurrencies and Blockchain" course.    
 
